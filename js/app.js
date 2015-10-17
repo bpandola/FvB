@@ -43,7 +43,7 @@ function main() {
 };
 
 function init() {
-    terrainPattern = ctx.createPattern(resources.get('img/background.png'), 'no-repeat');
+    terrainPattern = ctx.createPattern(resources.get('img/background.PNG'), 'no-repeat');
 
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
