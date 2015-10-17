@@ -112,7 +112,7 @@ function PollControls() {
     // Init these in game state
     var playerButtons = [
         [FvB.Keys.F, FvB.Keys.H, FvB.Keys.T, FvB.Keys.G, FvB.Keys.W, FvB.Keys.Q],
-        [FvB.Keys.LEFT, FvB.Keys.RIGHT, FvB.Keys.UP, FvB.Keys.DOWN, FvB.Keys.QUOTE, FvB.Keys.SEMI_COLON]];
+        [FvB.Keys.LEFT, FvB.Keys.RIGHT, FvB.Keys.UP, FvB.Keys.DOWN, FvB.Keys.L, FvB.Keys.K]];
 
     // copy previous state to held array
     for (i = 0; i < 2; i++) {
