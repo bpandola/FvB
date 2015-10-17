@@ -7,7 +7,7 @@ FvB.Player = (function () {
     FvB.setConsts({
         PLAYERSIZE: FvB.MINDIST, // player radius
         CHAR_SPRITE_WIDTH: 64,
-       
+
 
         ex_notingame: 0,
         ex_playing: 1,
@@ -18,7 +18,7 @@ FvB.Player = (function () {
         MAX_PLAYER_HEALTH: 270
 
     });
-    
+
     function setHitBox(player) {
         switch (player.state) {
             case FvB.ST_CROUCH:
@@ -35,7 +35,7 @@ FvB.Player = (function () {
         }
     }
     function clipMove(player, game) {
-        
+
         if (player.x < 0) {
             player.x = 0;
         }
@@ -157,9 +157,9 @@ FvB.Player = (function () {
         player.objClass = FvB.ob_Player;
 
         setHitBox(player);
-        
+
         return player;
-    }  
+    }
 
     function damage(player, attacker) {
         var damage = 0;
