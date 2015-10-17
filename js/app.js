@@ -54,7 +54,7 @@ function init() {
 }
 
 resources.load([
-    'img/background.png',
+    'img/background.PNG',
     'img/FARTSAC0.PNG',
     'img/BOOGBOY0.PNG',
     'img/FARTBOOG.PNG',
