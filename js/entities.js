@@ -255,7 +255,7 @@ FvB.Entities = (function () {
                 FvB.Sound.playSound("sfx/explodey.wav");
                 break;
             default:
-                FvB.Sound.playSound("sfx/splat.wav");
+                ;//FvB.Sound.playSound("sfx/splat.wav");
         }
 
         return self;
