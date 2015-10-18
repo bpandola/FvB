@@ -85,7 +85,7 @@ FvB.Player = (function () {
         }
 
         if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
-            FvB.Entities.spawnHugeProjectile(player, game);
+            player.state = FvB.ST_BLOW;
         }
     }
 
@@ -135,6 +135,58 @@ FvB.Player = (function () {
         clipMove(player, game);
     }
 
+    function T_Blow(self, game, tics) {
+
+        // First time
+        if (self._index === 0 && self.speed === 0) {
+            self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            self.frame = 0;
+            self.speed = 20;
+
+            //switch (self.type) {
+            //    case FvB.en_Fartsac:
+            //        FvB.Sound.playSound("sfx/fartball.wav");
+            //        break;
+            //    case FvB.en_Boogerboy:
+            //        FvB.Sound.playSound("sfx/booger.wav");
+            //        break;
+            //}
+
+            return true;
+        }
+
+        self._index += self.speed * tics;
+        if (self.speed > 0) {
+            var max = self.frames.length;
+            var idx = Math.floor(self._index);
+            self.frame = self.frames[idx % max];
+
+            if (self.type == FvB.en_Fartsac) {
+                self.y -= FvB.PLAYER_JUMP_SPEED * tics;
+                if (self.y <= FvB.PLAYER_START_Y - 26) {
+                    self.y = FvB.PLAYER_START_Y - 26;
+                }
+            } 
+            if (idx >= max) {
+                if (self.type == FvB.en_Fartsac) {
+                    self.state = FvB.ST_JUMP_DOWN;
+                } else {
+                    self.state = FvB.ST_STAND;
+                }
+                self.frames = [0];
+                self.frame = 0;
+                self.speed = 0;
+                self._index = 0;
+                FvB.Entities.spawnHugeProjectile(self, game);
+                return true;
+            }
+        }
+        else {
+
+            self.frame = self.frames[0];
+        }
+    }
+
     function spawnPlayer(game, playerNum, playerCharacter) {
 
         var x = playerNum == 1 ? FvB.SCREENWIDTH / 2 - FvB.CHAR_SPRITE_WIDTH * 2 : FvB.SCREENWIDTH / 2 + FvB.CHAR_SPRITE_WIDTH,
@@ -181,6 +233,8 @@ FvB.Player = (function () {
             player.health = 0;
             // change player state to dead?
         }
+        FvB.Sound.playSound("sfx/025.wav");
+        
     }
 
     return {
@@ -188,6 +242,7 @@ FvB.Player = (function () {
         T_Stand: T_Stand,
         T_Crouch: T_Crouch,
         T_Jump: T_Jump,
+        T_Blow: T_Blow,
         damage: damage
     };
 

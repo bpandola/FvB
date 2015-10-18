@@ -1,9 +1,12 @@
 ﻿FvB.Renderer = (function () {
 
     function renderEntity(e) {
-        var sheet = FvB.Sprites.getTexture(FvB.objstate[e.type][e.state].texture),
+        var sheet = FvB.Sprites.getTexture(FvB.objstate[e.type][e.state].texture + e.frames[e.frame]),
             offset = FvB.objstate[e.type][e.state].rotate ? e.dir : 0;
-        offset = offset + e.frames[e.frame];
+        //offset = offset + e.frames[e.frame];
+        if (e.state == FvB.ST_BLOW) {
+            console.log(e.frames[e.frame]);
+        }
         ctx.save();
         ctx.translate(e.x, e.y);
         var resource = resources.get('img/' + sheet.sheet);
@@ -13,7 +16,7 @@
                               0, 0,
                               sheet.size, sheet.size);
         ctx.restore();
-
+        
     }
 
     return {

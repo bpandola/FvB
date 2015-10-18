@@ -48,7 +48,7 @@ function init() {
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
-
+    
     reset();
    
 }
@@ -59,7 +59,9 @@ resources.load([
     'img/BOOGBOY0.PNG',
     'img/FARTBOOG.PNG',
     'img/EXPLODEY.PNG',
-    'img/HUGE.PNG'
+    'img/HUGE.PNG',
+    'img/BOOGBLOW.PNG',
+    'img/FARTBLOW.PNG'
 ]);
 resources.onReady(init);
 
@@ -191,8 +193,8 @@ function reset() {
     
     game.entities = [];
 
-    var player1 = FvB.Player.spawnPlayer(game, 1, FvB.BOOGERBOY);
-    var player2 = FvB.Player.spawnPlayer(game, 2, FvB.FARTSAC);
+    var player1 = FvB.Player.spawnPlayer(game, 1, FvB.en_Boogerboy);
+    var player2 = FvB.Player.spawnPlayer(game, 2, FvB.en_Fartsac);
       
     isGameOver = false;
     lastTime = Date.now()

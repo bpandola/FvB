@@ -23,7 +23,7 @@
                 switch (e.objClass) {
                     case self.objClass:
                         e.state = FvB.st_remove;
-                        FvB.Entities.spawnExplosion(self, game);
+                        FvB.Entities.spawnExplosion(self, e, game);
                         return false;
 
                     case FvB.ob_Player:
@@ -61,7 +61,7 @@
     
     function T_Projectile(self, game, tics) {
 
-        var speed = self.dir == FvB.DIR_LEFT ? -FvB.BASIC_PROJECTILE_SPEED : FvB.BASIC_PROJECTILE_SPEED;
+        var speed = self.dir == FvB.DIR_LEFT ? -FvB.SUPER_PROJECTILE_SPEED : FvB.SUPER_PROJECTILE_SPEED;
 
         self.x += speed * tics;
 

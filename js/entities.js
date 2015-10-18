@@ -217,19 +217,55 @@ FvB.Entities = (function () {
         }
     }
    
+    function centerPoint(e1, e2) {
 
-    function spawnExplosion(obj, game) {
+        var x, y, left, right,deltax, deltay;
+
+        if (e1.x + e1.hitBox.x1 < e2.x + e2.hitBox.x1) {
+            left = e1;
+            right = e2;
+        } else {
+            left = e2;
+            right = e1;
+        }
+
+        deltax = (right.x + right.hitBox.x2) - (left.x + left.hitBox.x1);
+        x = left.x + left.hitBox.x1 + (deltax / 2);
+
+        if (e1.y + e1.hitBox.y1 < e2.y + e2.hitBox.y1) {
+            left = e1;
+            right = e2;
+        } else {
+            left = e2;
+            right = e1;
+        }
+
+        deltay = (right.y + right.hitBox.y2) - (left.y + left.hitBox.y1);
+        y = left.y + left.hitBox.y1 + (deltay / 2);
+
+        return { x: x, y: y };
+    }
+
+    function spawnExplosion(e1, e2, game) {
         self = getNewEntity(game);
 
         if (!self)
             return;
 
-        self.x = obj.x-15;
-        self.y = obj.y-15;
+        self.x = centerPoint(e1, e2).x - 20;
+        self.y = centerPoint(e1, e2).y - 20;
         self.state = FvB.st_stand;
         self.type = FvB.en_Explosion;
         self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         self.speed = 16;
+
+        switch (e1.objClass) {
+            case FvB.ob_HugeProjectile:
+                FvB.Sound.playSound("sfx/explodey.wav");
+                break;
+            default:
+                FvB.Sound.playSound("sfx/splat.wav");
+        }
 
         return self;
     }
@@ -241,23 +277,31 @@ FvB.Entities = (function () {
             return;
 
         self.dir = player.dir;
-        self.y = player.y + 6;
-        self.x = player.x + 32 - (self.dir == FvB.DIR_LEFT ? 24 : 0);
+        if (player.type == FvB.en_Boogerboy) {
+            self.y = player.y + 7;
+            self.x = player.x + 36 - (self.dir == FvB.DIR_LEFT ? 24 : 0);
+        } else {
+            self.y = player.y + 33;
+            self.x = player.x + 32 - (self.dir == FvB.DIR_LEFT ? 34 : 0);
+        }
+        
         self.state = FvB.ST_PATH;
         self.objClass = FvB.ob_HugeProjectile;
         self.parent = player;
 
         self.hitBox.x1 = 0;
         self.hitBox.x2 = 24;
-        self.hitBox.y1 = 0;
-        self.hitBox.y2 = 24;
+        self.hitBox.y1 = 8;
+        self.hitBox.y2 = 16;
 
         switch (player.type) {
             case FvB.en_Fartsac:
                 self.type = FvB.en_HugeFartball;
+                FvB.Sound.playSound("sfx/fartball.wav");
                 break;
             case FvB.en_Boogerboy:
                 self.type = FvB.en_HugeBooger;
+                FvB.Sound.playSound("sfx/booger.wav");
                 break;
 
         }
@@ -302,9 +346,11 @@ FvB.Entities = (function () {
         switch (player.type) {
             case FvB.en_Fartsac:
                 self.type = FvB.en_Fartball;
+                //FvB.Sound.playSound("sfx/fartball.wav");
                 break;
             case FvB.en_Boogerboy:
                 self.type = FvB.en_Booger;
+                //FvB.Sound.playSound("sfx/booger.wav");
                 break;
 
         }

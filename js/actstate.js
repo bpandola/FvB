@@ -17,14 +17,18 @@
             [1, FvB.SPR_FARTSAC_STAND_1, 0, FvB.Player.T_Stand, null, FvB.Player.T_Stand],
             [1, FvB.SPR_FARTSAC_CROUCH_1, 0, FvB.Player.T_Crouch, null, FvB.Player.T_Crouch],
             [1, FvB.SPR_FARTSAC_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.Player.T_Jump],
-            [1, FvB.SPR_FARTSAC_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.Player.T_Jump]
+            [1, FvB.SPR_FARTSAC_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.Player.T_Jump],
+            ST_INFO_NULL,
+            [1, FvB.SPR_FART_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.Player.T_Stand]
         ],
         // Boogerboy
         [
             [1, FvB.SPR_BOOGERBOY_STAND_1, 0, FvB.Player.T_Stand, null, FvB.Player.T_Stand],
             [1, FvB.SPR_BOOGERBOY_CROUCH_1, 0, FvB.Player.T_Crouch, null, FvB.Player.T_Crouch],
             [1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.Player.T_Jump],
-            [1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.Player.T_Jump]
+            [1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.Player.T_Jump],
+            ST_INFO_NULL,
+            [1, FvB.SPR_BOOG_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.Player.T_Stand]
         ],
         // Fartball
         [

@@ -30,7 +30,8 @@ var FvB = {
     ST_JUMP_UP: 2,
     ST_JUMP_DOWN: 3,
     ST_PATH: 4,
-    ST_DEAD: 5,
+    ST_BLOW: 5,
+    ST_DEAD: 6,
 
 };
 
