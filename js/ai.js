@@ -9,7 +9,7 @@
     // */
     function projectileTryMove(self, game) {
 
-        if (self.x < 0 || self.x >= FvB.SCREENWIDTH)
+        if (self.x + self.hitBox.x2 < 0 || self.x + self.hitBox.x1 >= FvB.SCREENWIDTH)
             return false;
 
         for (i = 0; i < game.entities.length; i++) {
