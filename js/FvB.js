@@ -1,6 +1,8 @@
 ﻿/** @namespace */
 var FvB = {
 
+    TIC_BASE: 60,   // 60hz
+
     PLAYER_SPEED: 200,
     PLAYER_JUMP_SPEED: 100,
     PLAYER_START_Y: 280,
@@ -24,14 +26,7 @@ var FvB = {
     BT_PRIMARY_ATTACK: 4,
     BT_SECONDARY_ATTACK: 5,
 
-    // State Indices
-    ST_STAND: 0,
-    ST_CROUCH: 1,
-    ST_JUMP_UP: 2,
-    ST_JUMP_DOWN: 3,
-    ST_PATH: 4,
-    ST_BLOW: 5,
-    ST_DEAD: 6,
+   
 
 };
 
