@@ -21,6 +21,7 @@ var cancelRequestAnimFrame = (function () {
         clearTimeout
 })();
 
+
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -35,8 +36,23 @@ function main() {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
 
+
+    if (isGameOver && game.entities.length == 2) {
+        //if (game.entities[0].state == FvB.ST_DEAD)
+        gameOver();
+        return;
+
+        //if (animFrame) {
+        //    cancelRequestAnimFrame(animFrame);
+        //    animFrame = null;
+        //    return;
+        //}
+    }
+
     update(dt);
     render();
+
+    
 
     lastTime = now;
     animFrame = requestAnimFrame(main);
@@ -61,11 +77,15 @@ resources.load([
     'img/EXPLODEY.PNG',
     'img/HUGE.PNG',
     'img/BOOGBLOW.PNG',
-    'img/FARTBLOW.PNG'
+    'img/FARTBLOW.PNG',
+    'img/DAMAGED.PNG'
 ]);
 resources.onReady(init);
 
 var game = {
+
+    player1: {},
+    player2: {},
 
     entities: [],
 
@@ -100,12 +120,13 @@ function drawHealth()
 // Update game objects
 function update(dt) {
 
+    if (!isGameOver)
     PollControls();
 
     updateEntities(dt);
 
-    if (game.entities[0].health == 0 || game.entities[1].health == 0) {
-        gameOver();
+    if (game.player1.state == FvB.st_Dead || game.player2.state == FvB.st_Dead) {
+        isGameOver = true;
     }
 
 }
@@ -180,9 +201,8 @@ function gameOver() {
     document.getElementById('game-over-overlay').style.display = 'block';
     isGameOver = true;
 
-    setTimeout(function () {
-        cancelRequestAnimFrame(animFrame);
-    }, 1 * 1000);
+   
+    
 }
 
 // Reset game to original state
@@ -193,8 +213,8 @@ function reset() {
     
     game.entities = [];
 
-    var player1 = FvB.Player.spawnPlayer(game, 1, FvB.en_Boogerboy);
-    var player2 = FvB.Player.spawnPlayer(game, 2, FvB.en_Fartsac);
+    game.player1 = FvB.Player.spawnPlayer(game, 1, FvB.en_Boogerboy);
+    game.player2 = FvB.Player.spawnPlayer(game, 2, FvB.en_Fartsac);
       
     isGameOver = false;
     lastTime = Date.now()
