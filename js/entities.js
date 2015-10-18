@@ -26,9 +26,6 @@ FvB.Entities = (function () {
     });
 
     FvB.setConsts({
-        en_None: -1,
-        en_Player1: 0,
-        en_Player2: 1,
         en_Fartsac: 0,
         en_Boogerboy: 1,
         en_Fartball: 2,
@@ -39,42 +36,20 @@ FvB.Entities = (function () {
     });
 
     FvB.setConsts({
-        st_stand: 0,
-        st_walk: 1,
-        st_jump: 2,
-        st_crouch: 3,
-        st_path3: 4,
-        st_path3s: 5,
-        st_path4: 6,
-        st_pain: 7,
-        st_pain1: 8,
-        st_shoot1: 9,
-        st_shoot2: 10,
-        st_shoot3: 11,
-        st_shoot4: 12,
-        st_shoot5: 13,
-        st_shoot6: 14,
-        st_shoot7: 15,
-        st_shoot8: 16,
-        st_shoot9: 17,
-        st_chase1: 18,
-        st_chase1s: 19,
-        st_chase2: 20,
-        st_chase3: 21,
-        st_chase3s: 22,
-        st_chase4: 23,
-        st_die1: 24,
-        st_die2: 25,
-        st_die3: 26,
-        st_die4: 27,
-        st_die5: 28,
-        st_die6: 29,
-        st_die7: 30,
-        st_die8: 31,
-        st_die9: 32,
-        st_dead: 33,
-        st_remove: 34
+        st_Stand: 0,
+        st_Crouch: 1,
+        st_JumpUp: 2,
+        st_JumpDown: 3,
+        st_Path: 4,
+        st_Blow: 5,
+        st_Damaged: 6,
+        st_StaticOnce: 7,   // loop through frames once and then remove (e.g. explosions)
+        st_StaticCyle: 8,   // loop through frames over and over
+        st_NearlyDead: 32, // Player is dead, but fatality move hasn't been performed
+        st_Dead: 33,
+        st_Remove: 34,
     });
+
 
     /**
      * @description Create new entity.
@@ -131,7 +106,7 @@ FvB.Entities = (function () {
      * @returns {boolean} False if actor should be removed, otherwise true.
      */
     function doEntity(ent, game, tics) { // FIXME: revise!
-        var think;
+        var think, action;
 
         //assert( ent->tilex >= 0 && ent->tilex < 64 );
         //assert( ent->tiley >= 0 && ent->tiley < 64 );
@@ -141,34 +116,34 @@ FvB.Entities = (function () {
         }
 
         // ticcounts fire discrete actions separate from think functions
-        //if (ent.ticcount) {
-        //    ent.ticcount -= tics;
+        if (ent.ticcount) {
+            ent.ticcount -= (tics * FvB.TIC_BASE);
 
-        //    while (ent.ticcount <= 0) {
-        //        //assert( ent->type >= 0 && ent->type < NUMENEMIES );
-        //        //assert( ent->state >= 0 && ent->state < NUMSTATES );
+            while (ent.ticcount <= 0) {
+                //assert( ent->type >= 0 && ent->type < NUMENEMIES );
+                //assert( ent->state >= 0 && ent->state < NUMSTATES );
 
-        //        think = FvB.objstate[ent.type][ent.state].action; // end of state action
-        //        if (think) {
-        //            think(ent, game, tics);
-        //            if (ent.state == Wolf.st_remove) {
-        //                return false;
-        //            }
-        //        }
+                action = FvB.objstate[ent.type][ent.state].action; // end of state action
+                if (action) {
+                    action(ent, game, tics);
+                    if (ent.state == FvB.st_remove) {
+                        return false;
+                    }
+                }
 
-        //        ent.state = FvB.objstate[ent.type][ent.state].next_state;
-        //        if (ent.state == Wolf.st_remove) {
-        //            return false;
-        //        }
+                ent.state = FvB.objstate[ent.type][ent.state].next_state;
+                if (ent.state == FvB.st_remove) {
+                    return false;
+                }
 
-        //        if (!FvB.objstate[ent.type][ent.state].timeout) {
-        //            ent.ticcount = 0;
-        //            break;
-        //        }
+                if (!FvB.objstate[ent.type][ent.state].timeout) {
+                    ent.ticcount = 0;
+                    break;
+                }
 
-        //        ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
-        //    }
-        //}
+                ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
+            }
+        }
         //
         // think
         //
@@ -185,8 +160,22 @@ FvB.Entities = (function () {
 
         return true;
     }
-
-
+    // need to make this generic for changing needed entity properties on stateChange
+    function setHitBox(ent) {
+        switch (ent.state) {
+            case FvB.st_Crouch:
+                ent.hitBox.x1 = 26;
+                ent.hitBox.x2 = 36;
+                ent.hitBox.y1 = 32;
+                ent.hitBox.y2 = 64;
+                break;
+            default:
+                ent.hitBox.x1 = 26;
+                ent.hitBox.x2 = 36;
+                ent.hitBox.y1 = 0;
+                ent.hitBox.y2 = 64;
+        }
+    }
     /**
      * @description Changes etities state to that defined in newState.
      * @memberOf Wolf.Actors
@@ -201,6 +190,7 @@ FvB.Entities = (function () {
         } else {
             // assert( ent->state >= 0 && ent->state < NUMSTATES );
             ent.ticcount = FvB.objstate[ent.type][ent.state].timeout; //0;
+            setHitBox(ent);
         }
     }
 
@@ -217,6 +207,7 @@ FvB.Entities = (function () {
         }
     }
    
+    // Calculate midpoint of two entities
     function centerPoint(e1, e2) {
 
         var x, y, left, right,deltax, deltay;
@@ -254,7 +245,7 @@ FvB.Entities = (function () {
 
         self.x = centerPoint(e1, e2).x - 20;
         self.y = centerPoint(e1, e2).y - 20;
-        self.state = FvB.st_stand;
+        self.state = FvB.st_StaticOnce;
         self.type = FvB.en_Explosion;
         self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         self.speed = 16;
@@ -285,7 +276,7 @@ FvB.Entities = (function () {
             self.x = player.x + 32 - (self.dir == FvB.DIR_LEFT ? 34 : 0);
         }
         
-        self.state = FvB.ST_PATH;
+        self.state = FvB.st_Path;
         self.objClass = FvB.ob_HugeProjectile;
         self.parent = player;
 
@@ -325,6 +316,7 @@ FvB.Entities = (function () {
         return false;
         
     }
+
     function spawnBasicProjectile(player, game) {
         var self = getNewEntity(game);
 
@@ -334,7 +326,7 @@ FvB.Entities = (function () {
         self.dir = player.dir;
         self.y = player.y + 32;
         self.x = player.x + 32;
-        self.state = FvB.ST_PATH;
+        self.state = FvB.st_Path;
         self.objClass = FvB.ob_BasicProjectile;
         self.parent = player;
 
