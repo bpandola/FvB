@@ -63,13 +63,13 @@ FvB.Player = (function () {
 
         clipMove(player, game);
 
-        if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
+        if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
+            FvB.Entities.stateChange(player, FvB.st_Blow);
+        } else if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
             FvB.Entities.spawnBasicProjectile(player, game);
         }
 
-        if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
-            FvB.Entities.stateChange(player, FvB.st_Blow);
-        }
+        
     }
 
     function T_Crouch(player, game, tics) {
