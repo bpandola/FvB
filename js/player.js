@@ -8,7 +8,6 @@ FvB.Player = (function () {
         PLAYERSIZE: FvB.MINDIST, // player radius
         CHAR_SPRITE_WIDTH: 64,
 
-
         ex_notingame: 0,
         ex_playing: 1,
         ex_dead: 2,
@@ -19,21 +18,7 @@ FvB.Player = (function () {
 
     });
 
-    function setHitBox(player) {
-        switch (player.state) {
-            case FvB.ST_CROUCH:
-                player.hitBox.x1 = 26;
-                player.hitBox.x2 = 36;
-                player.hitBox.y1 = 32;
-                player.hitBox.y2 = 64;
-                break;
-            default:
-                player.hitBox.x1 = 26;
-                player.hitBox.x2 = 36;
-                player.hitBox.y1 = 0;
-                player.hitBox.y2 = 64;
-        }
-    }
+   
     function clipMove(player, game) {
 
         if (player.x < 0) {
@@ -43,31 +28,29 @@ FvB.Player = (function () {
             player.x = FvB.SCREENWIDTH - FvB.CHAR_SPRITE_WIDTH;
         }
 
-        if (player.player == FvB.en_Player1) {
+        if (player === game.player1) {
 
-            if (player.x + FvB.CHAR_SPRITE_WIDTH > game.entities[FvB.en_Player2].x) {
-                player.x = game.entities[FvB.en_Player2].x - FvB.CHAR_SPRITE_WIDTH;
+            if (player.x + FvB.CHAR_SPRITE_WIDTH > game.player2.x) {
+                player.x = game.player2.x - FvB.CHAR_SPRITE_WIDTH;
             }
         }
         else {
 
-            if (player.x < game.entities[FvB.en_Player1].x + FvB.CHAR_SPRITE_WIDTH) {
-                player.x = game.entities[FvB.en_Player1].x + FvB.CHAR_SPRITE_WIDTH;
+            if (player.x < game.player1.x + FvB.CHAR_SPRITE_WIDTH) {
+                player.x = game.player1.x + FvB.CHAR_SPRITE_WIDTH;
             }
         }
     }
 
     function T_Stand(player, game, tics) {
-        var p = player.player;
+        var p = player === game.player1 ? 0 : 1;
 
         if (game.buttonState[p][FvB.BT_DOWN] && !game.buttonHeld[p][FvB.BT_DOWN]) {
-            player.state = FvB.ST_CROUCH;
-            setHitBox(player);
+            FvB.Entities.stateChange(player, FvB.st_Crouch);
         }
 
         if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
-            player.state = FvB.ST_JUMP_UP;
-            setHitBox(player);
+            FvB.Entities.stateChange(player, FvB.st_JumpUp);
         }
 
         if (game.buttonState[p][FvB.BT_LEFT]) {
@@ -85,43 +68,40 @@ FvB.Player = (function () {
         }
 
         if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
-            player.state = FvB.ST_BLOW;
+            FvB.Entities.stateChange(player, FvB.st_Blow);
         }
     }
 
     function T_Crouch(player, game, tics) {
-        var p = player.player;
+        var p = player === game.player1 ? 0 : 1;
 
         if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
-            player.state = FvB.ST_STAND;
-            setHitBox(player);
+            FvB.Entities.stateChange(player, FvB.st_Stand);
         }
     }
 
     function T_Jump(player, game, tics) {
-        var p = player.player;
+        var p = player === game.player1 ? 0 : 1;
 
         switch (player.state) {
 
-            case FvB.ST_JUMP_DOWN:
+            case FvB.st_JumpDown:
                 player.y += FvB.PLAYER_JUMP_SPEED * tics;
                 if (player.y >= FvB.PLAYER_START_Y) {
                     player.y = FvB.PLAYER_START_Y;
-                    player.state = FvB.ST_STAND;
-                    setHitBox(player);
+                    FvB.Entities.stateChange(player, FvB.st_Stand);
                 }
                 break;
 
-            case FvB.ST_JUMP_UP:
+            case FvB.st_JumpUp:
                 player.y -= FvB.PLAYER_JUMP_SPEED * tics;
-                if (player.y <= FvB.PLAYER_START_Y - 40) {
-                    player.state = FvB.ST_JUMP_DOWN;
+                if (player.y <= FvB.PLAYER_START_Y - 50) {
+                    FvB.Entities.stateChange(player, FvB.st_JumpDown);
                 }
                 break;
 
             default:
-                player.state = FvB.ST_STAND;
-                setHitBox(player);
+                FvB.Entities.stateChange(player, FvB.st_Stand);
 
         }
         if (game.buttonState[p][FvB.BT_LEFT]) {
@@ -169,9 +149,9 @@ FvB.Player = (function () {
             } 
             if (idx >= max) {
                 if (self.type == FvB.en_Fartsac) {
-                    self.state = FvB.ST_JUMP_DOWN;
+                    FvB.Entities.stateChange(self, FvB.st_JumpDown);
                 } else {
-                    self.state = FvB.ST_STAND;
+                    FvB.Entities.stateChange(self, FvB.st_Stand);
                 }
                 self.frames = [0];
                 self.frame = 0;
@@ -191,8 +171,7 @@ FvB.Player = (function () {
 
         var x = playerNum == 1 ? FvB.SCREENWIDTH / 2 - FvB.CHAR_SPRITE_WIDTH * 2 : FvB.SCREENWIDTH / 2 + FvB.CHAR_SPRITE_WIDTH,
             y = 280,
-            direction = playerNum == 1 ? FvB.DIR_RIGHT : FvB.DIR_LEFT,
-            type = playerNum == 1 ? FvB.en_Player1 : FvB.en_Player2;
+            direction = playerNum == 1 ? FvB.DIR_RIGHT : FvB.DIR_LEFT
 
         var player = FvB.Entities.getNewEntity(game);
 
@@ -204,11 +183,9 @@ FvB.Player = (function () {
         player.y = y;
         player.type = playerCharacter;
         player.dir = direction;
-        player.player = type;
-        player.state = FvB.ST_STAND;
         player.objClass = FvB.ob_Player;
 
-        setHitBox(player);
+        FvB.Entities.stateChange(player, FvB.st_Stand);
 
         return player;
     }
@@ -216,11 +193,19 @@ FvB.Player = (function () {
     function damage(player, attacker) {
         var damage = 0;
 
+        if (player.state == FvB.st_NearlyDead) {
+            FvB.Entities.stateChange(player, FvB.st_Dead);
+            return;
+        }
+
         switch (attacker.objClass) {
             case FvB.ob_BasicProjectile:
                 damage = 10;
                 break;
             case FvB.ob_HugeProjectile:
+                if (player.state == FvB.st_Stand || player.state == FvB.st_Damaged) {
+                    FvB.Entities.stateChange(player, FvB.st_Damaged);
+                }
                 damage = 25;
                 break;
             default:
@@ -232,6 +217,7 @@ FvB.Player = (function () {
         if (player.health < 0) {
             player.health = 0;
             // change player state to dead?
+            FvB.Entities.stateChange(player, FvB.st_NearlyDead);
         }
         FvB.Sound.playSound("sfx/025.wav");
         
