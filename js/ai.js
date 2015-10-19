@@ -22,14 +22,14 @@
 
                 switch (e.objClass) {
                     case self.objClass:
-                        e.state = FvB.st_remove;
+                        e.state = FvB.st_Remove;
                         FvB.Entities.spawnExplosion(self, e, game);
                         return false;
 
                     case FvB.ob_Player:
                         if (self.parent != e) {
                             FvB.Player.damage(e, self);
-                            self.state = FvB.st_remove;
+                            self.state = FvB.st_Remove;
                             return false;
                         }
                 }
@@ -48,7 +48,7 @@
             self.frame = self.frames[idx % max];
 
             if (idx >= max) {
-                self.state = FvB.st_remove;
+                self.state = FvB.st_Remove;
                 return false;
             }
         }
@@ -66,11 +66,9 @@
         self.x += speed * tics;
 
         if (!projectileTryMove(self, game)) {
-            self.state = FvB.st_remove;
+            self.state = FvB.st_Remove;
         }
     }
-  
-
 
     return {
        
