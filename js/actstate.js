@@ -21,7 +21,17 @@
            [FvB.st_Blow,1, FvB.SPR_FART_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.st_Stand],
            [FvB.st_Damaged, 1, FvB.SPR_FARTSAC_DAMAGED, 50, null, null, FvB.st_Stand],
            [FvB.st_NearlyDead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead],
-           [FvB.st_Dead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead]
+           [FvB.st_Dead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead],
+           [FvB.st_StartFatality, 1, FvB.SPR_FARTSAC_STAND_1, 0, FvB.Player.T_StartFatality, null,FvB.st_Stand],
+           [FvB.st_FinishFatality, 1, FvB.SPR_FARTSAC_STAND_1, 0, FvB.Player.T_FinishFatality, null, FvB.st_Stand],
+
+           [FvB.st_EatBoog1, 0, FvB.SPR_BUTT_EATS_BOOG_1, 60, null, null, FvB.st_EatBoog2],
+           [FvB.st_EatBoog2, 0, FvB.SPR_BUTT_EATS_BOOG_2, 5, null, null, FvB.st_EatBoog3],
+           [FvB.st_EatBoog3, 0, FvB.SPR_BUTT_EATS_BOOG_3, 5, null, null, FvB.st_EatBoog4],
+           [FvB.st_EatBoog4, 0, FvB.SPR_BUTT_EATS_BOOG_4, 5, null, null, FvB.st_EatBoog5],
+           [FvB.st_EatBoog5, 0, FvB.SPR_BUTT_EATS_BOOG_5, 5, null, null, FvB.st_EatBoog6],
+           [FvB.st_EatBoog6, 0, FvB.SPR_BUTT_EATS_BOOG_6, 5, null, null, FvB.st_Victorious],
+           [FvB.st_Victorious, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Victorious]
        ],
        // en_Boogerboy
        [
@@ -32,7 +42,10 @@
            [FvB.st_Blow, 1, FvB.SPR_BOOG_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.st_Stand],
            [FvB.st_Damaged, 1, FvB.SPR_BOOGERBOY_DAMAGED, 50, null, null, FvB.st_Stand],
            [FvB.st_NearlyDead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead],
-           [FvB.st_Dead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead]
+           [FvB.st_Dead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead],
+           [FvB.st_Decapitated, 1, FvB.SPR_BOOG_HEADLESS, 0, null, null, FvB.st_Dead],
+           [FvB.st_FatalityDead, 1, FvB.SPR_BOOG_HEADLESS, 0, null, null, FvB.st_Dead],
+           [FvB.st_Victorious, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Victorious]
        ],
        // en_Fartball
        [
@@ -53,7 +66,9 @@
        // en_Explosion
        [
            [FvB.st_StaticOnce, 0, FvB.SPR_EXPLOSION_0, 0, FvB.AI.T_Explode, null, FvB.st_Remove],
-       ]
+       ],
+       // en_Static
+       []
     ];
     
     //
