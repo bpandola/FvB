@@ -15,6 +15,7 @@ FvB.Sprites = (function () {
         "SPR_FART_BLOW_1", "SPR_FART_BLOW_2", "SPR_FART_BLOW_3", "SPR_FART_BLOW_4", "SPR_FART_BLOW_5",
         "SPR_FART_BLOW_6", "SPR_FART_BLOW_7", "SPR_FART_BLOW_8", "SPR_FART_BLOW_9", "SPR_FART_BLOW_10",
         "SPR_FARTSAC_DAMAGED",
+        "SPR_BUTT_EATS_BOOG_1", "SPR_BUTT_EATS_BOOG_2", "SPR_BUTT_EATS_BOOG_3", "SPR_BUTT_EATS_BOOG_4", "SPR_BUTT_EATS_BOOG_5", "SPR_BUTT_EATS_BOOG_6",
         //
         // Boogerboy
         //
@@ -24,6 +25,7 @@ FvB.Sprites = (function () {
         "SPR_BOOG_BLOW_1", "SPR_BOOG_BLOW_2", "SPR_BOOG_BLOW_3", "SPR_BOOG_BLOW_4", "SPR_BOOG_BLOW_5",
         "SPR_BOOG_BLOW_6", "SPR_BOOG_BLOW_7", "SPR_BOOG_BLOW_8", "SPR_BOOG_BLOW_9", "SPR_BOOG_BLOW_10",
         "SPR_BOOGERBOY_DAMAGED",
+        "SPR_BOOG_HEAD","SPR_BOOG_HEADLESS",
         //
         // Static Sprites
         //
@@ -58,7 +60,13 @@ FvB.Sprites = (function () {
         { sheet: "FARTBLOW.PNG", size: 64, idx: 14, num: 20 },
         { sheet: "FARTBLOW.PNG", size: 64, idx: 16, num: 20 },
         { sheet: "FARTBLOW.PNG", size: 64, idx: 18, num: 20 },
-        { sheet: "DAMAGED.PNG", size: 64, idx: 0, num: 4},
+        { sheet: "DAMAGED.PNG", size: 64, idx: 0, num: 4 },
+        { sheet: "BUTTHEAD.PNG", size: 64, idx: 0, num: 6 },
+        { sheet: "BUTTHEAD.PNG", size: 64, idx: 1, num: 6 },
+        { sheet: "BUTTHEAD.PNG", size: 64, idx: 2, num: 6 },
+        { sheet: "BUTTHEAD.PNG", size: 64, idx: 3, num: 6 },
+        { sheet: "BUTTHEAD.PNG", size: 64, idx: 4, num: 6 },
+        { sheet: "BUTTHEAD.PNG", size: 64, idx: 5, num: 6 },
         { sheet: "BOOGBOY0.PNG", size: 64, idx: 0, num: 6 },
         { sheet: "BOOGBOY0.PNG", size: 64, idx: 1, num: 6 },
         { sheet: "BOOGBOY0.PNG", size: 64, idx: 2, num: 6 },
@@ -76,6 +84,8 @@ FvB.Sprites = (function () {
         { sheet: "BOOGBLOW.PNG", size: 64, idx: 16, num: 20 },
         { sheet: "BOOGBLOW.PNG", size: 64, idx: 18, num: 20 },
         { sheet: "DAMAGED.PNG", size: 64, idx: 2, num: 4 },
+        { sheet: "BOOGHEAD.PNG", size: 12, idx: 0, num: 1 },
+        { sheet: "HEADLESS.PNG", size: 64, idx: 0, num: 2 },
         { sheet: "FARTBOOG.PNG", size: 6, idx: 0, num: 2 },
         { sheet: "FARTBOOG.PNG", size: 6, idx: 1, num: 2 },
         { sheet: "HUGE.PNG", size: 24, idx: 0, num: 6 },
