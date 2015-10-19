@@ -69,7 +69,9 @@ FvB.Player = (function () {
             FvB.Entities.spawnBasicProjectile(player, game);
         }
 
-        
+        if (game.buttonHeld[p][FvB.BT_FATALITY] && !game.buttonState[p][FvB.BT_FATALITY]) {
+            FvB.Entities.stateChange(player, FvB.st_StartFatality);
+        }
     }
 
     function T_Crouch(player, game, tics) {
@@ -113,6 +115,126 @@ FvB.Player = (function () {
         }
 
         clipMove(player, game);
+    }
+
+    function T_StartFatality(self, game, tics) {
+
+        var line;
+        var otherPlayer = self == game.player1 ? game.player2 : game.player1;
+
+        if (typeof T_StartFatality.firstLine == 'undefined' || T_StartFatality.firstLine == null) {
+            T_StartFatality.firstLine = {
+                x1: self.x+36,
+                y1: self.y+42,
+                x2: self.x + 36,
+                y2: self.y + 42,
+                color: "rgb(160,80,0)"
+            };
+            FvB.Sound.playSound("sfx/hugefart.wav");
+        }
+        else {
+            T_StartFatality.firstLine.x2 += FvB.FART_ROPE_SPEED * tics;
+
+            if (T_StartFatality.firstLine.x2 >= FvB.SCREENWIDTH)
+                T_StartFatality.firstLine.x2 = FvB.SCREENWIDTH-1;
+
+            if ((typeof T_StartFatality.secondLine == 'undefined' || T_StartFatality.secondLine == null) && T_StartFatality.firstLine.x2 == FvB.SCREENWIDTH - 1) {
+                T_StartFatality.secondLine = {
+                    x1: 0,
+                    y1: otherPlayer.y + 18,
+                    x2: 0,
+                    y2: otherPlayer.y + 18,
+                    color: "rgb(160,80,0)"
+                };
+            }
+            else if (typeof T_StartFatality.secondLine != 'undefined' && T_StartFatality.secondLine != null) {
+                T_StartFatality.secondLine.x2 += FvB.FART_ROPE_SPEED * tics;
+
+                if (T_StartFatality.secondLine.x2 >= otherPlayer.x + 26)
+                    T_StartFatality.secondLine.x2 = otherPlayer.x + 26;
+
+            }
+            
+        }
+
+        line = T_StartFatality.firstLine;
+        if (typeof line != 'undefined' && line != null)
+            FvB.Entities.spawnLine(self, game, line.x1, line.y1, line.x2, line.y2, line.color);
+
+        line = T_StartFatality.secondLine;
+        if (typeof line != 'undefined' && line != null)
+            FvB.Entities.spawnLine(self, game, line.x1, line.y1, line.x2, line.y2, line.color);
+
+        if (typeof T_StartFatality.firstLine != 'undefined' && typeof T_StartFatality.secondLine != 'undefined' 
+            && T_StartFatality.firstLine.x2 == FvB.SCREENWIDTH - 1 && T_StartFatality.secondLine.x2 == otherPlayer.x + 26) {
+            T_StartFatality.firstLine = null;
+            T_StartFatality.secondLine = null;
+
+            FvB.Entities.stateChange(self, FvB.st_FinishFatality);
+            FvB.Entities.stateChange(otherPlayer, FvB.st_Decapitated);
+        }
+
+    }
+
+    function T_FinishFatality(self, game, tics) {
+
+        var line;
+        var otherPlayer = self == game.player1 ? game.player2 : game.player1;
+
+        if (typeof T_FinishFatality.firstLine == 'undefined' || T_FinishFatality.firstLine == null) {
+            T_FinishFatality.firstLine = {
+                x1: 0,
+                y1: otherPlayer.y + 18,
+                x2: otherPlayer.x + 26,
+                y2: otherPlayer.y + 18,
+                color: "rgb(160,80,0)"
+            };
+        }
+
+        if (typeof T_FinishFatality.secondLine == 'undefined' || T_FinishFatality.secondLine == null) {
+            T_FinishFatality.secondLine = {
+                x1: self.x + 36,
+                y1: self.y + 42,
+                x2: self.x + FvB.SCREENWIDTH - 1,
+                y2: self.y + 42,
+                color: "rgb(160,80,0)"
+            };
+        }
+
+        T_FinishFatality.firstLine.x2 -= FvB.FART_ROPE_SPEED * tics;
+
+        if (T_FinishFatality.firstLine.x2 < -12)   // hack to make boog head go off screen
+                T_FinishFatality.firstLine.x2 = -12;
+
+                T_FinishFatality.secondLine.x2 -= FvB.FART_ROPE_SPEED * tics;
+
+                if (T_FinishFatality.secondLine.x2 < self.x + 36)
+                    T_FinishFatality.secondLine.x2 = self.x + 36;
+
+           
+
+        line = T_FinishFatality.firstLine;
+        if (typeof line != 'undefined' && line != null) {
+            FvB.Entities.spawnLine(self, game, line.x1, line.y1, line.x2, line.y2, line.color);
+            FvB.Entities.spawnSingleFrameSprite(game, line.x2, line.y2-6, FvB.SPR_BOOG_HEAD);
+        }
+
+        line = T_FinishFatality.secondLine;
+        if (typeof line != 'undefined' && line != null) {
+            FvB.Entities.spawnLine(self, game, line.x1, line.y1, line.x2, line.y2, line.color);
+            FvB.Entities.spawnSingleFrameSprite(game, line.x2, line.y2-6, FvB.SPR_BOOG_HEAD);
+        }
+
+        if (typeof T_FinishFatality.firstLine != 'undefined' && typeof T_FinishFatality.secondLine != 'undefined'
+        && T_FinishFatality.firstLine.x2 == -12 && T_FinishFatality.secondLine.x2 == self.x + 36) {
+            T_FinishFatality.firstLine = null;
+            T_FinishFatality.secondLine = null;
+
+            FvB.Sound.playSound("sfx/slurp.wav");
+            FvB.Entities.stateChange(self, FvB.st_EatBoog1);
+            //FvB.Entities.stateChange(otherPlayer, FvB.st_FatalityDead);
+        }
+
     }
 
     function T_Blow(self, game, tics) {
@@ -195,6 +317,7 @@ FvB.Player = (function () {
 
         if (player.state == FvB.st_NearlyDead) {
             FvB.Entities.stateChange(player, FvB.st_Dead);
+            FvB.Entities.stateChange(attacker.parent.state, FvB.Victorious);
             return;
         }
 
@@ -205,6 +328,7 @@ FvB.Player = (function () {
             case FvB.ob_HugeProjectile:
                 if (player.state == FvB.st_Stand || player.state == FvB.st_Damaged) {
                     FvB.Entities.stateChange(player, FvB.st_Damaged);
+                    FvB.Sound.playSound("sfx/025.wav");
                 }
                 damage = 25;
                 break;
@@ -216,10 +340,10 @@ FvB.Player = (function () {
 
         if (player.health < 0) {
             player.health = 0;
-            // change player state to dead?
+           
             FvB.Entities.stateChange(player, FvB.st_NearlyDead);
         }
-        FvB.Sound.playSound("sfx/025.wav");
+        
         
     }
 
@@ -229,6 +353,8 @@ FvB.Player = (function () {
         T_Crouch: T_Crouch,
         T_Jump: T_Jump,
         T_Blow: T_Blow,
+        T_StartFatality: T_StartFatality,
+        T_FinishFatality: T_FinishFatality,
         damage: damage
     };
 
