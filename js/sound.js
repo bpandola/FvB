@@ -32,7 +32,7 @@
         musicEnabled = true,
         music,
         ext,
-        exts = ["mp3", "ogg"];
+        exts = ["mp3"/*, "ogg"*/];
 
     function getFileName(file) {
         if (!ext) {
