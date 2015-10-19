@@ -9,11 +9,11 @@ FvB.Entities = (function () {
         FL_SHOOTABLE: 1,
         FL_BONUS: 2,
         FL_NEVERMARK: 4,
-        FL_VISABLE: 8,
+        FL_VISIBLE: 8,
         FL_ATTACKMODE: 16,
         FL_FIRSTATTACK: 32,
         FL_AMBUSH: 64,
-        FL_NONMARK: 128,
+        FL_SINGLE_FRAME: 128,
 
         NUMSTATES: 34
     });
@@ -22,7 +22,8 @@ FvB.Entities = (function () {
         ob_None: -1,
         ob_Player: 0,
         ob_BasicProjectile: 1,
-        ob_HugeProjectile: 2
+        ob_HugeProjectile: 2,
+        ob_Line: 3
     });
 
     FvB.setConsts({
@@ -32,7 +33,8 @@ FvB.Entities = (function () {
         en_Booger: 3,
         en_HugeFartball: 4,
         en_HugeBooger: 5,
-        en_Explosion: 6
+        en_Explosion: 6,
+        en_Static: 7
     });
 
     FvB.setConsts({
@@ -45,6 +47,19 @@ FvB.Entities = (function () {
         st_Damaged: 6,
         st_StaticOnce: 7,   // loop through frames once and then remove (e.g. explosions)
         st_StaticCyle: 8,   // loop through frames over and over
+        st_StartFatality: 9,
+        st_FinishFatality: 10,
+        st_Decapitated: 11,
+        st_FatalityDead: 12,
+
+        st_EatBoog1: 13,
+        st_EatBoog2: 14,
+        st_EatBoog3: 15,
+        st_EatBoog4: 16,
+        st_EatBoog5: 17,
+        st_EatBoog6: 18,
+
+        st_Victorious: 31,
         st_NearlyDead: 32, // Player is dead, but fatality move hasn't been performed
         st_Dead: 33,
         st_Remove: 34,
@@ -89,7 +104,8 @@ FvB.Entities = (function () {
             frame: 0,
             _index: 0,
             objClass: FvB.ob_None,
-            parent: null
+            parent: null,
+            renderFunction: FvB.Renderer.renderEntity
         };
         game.entities.push(entity);
 
@@ -111,7 +127,7 @@ FvB.Entities = (function () {
         //assert( ent->tilex >= 0 && ent->tilex < 64 );
         //assert( ent->tiley >= 0 && ent->tiley < 64 );
         //assert( ent->dir >= 0 && ent->dir <= 8 );
-        if (ent.state == FvB.st_remove) {
+        if (ent.state == FvB.st_Remove) {
             return false;
         }
 
@@ -126,13 +142,13 @@ FvB.Entities = (function () {
                 action = FvB.objstate[ent.type][ent.state].action; // end of state action
                 if (action) {
                     action(ent, game, tics);
-                    if (ent.state == FvB.st_remove) {
+                    if (ent.state == FvB.st_Remove) {
                         return false;
                     }
                 }
 
                 ent.state = FvB.objstate[ent.type][ent.state].next_state;
-                if (ent.state == FvB.st_remove) {
+                if (ent.state == FvB.st_Remove) {
                     return false;
                 }
 
@@ -153,7 +169,7 @@ FvB.Entities = (function () {
 
         if (think) {
             think(ent, game, tics);
-            if (ent.state == FvB.st_remove) {
+            if (ent.state == FvB.st_Remove) {
                 return false;
             }
         }
@@ -185,7 +201,7 @@ FvB.Entities = (function () {
     function stateChange(ent, newState) {
         ent.state = newState;
         // assert( ent->type >= 0 && ent->type < NUMENEMIES );
-        if (newState == FvB.st_remove) {
+        if (newState == FvB.st_Remove) {
             ent.ticcount = 0;
         } else {
             // assert( ent->state >= 0 && ent->state < NUMSTATES );
@@ -237,6 +253,38 @@ FvB.Entities = (function () {
         return { x: x, y: y };
     }
 
+    function spawnLine(e, game, x1, y1, x2, y2, color) {
+        self = getNewEntity(game);
+
+        if (!self)
+            return;
+
+        self.type = FvB.en_Static;
+        self.flags = FvB.FL_SINGLE_FRAME;  // one and done
+        self.objClass = FvB.ob_Line;
+        self.renderFunction = FvB.Renderer.renderPrimitive
+        self.temp2 = {
+            x1: x1,
+            y1: y1,
+            x2: x2,
+            y2: y2,
+            color: color 
+        };
+    }
+   
+    function spawnSingleFrameSprite(game, x,y, textureId) {
+        self = getNewEntity(game);
+
+        if (!self)
+            return;
+
+        self.type = FvB.en_Static;
+        self.flags = FvB.FL_SINGLE_FRAME;  // one and done
+        self.renderFunction = FvB.Renderer.renderSprite
+        self.x = x;
+        self.y = y;
+        self.sprite = textureId;
+    }
     function spawnExplosion(e1, e2, game) {
         self = getNewEntity(game);
 
@@ -325,7 +373,7 @@ FvB.Entities = (function () {
 
         self.dir = player.dir;
         self.y = player.y + 32;
-        self.x = player.x + 32;
+        self.x = player.x + 32 - (player.dir == FvB.DIR_LEFT ? 8 : 0);
         self.state = FvB.st_Path;
         self.objClass = FvB.ob_BasicProjectile;
         self.parent = player;
@@ -358,6 +406,8 @@ FvB.Entities = (function () {
         spawnBasicProjectile: spawnBasicProjectile,
         spawnHugeProjectile: spawnHugeProjectile,
         spawnExplosion: spawnExplosion,
+        spawnSingleFrameSprite: spawnSingleFrameSprite,
+        spawnLine: spawnLine,
         stateChange: stateChange,
         haveCollided: haveCollided
     };
