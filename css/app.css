@@ -63,3 +63,37 @@ canvas {
 #game-over button {
     font-size: 1.5em;
 }
+
+/* FINISH HIM! */
+#finish-him, #finish-him-overlay {
+    margin: auto;
+    width: 640px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: none;
+}
+
+#finish-him-overlay {
+    background-color: black;
+    opacity: .5;
+}
+
+#finish-him {
+    height: 200px;
+    text-align: center;
+    color: blueviolet;
+}
+
+#finish-him h1 {
+    font-size: 3em;
+    font-family: sans-serif;
+}
+
+#finish-him button {
+    font-size: 1.5em;
+}
