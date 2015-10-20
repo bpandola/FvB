@@ -5,7 +5,7 @@
     // * @private
     // * @param {object} self The projectile actor object.
     // * @param {object} game The game object.
-    // * @returns {boolean} True if move ok, otherwise false.
+    // * @returns {boolean} true if move ok, otherwise false.
     // */
     function projectileTryMove(self, game) {
 
@@ -38,27 +38,6 @@
         return true;
     }
 
-    function T_Explode(self, game, tics) {
-        
-
-        self._index += self.speed * tics;
-        if (self.speed > 0) {
-            var max = self.frames.length;
-            var idx = Math.floor(self._index);
-            self.frame = self.frames[idx % max];
-
-            if (idx >= max) {
-                self.state = FvB.st_Remove;
-                return false;
-            }
-        }
-        else {
-            
-            self.frame = self.frames[0];
-        }
-    }
-
-    
     function T_Projectile(self, game, tics) {
 
         var speed = self.dir == FvB.DIR_LEFT ? -FvB.SUPER_PROJECTILE_SPEED : FvB.SUPER_PROJECTILE_SPEED;
@@ -72,8 +51,7 @@
 
     return {
        
-        T_Projectile: T_Projectile,
-        T_Explode: T_Explode
+        T_Projectile: T_Projectile
     };
 
 })();
