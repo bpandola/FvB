@@ -24,7 +24,7 @@
            [FvB.st_Dead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_StartFatality, 1, FvB.SPR_FARTSAC_STAND_1, 0, FvB.Player.T_StartFatality, null,FvB.st_Stand],
            [FvB.st_FinishFatality, 1, FvB.SPR_FARTSAC_STAND_1, 0, FvB.Player.T_FinishFatality, null, FvB.st_Stand],
-
+           [FvB.st_FatalityDead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_EatBoog1, 0, FvB.SPR_BUTT_EATS_BOOG_1, 60, null, null, FvB.st_EatBoog2],
            [FvB.st_EatBoog2, 0, FvB.SPR_BUTT_EATS_BOOG_2, 5, null, null, FvB.st_EatBoog3],
            [FvB.st_EatBoog3, 0, FvB.SPR_BUTT_EATS_BOOG_3, 5, null, null, FvB.st_EatBoog4],
@@ -65,7 +65,19 @@
        ],
        // en_Explosion
        [
-           [FvB.st_StaticOnce, 0, FvB.SPR_EXPLOSION_0, 0, FvB.AI.T_Explode, null, FvB.st_Remove],
+           [FvB.st_Explosion1, 0, FvB.SPR_EXPLOSION_0, 4, null, null, FvB.st_Explosion2],
+           [FvB.st_Explosion2, 0, FvB.SPR_EXPLOSION_1, 4, null, null, FvB.st_Explosion3],
+           [FvB.st_Explosion3, 0, FvB.SPR_EXPLOSION_2, 4, null, null, FvB.st_Explosion4],
+           [FvB.st_Explosion4, 0, FvB.SPR_EXPLOSION_3, 4, null, null, FvB.st_Explosion5],
+           [FvB.st_Explosion5, 0, FvB.SPR_EXPLOSION_4, 4, null, null, FvB.st_Explosion6],
+           [FvB.st_Explosion6, 0, FvB.SPR_EXPLOSION_5, 4, null, null, FvB.st_Explosion7],
+           [FvB.st_Explosion7, 0, FvB.SPR_EXPLOSION_6, 4, null, null, FvB.st_Explosion8],
+           [FvB.st_Explosion8, 0, FvB.SPR_EXPLOSION_7, 4, null, null, FvB.st_Explosion9],
+           [FvB.st_Explosion9, 0, FvB.SPR_EXPLOSION_8, 4, null, null, FvB.st_Explosion10],
+           [FvB.st_Explosion10, 0, FvB.SPR_EXPLOSION_9, 4, null, null, FvB.st_Explosion11],
+           [FvB.st_Explosion11, 0, FvB.SPR_EXPLOSION_10, 4, null, null, FvB.st_Explosion12],
+           [FvB.st_Explosion12, 0, FvB.SPR_EXPLOSION_11, 4, null, null, FvB.st_Explosion13],
+           [FvB.st_Explosion13, 0, FvB.SPR_EXPLOSION_12, 4, null, null, FvB.st_Remove]
        ],
        // en_Static
        []
