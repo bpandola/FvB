@@ -61,12 +61,13 @@ function main() {
 };
 
 function init() {
-    terrainPattern = ctx.createPattern(resources.get('img/background.PNG'), 'no-repeat');
+    canvasBackground = ctx.createPattern(resources.get('img/background.PNG'), 'no-repeat');
 
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
     
+    FvB.Sound.init();
     reset();
    
 }
@@ -97,11 +98,11 @@ var game = {
     health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
 
     // Players button states
-    buttonState: [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]],
-    buttonHeld: [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
+    buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
+    buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
 };
 
-var terrainPattern;
+var canvasBackground;
 var isGameOver = false;
 
 function drawHealth()
@@ -193,7 +194,7 @@ function updateEntities(dt) {
 function render() {
 
     // Background
-    ctx.fillStyle = terrainPattern;
+    ctx.fillStyle = canvasBackground;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     
