@@ -1,8 +1,4 @@
-﻿/** 
- * @namespace 
- * @description Entities
- */
-FvB.Entities = (function () {
+﻿FvB.Entities = (function () {
 
     FvB.setConsts({
         
@@ -15,7 +11,7 @@ FvB.Entities = (function () {
         FL_AMBUSH: 64,
         FL_SINGLE_FRAME: 128,
 
-        NUMSTATES: 34
+       // NUMSTATES: 34
     });
 
     FvB.setConsts({
@@ -59,10 +55,25 @@ FvB.Entities = (function () {
         st_EatBoog5: 17,
         st_EatBoog6: 18,
 
-        st_Victorious: 31,
-        st_NearlyDead: 32, // Player is dead, but fatality move hasn't been performed
-        st_Dead: 33,
-        st_Remove: 34,
+        st_Explosion1: 19,
+        st_Explosion2: 21,
+        st_Explosion3: 22,
+        st_Explosion4: 23,
+        st_Explosion5: 24,
+        st_Explosion6: 25,
+        st_Explosion7: 26,
+        st_Explosion8: 27,
+        st_Explosion9: 28,
+        st_Explosion10: 29,
+        st_Explosion11: 30,
+        st_Explosion12: 31,
+        st_Explosion13: 32,
+      
+
+        st_Victorious: 41,
+        st_NearlyDead: 42, // Player is dead, but fatality move hasn't been performed
+        st_Dead: 43,
+        st_Remove: 44,
     });
 
 
@@ -80,15 +91,15 @@ FvB.Entities = (function () {
             angle: 0,
             type: 0,
             health: 0,
-            max_health: 0,
+            //max_health: 0,
             speed: 0,
             ticcount: 0,
             temp2: 0,
-            distance: 0,
-            tile: {
-                x: 0,
-                y: 0
-            },
+            //distance: 0,
+            //tile: {
+            //    x: 0,
+            //    y: 0
+            //},
             hitBox: {
                 x1: 0,
                 x2: 0,
@@ -293,10 +304,11 @@ FvB.Entities = (function () {
 
         self.x = centerPoint(e1, e2).x - 20;
         self.y = centerPoint(e1, e2).y - 20;
-        self.state = FvB.st_StaticOnce;
+        self.state = FvB.st_Explosion1;
         self.type = FvB.en_Explosion;
-        self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        self.speed = 16;
+        self.ticcount = FvB.objstate[self.type][self.state].timeout;
+        //self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        //self.speed = 16;
 
         switch (e1.objClass) {
             case FvB.ob_HugeProjectile:
@@ -399,7 +411,7 @@ FvB.Entities = (function () {
 
     }
    
-
+    
     return {
         process: process,
         getNewEntity: getNewEntity,
