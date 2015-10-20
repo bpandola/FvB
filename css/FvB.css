@@ -78,10 +78,10 @@ canvas {
     display: none;
 }
 
-#finish-him-overlay {
+/*#finish-him-overlay {
     background-color: black;
-    opacity: .5;
-}
+    opacity: 0;
+}*/
 
 #finish-him {
     height: 200px;
@@ -94,6 +94,6 @@ canvas {
     font-family: sans-serif;
 }
 
-#finish-him button {
+/*#finish-him button {
     font-size: 1.5em;
-}
+}*/
