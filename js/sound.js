@@ -25,6 +25,18 @@
         MASTER_VOLUME: 0.6
     });
 
+    var soundResources = [
+        'sfx/025.mp3',
+        'sfx/booger.mp3',
+        'sfx/explodey.mp3',
+        'sfx/fartball.mp3',
+        'sfx/hugebooger.mp3',
+        'sfx/hugefart.mp3',
+        'sfx/slurp.mp3',
+        'sfx/smallexplodey.mp3',
+        'sfx/splat.mp3'        
+    ];
+
     var sounds = {},
         audioElements = [],
         currentMusic,
@@ -53,7 +65,7 @@
                 }
             }
         }
-        return file.split(".")[0] + "." + ext
+        return file.split(".")[0] + "." + ext;
     }
 
     function createAudioElement() {
@@ -118,6 +130,24 @@
     }
 
     function init() {
+        
+        // Load in all sounds and play them at 0 volume
+        if (Modernizr.audio) {
+            for (i = 0; i < soundResources.length; i++) {
+                var file = soundResources[i];
+
+                if (!sounds[file]) {
+                    sounds[file] = [];
+                }
+
+                audio = createAudioElement();
+                audio.src = getFileName(file);
+                sounds[file].push(audio);
+
+                audio.volume = 0;
+                audio.play();
+            }
+        }
     }
 
 
