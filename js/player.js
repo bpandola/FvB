@@ -17,10 +17,9 @@ FvB.Player = (function () {
         MAX_PLAYER_HEALTH: 270
 
     });
-
-   
+    
     function clipMove(player, game) {
-
+        
         if (player.x < 0) {
             player.x = 0;
         }
@@ -211,8 +210,6 @@ FvB.Player = (function () {
                 if (T_FinishFatality.secondLine.x2 < self.x + 36)
                     T_FinishFatality.secondLine.x2 = self.x + 36;
 
-           
-
         line = T_FinishFatality.firstLine;
         if (typeof line != 'undefined' && line != null) {
             FvB.Entities.spawnLine(self, game, line.x1, line.y1, line.x2, line.y2, line.color);
@@ -229,7 +226,7 @@ FvB.Player = (function () {
         && T_FinishFatality.firstLine.x2 == -12 && T_FinishFatality.secondLine.x2 == self.x + 36) {
             T_FinishFatality.firstLine = null;
             T_FinishFatality.secondLine = null;
-
+            
             FvB.Sound.playSound("sfx/slurp.wav");
             FvB.Entities.stateChange(self, FvB.st_EatBoog1);
             //FvB.Entities.stateChange(otherPlayer, FvB.st_FatalityDead);
@@ -317,7 +314,7 @@ FvB.Player = (function () {
 
         if (player.state == FvB.st_NearlyDead) {
             FvB.Entities.stateChange(player, FvB.st_Dead);
-            FvB.Entities.stateChange(attacker.parent.state, FvB.Victorious);
+            FvB.Entities.stateChange(attacker.parent, FvB.st_Victorious);
             return;
         }
 
@@ -337,16 +334,16 @@ FvB.Player = (function () {
         }
 
         player.health -= damage;
-
-        if (player.health < 0) {
+        
+        if (player.health <= 0) {
             player.health = 0;
-           
+          
             FvB.Entities.stateChange(player, FvB.st_NearlyDead);
         }
         
         
     }
-
+    
     return {
         spawnPlayer: spawnPlayer,
         T_Stand: T_Stand,
