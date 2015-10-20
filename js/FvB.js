@@ -26,7 +26,9 @@ var FvB = {
     BT_DOWN: 3,
     BT_PRIMARY_ATTACK: 4,
     BT_SECONDARY_ATTACK: 5,
-    BT_FATALITY: 6
+    BT_FATALITY: 6,
+
+    NUM_PLAYER_BUTTONS: 7
 
    
 
