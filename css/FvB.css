@@ -13,6 +13,8 @@ canvas {
     bottom: 0;
     left: 0;
     right: 0;
+
+    cursor: none;
 }
 
 .wrapper {
@@ -97,3 +99,34 @@ canvas {
 /*#finish-him button {
     font-size: 1.5em;
 }*/
+
+
+/* Title Screen */
+#title-screen {
+    margin: auto;
+    width: 640px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image : url(../img/TITLE.PNG);
+    display : none;
+}
+
+.load-progress {
+    position : absolute;
+    left : 0;
+    bottom : 0;
+    height : 16px;
+    width : 400px;
+    background-color : #00AAAA;
+    font-size: small;
+    color: white;
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+    margin-left: 8px;
+    
+}
