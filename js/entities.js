@@ -312,10 +312,10 @@
 
         switch (e1.objClass) {
             case FvB.ob_HugeProjectile:
-                FvB.Sound.playSound("sfx/explodey.wav");
+                FvB.Sound.playSound(FvB.SFX_HUGE_EXPLOSION);
                 break;
             default:
-                ;//FvB.Sound.playSound("sfx/splat.wav");
+                ;//FvB.Sound.playSound(SFX_SPLAT);
         }
 
         return self;
@@ -348,11 +348,11 @@
         switch (player.type) {
             case FvB.en_Fartsac:
                 self.type = FvB.en_HugeFartball;
-                FvB.Sound.playSound("sfx/fartball.wav");
+                FvB.Sound.playSound(FvB.SFX_HUGE_FARTBALL);
                 break;
             case FvB.en_Boogerboy:
                 self.type = FvB.en_HugeBooger;
-                FvB.Sound.playSound("sfx/booger.wav");
+                FvB.Sound.playSound(FvB.SFX_HUGE_BOOGER);
                 break;
 
         }

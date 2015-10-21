@@ -22,20 +22,10 @@
         MAX_CHANNELS: 64,
 
         MUSIC_VOLUME: 0.8,
-        MASTER_VOLUME: 0.6
-    });
+        MASTER_VOLUME: 0.6,
 
-    var soundResources = [
-        'sfx/025.mp3',
-        'sfx/booger.mp3',
-        'sfx/explodey.mp3',
-        'sfx/fartball.mp3',
-        'sfx/hugebooger.mp3',
-        'sfx/hugefart.mp3',
-        'sfx/slurp.mp3',
-        'sfx/smallexplodey.mp3',
-        'sfx/splat.mp3'        
-    ];
+        SFX_PATH: 'sfx'
+    });
 
     var sounds = {},
         audioElements = [],
@@ -65,7 +55,7 @@
                 }
             }
         }
-        return file.split(".")[0] + "." + ext;
+        return FvB.SFX_PATH + "/" + file.split(".")[0] + "." + ext;
     }
 
     function createAudioElement() {
@@ -96,13 +86,6 @@
             sounds[file].push(audio);
         }
 
-        //if (posPlayer && posSound) {
-        //    dx = (posPlayer.x - posSound.x) / FvB.TILEGLOBAL;
-        //    dy = (posPlayer.y - posSound.y) / FvB.TILEGLOBAL;
-        //    dist = dx * dx + dy * dy;
-        //    volume *= 1 / (1 + dist / 50);
-        //}
-
         audio.volume = volume * FvB.MASTER_VOLUME * (soundEnabled ? 1 : 0);
         audio.play();
     }
@@ -129,8 +112,7 @@
         }
     }
 
-    function init() {
-        
+    function init(soundResources) {
         // Load in all sounds and play them at 0 volume
         if (Modernizr.audio) {
             for (i = 0; i < soundResources.length; i++) {
@@ -147,9 +129,21 @@
                 audio.volume = 0;
                 audio.play();
             }
-        }
+        }       
     }
 
+    function finishedLoading() {
+        var finishedLoading = true;
+
+        for (var s in sounds) {
+            if (!sounds[s][0].ended) {
+                finishedLoading = false;
+                break;
+            }
+        }
+
+        return finishedLoading;
+    }
 
     function isMusicEnabled() {
         return musicEnabled
@@ -199,7 +193,8 @@
             toggleMusic: toggleMusic,
             toggleSound: toggleSound,
             pauseMusic: pauseMusic,
-            init: init
+            init: init,
+            finishedLoading: finishedLoading
         }
     } else {
         return {
@@ -212,7 +207,8 @@
             toggleMusic: FvB.noop,
             toggleSound: FvB.noop,
             pauseMusic: FvB.noop,
-            init: FvB.noop
+            init: FvB.noop,
+            finishedLoading: finishedLoading
         }
     }
 })();
