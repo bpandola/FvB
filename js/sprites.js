@@ -1,11 +1,15 @@
 ﻿
 FvB.Sprites = (function () {
-    var spriteTextures = [];
+
+    FvB.setConsts({
+
+        GFX_PATH: 'img'
+    });
     //
     // sprite constants
     //
     var spriteNames = [
-        "SPR_DONT_USE",
+        "SPR_BACKGROUND",
         //
         // Fartsac
         //
@@ -42,8 +46,11 @@ FvB.Sprites = (function () {
         spriteConsts[spriteNames[i]] = i;
     }
 
+    // 
+    // Each sprite constant is an index into this array
+    //
     var sheets = [
-        {},
+        { sheet: "background.PNG", size: 640, idx: 0, num: 1},
         { sheet: "FARTSAC0.PNG", size: 64, idx: 0, num: 6 },
         { sheet: "FARTSAC0.PNG", size: 64, idx: 1, num: 6 },
         { sheet: "FARTSAC0.PNG", size: 64, idx: 2, num: 6 },
@@ -109,22 +116,61 @@ FvB.Sprites = (function () {
 
     FvB.setConsts(spriteConsts);
 
-    FvB.setConsts({
-        SPRT_ONE_TEX: 1,
-        SPRT_NO_ROT: 2,
-        SPRT_CHG_POS: 4,
-        SPRT_CHG_TEX: 8,
-        SPRT_REMOVE: 16,
-        MAX_SPRITES: 1024,
-        MAX_VIS_SPRITES: 128
-    });
+    var gfxResources = {};
 
-    function getTexture(id) {
+    function loadImage(fileName) {
+        var img = new Image();
+        img.onload = function () {
+            gfxResources[fileName] = img;
+        };
+
+        gfxResources[fileName] = false;
+        img.src = FvB.GFX_PATH + '/' + fileName;
+    }
+
+    function init() {
+
+        var fileName;
+
+        for (i = 0; i < sheets.length; i++) {
+
+            if (fileName == sheets[i].sheet) {
+                // already did this one
+                continue;
+            } else {
+                fileName = sheets[i].sheet;
+            }
+
+            loadImage(fileName);
+        }
+    }
+
+       
+    function isReady() {
+        var ready = true;
+        for (var k in gfxResources) {
+            if (gfxResources.hasOwnProperty(k) &&
+               !gfxResources[k]) {
+                ready = false;
+                break;
+            }
+        }
+        return ready;
+    }
+
+    function getSheet(id) {
         return sheets[id];
     }
 
+    function getTexture(id) {
+        return gfxResources[sheets[id].sheet];
+    }
+
     return {
-        getTexture: getTexture
+        init: init,
+        isReady: isReady,
+        getTexture: getTexture,
+        getSheet: getSheet
     };
 
 })();
