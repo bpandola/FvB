@@ -1,33 +1,17 @@
 
-// A cross-browser requestAnimationFrame
-// See https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe/
-var requestAnimFrame = (function(){
-    return window.requestAnimationFrame       ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame    ||
-        window.oRequestAnimationFrame      ||
-        window.msRequestAnimationFrame     ||
-        function(callback){
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
-
-var cancelRequestAnimFrame = (function () {
-    return window.cancelAnimationFrame ||
-        window.webkitCancelRequestAnimationFrame ||
-        window.mozCancelRequestAnimationFrame ||
-        window.oCancelRequestAnimationFrame ||
-        window.msCancelRequestAnimationFrame ||
-        clearTimeout
-})();
+FvB.Game = (function () {
+    var game = {};
 
 
+
+    var canvasBackground;
+    var isGameOver = false;
 // Create the canvas
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
-canvas.width = 640;
-canvas.height = 400;
-document.body.appendChild(canvas);
+    var canvas; //= document.getElementById('myCanvas');// document.createElement("canvas");
+    var ctx; //= canvas.getContext("2d");
+//canvas.width = 640;
+//canvas.height = 400;
+//document.body.appendChild(canvas);
 
 // The main game loop
 var lastTime;
@@ -36,7 +20,8 @@ function main() {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
 
-    if (dt > 1.0) { dt = 1.0; }
+    // bound ticcount to a maximum of 1 second (should maybe be even less...)
+    if (dt > 1.0) { dt = 0.5; }
 
 
     if (isGameOver && game.entities.length == 2) {
@@ -61,49 +46,38 @@ function main() {
 };
 
 function init() {
-    canvasBackground = ctx.createPattern(resources.get('img/background.PNG'), 'no-repeat');
+    canvas= document.getElementById('myCanvas');// document.createElement("canvas");
+    ctx= canvas.getContext("2d");
+    canvasBackground = ctx.createPattern(FvB.Sprites.getTexture(FvB.SPR_BACKGROUND), 'no-repeat');
 
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
     
-    FvB.Sound.init();
+    
+    FvB.Renderer.init(ctx);
+
+   
     reset();
    
 }
 
-resources.load([
-    'img/background.PNG',
-    'img/FARTSAC0.PNG',
-    'img/BOOGBOY0.PNG',
-    'img/FARTBOOG.PNG',
-    'img/EXPLODEY.PNG',
-    'img/HUGE.PNG',
-    'img/BOOGBLOW.PNG',
-    'img/FARTBLOW.PNG',
-    'img/DAMAGED.PNG',
-    'img/BOOGHEAD.PNG',
-    'img/HEADLESS.PNG',
-    'img/BUTTHEAD.PNG'
-]);
-resources.onReady(init);
+function startGame() {
 
-var game = {
+    game = {
+        player1: {},
+        player2: {},
 
-    player1: {},
-    player2: {},
+        entities: [],
 
-    entities: [],
+        health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
 
-    health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
-
-    // Players button states
-    buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
-    buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
-};
-
-var canvasBackground;
-var isGameOver = false;
+        // Players button states
+        buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
+        buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
+    };
+    init();
+}
 
 function drawHealth()
 {
@@ -125,11 +99,12 @@ function drawHealth()
     }
        
 }
+
 // Update game objects
 function update(dt) {
 
     if (!isGameOver)
-    PollControls();
+        PollControls();
 
     updateEntities(dt);
 
@@ -188,8 +163,6 @@ function updateEntities(dt) {
     FvB.Entities.process(game, dt);
 }
 
-
-
 // Draw everything
 function render() {
 
@@ -197,7 +170,6 @@ function render() {
     ctx.fillStyle = canvasBackground;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    
     // Render Players first
     FvB.Renderer.renderEntity(game.entities[0]);
     FvB.Renderer.renderEntity(game.entities[1]);
@@ -236,9 +208,6 @@ function gameOver() {
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
     isGameOver = true;
-
-   
-    
 }
 
 // Reset game to original state
@@ -247,6 +216,7 @@ function reset() {
     document.getElementById('game-over-overlay').style.display = 'none';
     document.getElementById('finish-him').style.display = 'none';
     document.getElementById('finish-him-overlay').style.display = 'none';
+    document.getElementById('title-screen').style.display = 'none';
     
     game.entities = [];
 
@@ -256,4 +226,10 @@ function reset() {
     isGameOver = false;
     lastTime = Date.now()
     main();
+}
+
+return {
+    startGame: startGame
 };
+
+})();
