@@ -5,18 +5,34 @@
 
     <title>Fartsac vs Boogerboy</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-
+    <!--<meta name="viewport" content="width=device-width">-->
+    <meta name="viewport" content="width=640, height=400, user-scalable=no">
     <link rel="stylesheet" href="css/FvB.css">
 
     <script src="js/modernizr/modernizr-2.6.2.min.js"></script>
+    <script src="js/jquery/jquery-2.1.4.min.js"></script>
+    
+    <script src="js/FvB.js"></script>
+    <script src="js/sounds.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/sprites.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/actstate.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/requestanimframe.js"></script>
 </head>
 <body>
-    <div id="game-over-overlay">
-    </div>
+    <div id="title-screen"></div>
 
-    <div id="finish-him-overlay">
-    </div>
+    <canvas id="myCanvas" width="640" height="400"></canvas>
+
+    <div id="game-over-overlay"></div>
+
+    <div id="finish-him-overlay"></div>
 
     <div id="game-over">
         <h1>GAME OVER</h1>
@@ -26,7 +42,7 @@
         <h1>FINISH HIM!</h1>
     </div>
 
-    <div class="wrapper">
+    <!--<div class="wrapper">
         <div id="instructions">
             <div>
                 Player 1 Movement: <span class="key">T,F,G,H</span> Fire: <span class="key">Q,W</span> Fatality: <span class="key">A</span>
@@ -36,19 +52,9 @@
                 Player 2 Movement: <span class="key">Arrow Keys</span> Fire: <span class="key">K,L</span> Fatality: <span class="key">O</span>
             </div>
         </div>
-    </div>
+    </div>-->
 
-    <script src="js/FvB.js"></script>
-    <script src="js/resources.js"></script>
-    <script src="js/sound.js"></script>
-    <script src="js/input.js"></script>
-    <script src="js/ai.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/sprites.js"></script>
-    <script src="js/renderer.js"></script>
-    <script src="js/entities.js"></script>
-    <script src="js/actstate.js"></script>
     
-    <script type="text/javascript" src="js/app.js"></script>
+    <script src="js/load.js"></script>
 </body>
 </html>
