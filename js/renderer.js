@@ -1,12 +1,18 @@
 ﻿FvB.Renderer = (function () {
 
+    var ctx;
+
+    function init(canvasElement) {
+        ctx = canvasElement;
+    }
+
     function renderEntity(e) {
-        var sheet = FvB.Sprites.getTexture(FvB.objstate[e.type][e.state].texture + e.frames[e.frame]),
+        var sheet = FvB.Sprites.getSheet(FvB.objstate[e.type][e.state].texture + e.frames[e.frame]),
             offset = FvB.objstate[e.type][e.state].rotate ? e.dir : 0;
        
         ctx.save();
         ctx.translate(e.x, e.y);
-        var resource = resources.get('img/' + sheet.sheet);
+        var resource = FvB.Sprites.getTexture(FvB.objstate[e.type][e.state].texture + e.frames[e.frame]);
         ctx.drawImage(resource,
                               (sheet.idx + offset) * sheet.size, 0,
                               sheet.size, sheet.size,
@@ -17,11 +23,11 @@
     }
 
     function renderSprite(e) {
-        var sheet = FvB.Sprites.getTexture(e.sprite);
+        var sheet = FvB.Sprites.getSheet(e.sprite);
 
         ctx.save();
         ctx.translate(e.x, e.y);
-        var resource = resources.get('img/' + sheet.sheet);
+        var resource = FvB.Sprites.getTexture(e.sprite);
         ctx.drawImage(resource,
                               sheet.idx * sheet.size, 0,
                               sheet.size, sheet.size,
@@ -47,6 +53,7 @@
     }
 
     return {
+        init: init,
         renderEntity: renderEntity,
         renderSprite: renderSprite,
         renderPrimitive: renderPrimitive
