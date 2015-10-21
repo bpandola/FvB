@@ -4,7 +4,7 @@
 
         State: st_ index constant
         Rotate: 1-if object can be rotated left/right, 0 if one sprite for every direction
-        Texture: sprite image or base lef-facing image for rotatable sprites 
+        Texture: sprite image or base left-facing image for rotatable sprites 
         Timeout: how many frames until state change or 0 if state will change externally
         Think:  what to do every frame
         Action: what to do once per state
