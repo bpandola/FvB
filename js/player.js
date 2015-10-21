@@ -62,11 +62,12 @@ FvB.Player = (function () {
 
         clipMove(player, game);
 
-        if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
-            FvB.Entities.stateChange(player, FvB.st_Blow);
-        } else if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
+        // If both fire buttons hit, default to Primary Attack
+        if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
             FvB.Entities.spawnBasicProjectile(player, game);
-        }
+        } else if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
+            FvB.Entities.stateChange(player, FvB.st_Blow);
+        } 
 
         if (game.buttonHeld[p][FvB.BT_FATALITY] && !game.buttonState[p][FvB.BT_FATALITY]) {
             FvB.Entities.stateChange(player, FvB.st_StartFatality);
@@ -129,7 +130,7 @@ FvB.Player = (function () {
                 y2: self.y + 42,
                 color: "rgb(160,80,0)"
             };
-            FvB.Sound.playSound("sfx/hugefart.wav");
+            FvB.Sound.playSound(FvB.SFX_FATALITY_FART);
         }
         else {
             T_StartFatality.firstLine.x2 += FvB.FART_ROPE_SPEED * tics;
@@ -227,7 +228,7 @@ FvB.Player = (function () {
             T_FinishFatality.firstLine = null;
             T_FinishFatality.secondLine = null;
             
-            FvB.Sound.playSound("sfx/slurp.wav");
+            FvB.Sound.playSound(FvB.SFX_SLURP);
             FvB.Entities.stateChange(self, FvB.st_EatBoog1);
             //FvB.Entities.stateChange(otherPlayer, FvB.st_FatalityDead);
         }
@@ -325,7 +326,7 @@ FvB.Player = (function () {
             case FvB.ob_HugeProjectile:
                 if (player.state == FvB.st_Stand || player.state == FvB.st_Damaged) {
                     FvB.Entities.stateChange(player, FvB.st_Damaged);
-                    FvB.Sound.playSound("sfx/025.wav");
+                    FvB.Sound.playSound(FvB.SFX_DAMAGE_SCREAM);
                 }
                 damage = 25;
                 break;
