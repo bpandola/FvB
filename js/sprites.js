@@ -3,7 +3,7 @@ FvB.Sprites = (function () {
 
     FvB.setConsts({
 
-        GFX_PATH: 'img'
+        GFX_PATH: 'gfx'
     });
     //
     // sprite constants
@@ -38,7 +38,19 @@ FvB.Sprites = (function () {
         "SPR_HUGE_FARTBALL", "SPR_HUGE_FARTBALL_1",
         "SPR_HUGE_BOOGER","SPR_HUGE_BOOGER_1",
         "SPR_EXPLOSION_0", "SPR_EXPLOSION_1", "SPR_EXPLOSION_2", "SPR_EXPLOSION_3", "SPR_EXPLOSION_4", "SPR_EXPLOSION_5", "SPR_EXPLOSION_6",
-        "SPR_EXPLOSION_7", "SPR_EXPLOSION_8", "SPR_EXPLOSION_9", "SPR_EXPLOSION_10", "SPR_EXPLOSION_11", "SPR_EXPLOSION_12"
+        "SPR_EXPLOSION_7", "SPR_EXPLOSION_8", "SPR_EXPLOSION_9", "SPR_EXPLOSION_10", "SPR_EXPLOSION_11", "SPR_EXPLOSION_12",
+        "SPR_HUGE_EXPLOSION_0", "SPR_HUGE_EXPLOSION_1", "SPR_HUGE_EXPLOSION_2", "SPR_HUGE_EXPLOSION_3", "SPR_HUGE_EXPLOSION_4", "SPR_HUGE_EXPLOSION_5", "SPR_HUGE_EXPLOSION_6",
+        "SPR_HUGE_EXPLOSION_7", "SPR_HUGE_EXPLOSION_8", "SPR_HUGE_EXPLOSION_9", "SPR_HUGE_EXPLOSION_10", "SPR_HUGE_EXPLOSION_11", "SPR_HUGE_EXPLOSION_12",
+        //
+        // Ryu
+        //
+        "SPR_RYU_IDLE_1", "SPR_RYU_IDLE_2", "SPR_RYU_IDLE_3", "SPR_RYU_IDLE_4",
+        "SPR_RYU_WALK_1", "SPR_RYU_WALK_2", "SPR_RYU_WALK_3", "SPR_RYU_WALK_4", "SPR_RYU_WALK_5",
+        "SPR_RYU_CROUCH_1",
+        "SPR_RYU_JUMP_1", "SPR_RYU_JUMP_2",
+        "SPR_RYU_HADOUKEN_1", "SPR_RYU_HADOUKEN_2", "SPR_RYU_HADOUKEN_3", "SPR_RYU_HADOUKEN_4", "SPR_RYU_HADOUKEN_5",
+        "SPR_HADOUKEN_1","SPR_HADOUKEN_2","SPR_HADOUKEN_3"
+
     ];
 
     var spriteConsts = {};
@@ -99,6 +111,19 @@ FvB.Sprites = (function () {
         { sheet: "HUGE.PNG", size: 24, idx: 1, num: 6 },
         { sheet: "HUGE.PNG", size: 24, idx: 2, num: 6 },
         { sheet: "HUGE.PNG", size: 24, idx: 3, num: 6 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 0, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 1, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 2, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 3, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 4, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 5, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 6, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 7, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 8, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 9, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 10, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 11, num: 13 },
+        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 12, num: 13 },
         { sheet: "EXPLODEY.PNG", size: 40, idx: 0, num: 13 },
         { sheet: "EXPLODEY.PNG", size: 40, idx: 1, num: 13 },
         { sheet: "EXPLODEY.PNG", size: 40, idx: 2, num: 13 },
@@ -111,7 +136,34 @@ FvB.Sprites = (function () {
         { sheet: "EXPLODEY.PNG", size: 40, idx: 9, num: 13 },
         { sheet: "EXPLODEY.PNG", size: 40, idx: 10, num: 13 },
         { sheet: "EXPLODEY.PNG", size: 40, idx: 11, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 12, num: 13 }
+        { sheet: "EXPLODEY.PNG", size: 40, idx: 12, num: 13 },
+        // Ryu Idle
+         { sheet: "RYU.PNG", x: 5, y: 17, width: 45, height: 82 },
+         { sheet: "RYU.PNG", x: 54, y: 17, width: 45, height: 82 },
+         { sheet: "RYU.PNG", x: 104, y: 17, width: 45, height: 82 },
+         { sheet: "RYU.PNG", x: 153, y: 17, width: 45, height: 82 },
+         // Ryu Walk
+          { sheet: "RYU.PNG", x: 204, y: 17, width: 45, height: 82 },
+         { sheet: "RYU.PNG", x: 251, y: 17, width: 45, height: 82 },
+         { sheet: "RYU.PNG", x: 300, y: 17, width: 45, height: 82 },
+         { sheet: "RYU.PNG", x: 350, y: 17, width: 45, height: 82 },
+          { sheet: "RYU.PNG", x: 400, y: 17, width: 45, height: 82 },
+          // Ryu Crouch
+    { sheet: "RYU.PNG", x: 1159, y: 17, width: 45, height: 82 },
+    // Ryu Jump
+    { sheet: "RYU.PNG", x: 537, y: 17, width: 43, height: 82 },
+    { sheet: "RYU.PNG", x: 575, y: 17, width: 43, height: 82 },
+    // Ryu Hadouken
+      { sheet: "RYU.PNG", x: 4, y: 636, width: 52, height: 85 },
+         { sheet: "RYU.PNG", x: 60, y: 636, width: 66, height: 85 },
+         { sheet: "RYU.PNG", x: 131, y: 636, width: 68, height: 85 },
+         { sheet: "RYU.PNG", x: 202, y: 636, width: 96, height: 85 },
+          { sheet: "RYU.PNG", x: 299, y: 636, width: 72, height: 85 },
+
+          // Hadouken Projectile
+          { sheet: "RYU.PNG", x: 131, y: 636, width: 68, height: 85 },
+         { sheet: "RYU.PNG", x: 202, y: 636, width: 96, height: 85 },
+          { sheet: "RYU.PNG", x: 299, y: 636, width: 72, height: 85 }
     ];
 
     FvB.setConsts(spriteConsts);
