@@ -44,11 +44,13 @@
             progress.text("Ready.  Click anywhere to run.");
             document.getElementById('title-screen').addEventListener('click', function () {
 
+                document.getElementById('title-screen').style.cursor = "none";
 
                 $("#title-screen").fadeOut(1500, function () {
                     //Wolf.Input.init();
                     //Wolf.Game.init();
                     //Wolf.Menu.show();
+                    FvB.Renderer.init();
                     
                     FvB.Game.startGame();
                 });
