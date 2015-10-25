@@ -33,7 +33,7 @@ canvas {
     color: #aaffdd;
 }
 
-#game-over, #game-over-overlay {
+#game-over, #game-over-overlay, #fader-overlay {
     margin: auto;
     width: 640px;
     height: 400px;
@@ -44,6 +44,13 @@ canvas {
     bottom: 0;
     z-index: 1;
     display: none;
+}
+
+#fader-overlay {
+    background-color: black;
+    opacity: 1;
+    display: block;
+     cursor: none;
 }
 
 #game-over-overlay {
@@ -111,8 +118,10 @@ canvas {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
-    background-image : url(../img/TITLE.PNG);
+    z-index: 2;
+    background-image : url(../gfx/TITLE.PNG);
+    /*background-repeat: no-repeat;
+    background-size: 100% 100%;*/
     display : none;
 }
 
