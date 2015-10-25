@@ -59,37 +59,6 @@
 
         ctx.restore();
     }
-   
-    //function renderSprite(e) {
-    //    var sheet = FvB.Sprites.getSheet(e.sprite);
-
-    //    ctx.save();
-    //    ctx.translate(e.x, e.y);
-    //    var resource = FvB.Sprites.getTexture(e.sprite);
-    //    ctx.drawImage(resource,
-    //                          sheet.idx * sheet.size, 0,
-    //                          sheet.size, sheet.size,
-    //                          0, 0,
-    //                          sheet.size, sheet.size);
-    //    ctx.restore();
-
-    //}
-
-    //function renderRightAlignedSpriteById(id, x, y) {
-    //    //var sheet = FvB.Sprites.getSprite(id);
-
-    //    //ctx.save();
-    //    //ctx.translate(x, y);
-    //    //var resource = FvB.Sprites.getTexture(id);
-    //    //ctx.drawImage(resource,
-    //    //                      sheet.xOffset, sheet.yOffset,
-    //    //                      sheet.width, sheet.height,
-    //    //                      -sheet.width, 0,
-    //    //                      sheet.width, sheet.height);
-    //    //ctx.restore();
-    //    renderSprite(id, x, y, FvB.R_X_ALIGN_RIGHT);
-
-    //}
 
     // Render sprite on the canvas
     // The default flags are R_X_ALIGN_LEFT | R_Y_ALIGN_TOP
@@ -126,36 +95,6 @@
         ctx.restore();
     }
 
-    //function renderSprite(id, x, y) {
-    //    //var sheet = FvB.Sprites.getSprite(id);
-
-    //    //ctx.save();
-    //    //ctx.translate(x, y);
-    //    //var resource = FvB.Sprites.getTexture(id);
-    //    //ctx.drawImage(resource,
-    //    //                      sheet.xOffset, sheet.yOffset,
-    //    //                      sheet.width, sheet.height,
-    //    //                      -sheet.width/2, -sheet.height/2,
-    //    //                      sheet.width, sheet.height);
-    //    //ctx.restore();
-    //    renderSprite(id, x, y, FvB.R_ALIGN_CENTER);
-
-    //}
-
-    //function renderSpriteById(id, x, y) {
-    //    var sheet = FvB.Sprites.getSprite(id);
-
-    //    ctx.save();
-    //    ctx.translate(x, y);
-    //    var resource = FvB.Sprites.getTexture(id);
-    //    ctx.drawImage(resource,
-    //                          sheet.xOffset, sheet.yOffset,
-    //                          sheet.width, sheet.height,
-    //                          0, 0,
-    //                          sheet.width, sheet.height);
-    //    ctx.restore();
-
-    //}
     function renderPrimitive(e) {
 
         // Only line supported at the moment
