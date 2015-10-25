@@ -40,7 +40,8 @@
 
     function T_Projectile(self, game, tics) {
 
-        var speed = self.dir == FvB.DIR_LEFT ? -FvB.SUPER_PROJECTILE_SPEED : FvB.SUPER_PROJECTILE_SPEED;
+        var speed = self.objClass == FvB.ob_BasicProjectile ? FvB.BASIC_PROJECTILE_SPEED : FvB.SUPER_PROJECTILE_SPEED;
+        speed = self.dir == FvB.DIR_LEFT ? -speed : speed;
 
         self.x += speed * tics;
 

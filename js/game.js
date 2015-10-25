@@ -1,18 +1,66 @@
 
 FvB.Game = (function () {
-    var game = {};
 
+    var game = {
+        isSinglePlayer: true,
+        doneSelecting: false,
+        round: 1,
 
+        playerCharacters: [FvB.en_Fartsac, FvB.en_Boogerboy],
+        charactersSelected: [false, false],
+
+        player1: {},
+        player2: {},
+
+        entities: [],
+
+        health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
+
+        // Players button states
+        buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
+        buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
+    };
 
     var canvasBackground;
     var isGameOver = false;
 // Create the canvas
-    var canvas; //= document.getElementById('myCanvas');// document.createElement("canvas");
-    var ctx; //= canvas.getContext("2d");
+    //var canvas; //= document.getElementById('myCanvas');// document.createElement("canvas");
+    //var ctx; //= canvas.getContext("2d");
 //canvas.width = 640;
 //canvas.height = 400;
 //document.body.appendChild(canvas);
+    function nextRound() {
+        game.round++;
+        if (game.round > 1) {
+            gameOver();
+            return;
+        }
+        document.getElementById('finish-him').style.display = 'none';
+        $("#fader-overlay").fadeIn(1500, function () {
+            
+            game.entities = [];
 
+            game.player1 = FvB.Player.spawnPlayer(game, 1, game.playerCharacters[0]);
+            if (!game.isSinglePlayer)
+                game.player2 = FvB.Player.spawnPlayer(game, 2, game.playerCharacters[1]);
+
+            isGameOver = false;
+
+            main();
+            // Render initial screen
+            //render();
+
+            //$("#fader-overlay").fadeOut(3000, function () {
+            //    lastTime = Date.now()
+            //    main();
+            //});
+
+            $("#fader-overlay").fadeOut(1500);
+
+
+        });
+        
+    }
 // The main game loop
 var lastTime;
 var animFrame;
@@ -26,7 +74,8 @@ function main() {
 
     if (isGameOver && game.entities.length == 2) {
         //if (game.entities[0].state == FvB.ST_DEAD)
-        gameOver();
+        //gameOver();
+        nextRound();
         return;
 
         //if (animFrame) {
@@ -46,16 +95,16 @@ function main() {
 };
 
 function init() {
-    canvas= document.getElementById('myCanvas');// document.createElement("canvas");
-    ctx= canvas.getContext("2d");
-    canvasBackground = ctx.createPattern(FvB.Sprites.getTexture(FvB.SPR_BACKGROUND), 'no-repeat');
+    //canvas= document.getElementById('myCanvas');// document.createElement("canvas");
+    //ctx= canvas.getContext("2d");
+    //canvasBackground = ctx.createPattern(FvB.Sprites.getTexture(FvB.SPR_RYU_BACKGROUND), 'no-repeat');
 
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
     
     
-    FvB.Renderer.init(ctx);
+    //FvB.Renderer.init(ctx);
 
    
     reset();
@@ -64,24 +113,43 @@ function init() {
 
 function startGame() {
 
-    game = {
-        player1: {},
-        player2: {},
+    //game = {
+    //    isSinglePlayer: true,
+    //    doneSelecting: false,
 
-        entities: [],
+    //    player1: {},
+    //    player2: {},
 
-        health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
+    //    entities: [],
+
+    //    health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
+
+    //    // Players button states
+    //    buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
+    //    buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
+    //};
+
+    game.isSinglePlayer = true;
+    game.doneSelecting = false;
+
+    game.player1 = {};
+    game.player2 = {};
+
+    game.entities = [];
+
+    game.health = [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH];
 
         // Players button states
-        buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
-        buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
-    };
+    game.buttonState=[[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
+    game.buttonHeld=[[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
+    
     init();
 }
 
 function drawHealth()
 {
-    var health = 0;
+    var health = 0,
+        ctx = FvB.Renderer.getContext();
     // Player 1
     health = game.health[0] - FvB.MAX_PLAYER_HEALTH;
     if (health < 0) {
@@ -167,12 +235,29 @@ function updateEntities(dt) {
 function render() {
 
     // Background
-    ctx.fillStyle = canvasBackground;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //ctx.fillStyle = "#000000"; //canvasBackground;
+    //ctx.fillStyle = canvasBackground;
+    //ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (game.player1.type != FvB.en_Ryu && game.player2.type != FvB.en_Ryu) {
+        FvB.Renderer.clearScreen();
+    } else {
+        FvB.Renderer.renderSprite(FvB.SPR_RYU_BACKGROUND, 0, 0);
+    }
+
+    FvB.Renderer.renderSprite(FvB.SPR_PLAYER_HEALTH_BAR, 0, 44);
+
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_TEXT + game.playerCharacters[0], 20, 80);
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_TEXT + game.playerCharacters[1], 621, 80, FvB.R_X_ALIGN_RIGHT);
 
     // Render Players first
-    FvB.Renderer.renderEntity(game.entities[0]);
-    FvB.Renderer.renderEntity(game.entities[1]);
+    for (i = 0; i < 2; i++) {
+        var renderFunction = game.entities[i].renderFunction;
+        if (renderFunction)
+            renderFunction(game.entities[i]);
+    }
+    //FvB.Renderer.renderEntity(game.entities[0]);
+    //FvB.Renderer.renderEntity(game.entities[1]);
 
     // Render entities backwards so new explosions don't cover old ones
     for (i = game.entities.length - 1; i > 1; i--) {
@@ -205,11 +290,176 @@ function render() {
 function gameOver() {
     document.getElementById('finish-him').style.display = 'none';
     document.getElementById('finish-him-overlay').style.display = 'none';
+
+    
+    var gameOver = $('#game-over h1').text('Boogerboy Wins!');
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
     isGameOver = true;
+    game.charactersSelected[0] = game.charactersSelected[1] = false;
 }
 
+function updateCharacterSelect() {
+
+    PollControls();
+
+    for (p = 0; p < (game.isSinglePlayer ? 1 : 2); p++) {
+
+        if (p == 0) {
+            // Secret select Ryu
+            if (/*game.buttonState[p][FvB.BT_LEFT] && game.buttonState[p][FvB.BT_RIGHT] && game.buttonState[p][FvB.BT_UP] &&*/ game.buttonState[p][FvB.BT_DOWN]) {
+                game.playerCharacters[p] = FvB.en_Ryu;
+                continue;
+            }
+
+        }
+
+        if (game.buttonState[p][FvB.BT_LEFT] && !game.buttonHeld[p][FvB.BT_LEFT] && game.playerCharacters[p] > 0) {
+            game.playerCharacters[p] = game.playerCharacters[p] - 1;
+            FvB.Sound.playSound(FvB.SFX_SELECT_CHARACTER);
+        } else if (game.buttonState[p][FvB.BT_RIGHT] && !game.buttonHeld[p][FvB.BT_RIGHT] && game.playerCharacters[p] < FvB.en_Yohan) {
+            game.playerCharacters[p] = game.playerCharacters[p] + 1;
+            FvB.Sound.playSound(FvB.SFX_SELECT_CHARACTER);
+        }
+
+        if (game.buttonState[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK]) {
+            FvB.Sound.playSound(FvB.SFX_CHOOSE_CHARACTER);
+            game.charactersSelected[p] = true;
+        }
+
+       
+    }
+   
+}
+
+function renderCharacterSelect() {
+    
+    var characterMatrixYPos = 125,
+        characterMatrixX = 244,
+        characterMatrixY = characterMatrixYPos - 41,
+        characterMatrixCellWidth = 50;
+
+    var p1 = game.playerCharacters[0],
+        p2 = game.playerCharacters[1];
+
+    //ctx.fillStyle="#000000";
+    //ctx.fillRect(0, 0, canvas.width, canvas.height);
+    FvB.Renderer.clearScreen();
+
+    // Static elements
+    FvB.Renderer.renderSprite(FvB.SPR_CHARACTER_SELECT_TEXT, 0, 10);
+    FvB.Renderer.renderSprite(FvB.SPR_CHARACTER_SELECT_MATRIX, 320, characterMatrixYPos,FvB.R_ALIGN_CENTER);
+
+    if (!game.isSinglePlayer) {
+        FvB.Renderer.renderSprite(FvB.SPR_VERSUS, 320, 300, FvB.R_ALIGN_CENTER);
+    }
+
+    // Player 1
+    FvB.Renderer.renderSprite(FvB.SPR_1P, 101, 155, FvB.R_ALIGN_CENTER);
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_TEXT + p1, 101, 182, FvB.R_ALIGN_CENTER);
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_MUG + p1, 0, 194);
+
+    if (p1 != FvB.en_Ryu) {
+        FvB.Renderer.renderSprite(FvB.SPR_1P, characterMatrixX + (characterMatrixCellWidth * p1) + 27, characterMatrixY - 17, FvB.R_ALIGN_CENTER);
+        FvB.Renderer.renderSprite(FvB.SPR_1P_SELECT, characterMatrixX + (characterMatrixCellWidth * p1), characterMatrixY);
+    }
+
+    // Player 2
+    if (!game.isSinglePlayer) {
+        FvB.Renderer.renderSprite(FvB.SPR_2P, 538, 155, FvB.R_ALIGN_CENTER);
+        FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_TEXT + p2, 538, 182, FvB.R_ALIGN_CENTER);
+        FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_MUG + p2, 437, 194);
+
+        FvB.Renderer.renderSprite(FvB.SPR_2P, characterMatrixX + (characterMatrixCellWidth * p2) + 27, characterMatrixY + 100, FvB.R_ALIGN_CENTER);
+
+        if (p1 != p2)
+            FvB.Renderer.renderSprite(FvB.SPR_2P_SELECT, characterMatrixX + (characterMatrixCellWidth * p2), characterMatrixY);
+        else
+            FvB.Renderer.renderSprite(FvB.SPR_BOTH_SELECT, characterMatrixX + (characterMatrixCellWidth * p2), characterMatrixY);
+
+    }
+
+}
+
+function renderVersusScreen() {
+
+    var characterMatrixYPos = 125,
+        characterMatrixX = 244,
+        characterMatrixY = characterMatrixYPos - 41,
+        characterMatrixCellWidth = 50;
+
+    var p1 = game.playerCharacters[0],
+        p2 = game.playerCharacters[1];
+
+    //ctx.fillStyle = "#000000";
+    //ctx.fillRect(0, 0, canvas.width, canvas.height);
+    FvB.Renderer.clearScreen(/*"#000000"*/);
+    
+    FvB.Renderer.renderSprite(FvB.SPR_VERSUS, 320, 300, FvB.R_ALIGN_CENTER);
+    
+    // Player 1
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_TEXT + p1, 101, 182, FvB.R_ALIGN_CENTER);
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_MUG + p1, 0, 194);
+
+    // Player 2
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_TEXT + p2, 538, 182, FvB.R_ALIGN_CENTER);
+    FvB.Renderer.renderSprite(FvB.SPR_FARTSAC_MUG + p2, 437, 194);
+
+}
+
+function newStartGame() {
+    
+
+    game.entities = [];
+
+    game.player1 = FvB.Player.spawnPlayer(game, 1, game.playerCharacters[0]);
+    //if (!game.isSinglePlayer)
+     game.player2 = FvB.Player.spawnPlayer(game, 2, game.playerCharacters[1]);
+
+    isGameOver = false;
+
+    // Render initial screen
+    render();
+
+    //$("#fader-overlay").fadeOut(3000, function () {
+    //    lastTime = Date.now()
+    //    main();
+    //});
+
+    $("#fader-overlay").fadeOut(3000);
+
+    if (game.player1.type == FvB.en_Ryu || game.player2.type == FvB.en_Ryu) {
+        FvB.Sound.startMusic(FvB.SFX_RYU_THEME);
+    }
+    
+    lastTime = Date.now()
+    main();
+}
+function characterSelect(game) {
+
+    
+
+    function characterSelectAnim() {
+        updateCharacterSelect();
+        renderCharacterSelect();
+        
+        if (game.charactersSelected[0]  && (game.isSinglePlayer || game.charactersSelected[1])) {
+            // put up black screen
+            $("#fader-overlay").fadeIn(3000, function () {
+                newStartGame();
+            }
+                );
+            return;
+        }
+
+        animFrame = requestAnimFrame(characterSelectAnim);
+    }
+    
+    // Render intial view and then fade in and start anim loop
+    renderCharacterSelect();
+    $("#fader-overlay").fadeOut(1500, characterSelectAnim);
+
+}
 // Reset game to original state
 function reset() {
     document.getElementById('game-over').style.display = 'none';
@@ -217,15 +467,36 @@ function reset() {
     document.getElementById('finish-him').style.display = 'none';
     document.getElementById('finish-him-overlay').style.display = 'none';
     document.getElementById('title-screen').style.display = 'none';
+
+    // put up black screen
+    document.getElementById('fader-overlay').style.display = 'block';
     
     game.entities = [];
+    FvB.Sound.stopAllSounds();
+    game.isSinglePlayer = false;
+    characterSelect(game);
+    return;
 
-    game.player1 = FvB.Player.spawnPlayer(game, 1, FvB.en_Boogerboy);
+    game.player1 = FvB.Player.spawnPlayer(game, 1, FvB.en_Ryu);
     game.player2 = FvB.Player.spawnPlayer(game, 2, FvB.en_Fartsac);
       
     isGameOver = false;
-    lastTime = Date.now()
-    main();
+
+    // Render initial screen
+    render();
+
+    //$("#fader-overlay").fadeOut(3000, function () {
+    //    lastTime = Date.now()
+    //    main();
+    //});
+
+    $("#fader-overlay").fadeOut(3000);
+
+    //FvB.Sound.startMusic(FvB.SFX_RYU_THEME);
+        lastTime = Date.now()
+        main();
+    
+    
 }
 
 return {

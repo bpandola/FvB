@@ -5,8 +5,11 @@
 FvB.Player = (function () {
 
     FvB.setConsts({
-        PLAYERSIZE: FvB.MINDIST, // player radius
-        CHAR_SPRITE_WIDTH: 64,
+        MIN_DISTANCE: 64,
+        
+        PLAYER_SPEED: 100,
+        PLAYER_JUMP_SPEED: 100,
+        PLAYER_START_Y: 330,
 
         ex_notingame: 0,
         ex_playing: 1,
@@ -20,27 +23,74 @@ FvB.Player = (function () {
     
     function clipMove(player, game) {
         
-        if (player.x < 0) {
-            player.x = 0;
+        if (player.x - FvB.MIN_DISTANCE/2 < 0) {
+            player.x = FvB.MIN_DISTANCE/2;
         }
-        else if (player.x > FvB.SCREENWIDTH - FvB.CHAR_SPRITE_WIDTH) {
-            player.x = FvB.SCREENWIDTH - FvB.CHAR_SPRITE_WIDTH;
+        else if (player.x > FvB.SCREENWIDTH - FvB.MIN_DISTANCE/2) {
+            player.x = FvB.SCREENWIDTH - FvB.MIN_DISTANCE/2;
         }
 
         if (player === game.player1) {
 
-            if (player.x + FvB.CHAR_SPRITE_WIDTH > game.player2.x) {
-                player.x = game.player2.x - FvB.CHAR_SPRITE_WIDTH;
+            if (player.x + FvB.MIN_DISTANCE > game.player2.x) {
+                player.x = game.player2.x - FvB.MIN_DISTANCE;
             }
         }
         else {
 
-            if (player.x < game.player1.x + FvB.CHAR_SPRITE_WIDTH) {
-                player.x = game.player1.x + FvB.CHAR_SPRITE_WIDTH;
+            if (player.x < game.player1.x + FvB.MIN_DISTANCE) {
+                player.x = game.player1.x + FvB.MIN_DISTANCE;
             }
         }
     }
 
+    function T_Walk(player, game, tics) {
+        var p = player === game.player1 ? 0 : 1;
+
+        if (game.buttonState[p][FvB.BT_LEFT] || game.buttonState[p][FvB.BT_RIGHT]) {
+
+            if (game.buttonState[p][FvB.BT_LEFT]) {
+                player.x -= FvB.PLAYER_SPEED * tics;
+            }
+            if (game.buttonState[p][FvB.BT_RIGHT]) {
+                player.x += FvB.PLAYER_SPEED * tics;
+            }
+        }
+        else {
+            FvB.Entities.stateChange(player, FvB.st_Idle1);
+            return;
+        }
+
+        clipMove(player, game);
+    }
+    function T_Idle(player, game, tics) {
+        var p = player === game.player1 ? 0 : 1;
+
+        if (game.buttonState[p][FvB.BT_LEFT] || game.buttonState[p][FvB.BT_RIGHT]) {
+            FvB.Entities.stateChange(player, FvB.st_Walk1);
+            return;
+        }
+
+        if (game.buttonState[p][FvB.BT_DOWN] && !game.buttonHeld[p][FvB.BT_DOWN]) {
+            FvB.Entities.stateChange(player, FvB.st_Crouch);
+        }
+
+        if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
+            FvB.Entities.stateChange(player, FvB.st_JumpStart);
+        }
+
+       
+
+        // If both fire buttons hit, default to Primary Attack
+        if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
+            //FvB.Entities.spawnBasicProjectile(player, game);
+
+        } else if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
+            FvB.Entities.stateChange(player, FvB.st_Hadouken1);
+        }
+
+        
+    }
     function T_Stand(player, game, tics) {
         var p = player === game.player1 ? 0 : 1;
 
@@ -78,7 +128,7 @@ FvB.Player = (function () {
         var p = player === game.player1 ? 0 : 1;
 
         if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
-            FvB.Entities.stateChange(player, FvB.st_Stand);
+            FvB.Entities.stateChange(player, FvB.objstate[player.type][player.state].next_state/*FvB.st_Stand*/);
         }
     }
 
@@ -88,17 +138,20 @@ FvB.Player = (function () {
         switch (player.state) {
 
             case FvB.st_JumpDown:
+                case FvB.st_JumpEnd:
                 player.y += FvB.PLAYER_JUMP_SPEED * tics;
                 if (player.y >= FvB.PLAYER_START_Y) {
                     player.y = FvB.PLAYER_START_Y;
-                    FvB.Entities.stateChange(player, FvB.st_Stand);
+                    FvB.Entities.stateChange(player, FvB.objstate[player.type][player.state].next_state/*FvB.st_Stand*/);
                 }
                 break;
 
             case FvB.st_JumpUp:
+                case FvB.st_JumpStart:
                 player.y -= FvB.PLAYER_JUMP_SPEED * tics;
                 if (player.y <= FvB.PLAYER_START_Y - 50) {
-                    FvB.Entities.stateChange(player, FvB.st_JumpDown);
+                    //FvB.Entities.stateChange(player, FvB.st_JumpDown);
+                    FvB.Entities.nextState(player);
                 }
                 break;
 
@@ -235,77 +288,93 @@ FvB.Player = (function () {
 
     }
 
-    function T_Blow(self, game, tics) {
+    function T_FartTurd(self, game, tics) {
+        self.y -= FvB.PLAYER_JUMP_SPEED * tics;
+        if (self.y <= FvB.PLAYER_START_Y - 26) {
+            self.y = FvB.PLAYER_START_Y - 26;
 
-        // First time
-        if (self._index === 0 && self.speed === 0) {
-            self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-            self.frame = 0;
-            self.speed = 20;
-
-            //switch (self.type) {
-            //    case FvB.en_Fartsac:
-            //        FvB.Sound.playSound("sfx/fartball.wav");
-            //        break;
-            //    case FvB.en_Boogerboy:
-            //        FvB.Sound.playSound("sfx/booger.wav");
-            //        break;
-            //}
-
-            return true;
-        }
-
-        self._index += self.speed * tics;
-        if (self.speed > 0) {
-            var max = self.frames.length;
-            var idx = Math.floor(self._index);
-            self.frame = self.frames[idx % max];
-
-            if (self.type == FvB.en_Fartsac) {
-                self.y -= FvB.PLAYER_JUMP_SPEED * tics;
-                if (self.y <= FvB.PLAYER_START_Y - 26) {
-                    self.y = FvB.PLAYER_START_Y - 26;
-                }
-            } 
-            if (idx >= max) {
-                if (self.type == FvB.en_Fartsac) {
-                    FvB.Entities.stateChange(self, FvB.st_JumpDown);
-                } else {
-                    FvB.Entities.stateChange(self, FvB.st_Stand);
-                }
-                self.frames = [0];
-                self.frame = 0;
-                self.speed = 0;
-                self._index = 0;
+            if (self.state == FvB.st_FartTurd10) {
                 FvB.Entities.spawnHugeProjectile(self, game);
-                return true;
+                FvB.Entities.nextState(self);
             }
-        }
-        else {
-
-            self.frame = self.frames[0];
         }
     }
 
-    function spawnPlayer(game, playerNum, playerCharacter) {
+    function T_BlowBoog(self, game, tics) {
+            if (self.state == FvB.st_BlowBoog10) {
+                FvB.Entities.spawnHugeProjectile(self, game);
+                FvB.Entities.nextState(self);
+            }
+        
+    }
 
-        var x = playerNum == 1 ? FvB.SCREENWIDTH / 2 - FvB.CHAR_SPRITE_WIDTH * 2 : FvB.SCREENWIDTH / 2 + FvB.CHAR_SPRITE_WIDTH,
-            y = 280,
-            direction = playerNum == 1 ? FvB.DIR_RIGHT : FvB.DIR_LEFT
+    //function T_Blow(self, game, tics) {
+
+    //    // First time
+    //    if (self._index === 0 && self.speed === 0) {
+    //        self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    //        self.frame = 0;
+    //        self.speed = 20;
+
+    //        //switch (self.type) {
+    //        //    case FvB.en_Fartsac:
+    //        //        FvB.Sound.playSound("sfx/fartball.wav");
+    //        //        break;
+    //        //    case FvB.en_Boogerboy:
+    //        //        FvB.Sound.playSound("sfx/booger.wav");
+    //        //        break;
+    //        //}
+
+    //        return true;
+    //    }
+
+    //    self._index += self.speed * tics;
+    //    if (self.speed > 0) {
+    //        var max = self.frames.length;
+    //        var idx = Math.floor(self._index);
+    //        self.frame = self.frames[idx % max];
+
+    //        if (self.type == FvB.en_Fartsac) {
+    //            self.y -= FvB.PLAYER_JUMP_SPEED * tics;
+    //            if (self.y <= FvB.PLAYER_START_Y - 26) {
+    //                self.y = FvB.PLAYER_START_Y - 26;
+    //            }
+    //        } 
+    //        if (idx >= max) {
+    //            if (self.type == FvB.en_Fartsac) {
+    //                FvB.Entities.stateChange(self, FvB.st_JumpDown);
+    //            } else {
+    //                FvB.Entities.stateChange(self, FvB.st_Stand);
+    //            }
+    //            self.frames = [0];
+    //            self.frame = 0;
+    //            self.speed = 0;
+    //            self._index = 0;
+    //            FvB.Entities.spawnHugeProjectile(self, game);
+    //            return true;
+    //        }
+    //    }
+    //    else {
+
+    //        self.frame = self.frames[0];
+    //    }
+    //}
+
+    function spawnPlayer(game, playerNum, playerCharacter) {
 
         var player = FvB.Entities.getNewEntity(game);
 
         if (!player)
             return;
-
+        
+        player.x = playerNum == 1 ? FvB.SCREENWIDTH / 2 - FvB.MIN_DISTANCE*3 : FvB.SCREENWIDTH / 2 + FvB.MIN_DISTANCE*3;
+        player.y = FvB.PLAYER_START_Y;
         player.health = FvB.MAX_PLAYER_HEALTH;
-        player.x = x;
-        player.y = y;
         player.type = playerCharacter;
-        player.dir = direction;
+        player.dir = playerNum == 1 ? FvB.DIR_RIGHT : FvB.DIR_LEFT;
         player.objClass = FvB.ob_Player;
 
-        FvB.Entities.stateChange(player, FvB.st_Stand);
+        FvB.Entities.stateChange(player, FvB.st_Idle1);        
 
         return player;
     }
@@ -324,8 +393,10 @@ FvB.Player = (function () {
                 damage = 10;
                 break;
             case FvB.ob_HugeProjectile:
-                if (player.state == FvB.st_Stand || player.state == FvB.st_Damaged) {
+                if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged) {
                     FvB.Entities.stateChange(player, FvB.st_Damaged);
+                    // HACKY! - Advance damage frame by other character value to get offset into sprite sheet
+                    player.sprite += attacker.parent.type;
                     FvB.Sound.playSound(FvB.SFX_DAMAGE_SCREAM);
                 }
                 damage = 25;
@@ -350,9 +421,12 @@ FvB.Player = (function () {
         T_Stand: T_Stand,
         T_Crouch: T_Crouch,
         T_Jump: T_Jump,
-        T_Blow: T_Blow,
+        T_BlowBoog: T_BlowBoog,
+        T_FartTurd: T_FartTurd,
         T_StartFatality: T_StartFatality,
         T_FinishFatality: T_FinishFatality,
+        T_Idle: T_Idle,
+        T_Walk: T_Walk,
         damage: damage
     };
 

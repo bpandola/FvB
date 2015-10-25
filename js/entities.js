@@ -23,14 +23,20 @@
     });
 
     FvB.setConsts({
+        // Characters have to be first and in order
         en_Fartsac: 0,
         en_Boogerboy: 1,
-        en_Fartball: 2,
-        en_Booger: 3,
-        en_HugeFartball: 4,
-        en_HugeBooger: 5,
-        en_Explosion: 6,
-        en_Static: 7
+        en_Yohan: 2,
+        en_Ryu: 3,
+
+        en_Fartball: 4,
+        en_Booger: 5,
+        en_HugeFartball: 6,
+        en_HugeBooger: 7,
+        en_Explosion: 8,
+        en_HugeExplosion: 9,
+        en_Static: 10,
+        en_Hadouken: 11
     });
 
     FvB.setConsts({
@@ -74,6 +80,50 @@
         st_NearlyDead: 42, // Player is dead, but fatality move hasn't been performed
         st_Dead: 43,
         st_Remove: 44,
+
+        st_Idle1: 45,
+        st_Idle2: 46,
+        st_Idle3: 47,
+        st_Idle4: 48,
+
+        st_Walk1: 49,
+        st_Walk2: 50,
+        st_Walk3: 51,
+        st_Walk4: 52,
+        st_Walk5: 53,
+
+        st_JumpStart: 54,
+        st_JumpEnd: 55,
+
+        st_Hadouken1: 56,
+        st_Hadouken2: 57,
+        st_Hadouken3: 58,
+        st_Hadouken4: 59,
+        st_Hadouken5: 60,
+
+        st_FartTurd1: 61,
+        st_FartTurd2: 62,
+        st_FartTurd3: 63,
+        st_FartTurd4: 64,
+        st_FartTurd5: 65,
+        st_FartTurd6: 66,
+        st_FartTurd7: 67,
+        st_FartTurd8: 68,
+        st_FartTurd9: 69,
+        st_FartTurd10: 70,
+
+        st_BlowBoog1: 71,
+        st_BlowBoog2: 72,
+        st_BlowBoog3: 73,
+        st_BlowBoog4: 74,
+        st_BlowBoog5: 75,
+        st_BlowBoog6: 76,
+        st_BlowBoog7: 77,
+        st_BlowBoog8: 78,
+        st_BlowBoog9: 79,
+        st_BlowBoog10: 80
+
+
     });
 
 
@@ -88,7 +138,7 @@
         var entity = {
             x: 0,
             y: 0,
-            angle: 0,
+            //angle: 0,
             type: 0,
             health: 0,
             //max_health: 0,
@@ -110,7 +160,8 @@
             state: 0,
             dir: 0,
             sprite: 0,
-            player: -1,
+            flip: 0,
+            //player: -1,
             frames: [0],
             frame: 0,
             _index: 0,
@@ -135,9 +186,6 @@
     function doEntity(ent, game, tics) { // FIXME: revise!
         var think, action;
 
-        //assert( ent->tilex >= 0 && ent->tilex < 64 );
-        //assert( ent->tiley >= 0 && ent->tiley < 64 );
-        //assert( ent->dir >= 0 && ent->dir <= 8 );
         if (ent.state == FvB.st_Remove) {
             return false;
         }
@@ -158,17 +206,21 @@
                     }
                 }
 
-                ent.state = FvB.objstate[ent.type][ent.state].next_state;
+                //ent.state = FvB.objstate[ent.type][ent.state].next_state;
+                nextState(ent);
                 if (ent.state == FvB.st_Remove) {
                     return false;
                 }
 
-                if (!FvB.objstate[ent.type][ent.state].timeout) {
-                    ent.ticcount = 0;
+                if (!ent.ticcount) {
                     break;
                 }
+                //if (!FvB.objstate[ent.type][ent.state].timeout) {
+                //    ent.ticcount = 0;
+                //    break;
+                //}
 
-                ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
+                //ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
             }
         }
         //
@@ -189,18 +241,21 @@
     }
     // need to make this generic for changing needed entity properties on stateChange
     function setHitBox(ent) {
-        switch (ent.state) {
-            case FvB.st_Crouch:
-                ent.hitBox.x1 = 26;
-                ent.hitBox.x2 = 36;
-                ent.hitBox.y1 = 32;
-                ent.hitBox.y2 = 64;
-                break;
-            default:
-                ent.hitBox.x1 = 26;
-                ent.hitBox.x2 = 36;
-                ent.hitBox.y1 = 0;
-                ent.hitBox.y2 = 64;
+
+        var sprite = FvB.Sprites.getSprite(ent.sprite);
+
+        if (sprite.hitBox != null) {
+            // ent.hitBox = sprite.hitBox doesn't work!  It then modifies the sprite hitBox later...  
+            ent.hitBox.x1 = sprite.hitBox.x1;
+            ent.hitBox.x2 = sprite.hitBox.x2;
+            ent.hitBox.y1 = sprite.hitBox.y1;
+            ent.hitBox.y2 = sprite.hitBox.y2;
+        } else {
+            // Default to sprite size
+            ent.hitBox.x1 = -sprite.width/2;
+            ent.hitBox.x2 = sprite.width/2;
+            ent.hitBox.y1 = -sprite.height;
+            ent.hitBox.y2 = 0;
         }
     }
     /**
@@ -209,16 +264,28 @@
      * @param {object} ent The actor object.
      * @param {number} newState The new state.
      */
+    function nextState(ent) {
+        stateChange(ent, FvB.objstate[ent.type][ent.state].next_state);
+    }
     function stateChange(ent, newState) {
+        // assert( ent->type >= 0 && ent->type < NUMENTITIES );
         ent.state = newState;
-        // assert( ent->type >= 0 && ent->type < NUMENEMIES );
-        if (newState == FvB.st_Remove) {
+        ent.flip = FvB.objstate[ent.type][ent.state].flip;
+        ent.sprite = FvB.objstate[ent.type][ent.state].texture;
+
+        if (!FvB.objstate[ent.type][ent.state].timeout) {
             ent.ticcount = 0;
         } else {
-            // assert( ent->state >= 0 && ent->state < NUMSTATES );
-            ent.ticcount = FvB.objstate[ent.type][ent.state].timeout; //0;
-            setHitBox(ent);
+            
+            ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
         }
+
+        if (newState == FvB.st_Remove) {
+            ent.ticcount = 0;
+            return;
+        } 
+            setHitBox(ent);
+        
     }
 
     /**
@@ -234,7 +301,12 @@
         }
     }
    
-    // Calculate midpoint of two entities
+    /**
+     * @description Returns the center point of two entities
+     * @memberOf FvB.Entities
+     * @param {object} e1 Entity1.
+     * @param {object} e2 Entity2.
+     */
     function centerPoint(e1, e2) {
 
         var x, y, left, right,deltax, deltay;
@@ -262,6 +334,22 @@
         y = left.y + left.hitBox.y1 + (deltay / 2);
 
         return { x: x, y: y };
+    }
+
+    function haveCollided(a, b) {
+
+        if ((a.x + a.hitBox.x2) >= (b.x + b.hitBox.x1)) {
+            if ((a.x + a.hitBox.x1) <= (b.x + b.hitBox.x2)) {
+                if ((a.y + a.hitBox.y2) >= (b.y + b.hitBox.y1)) {
+                    if ((a.y + a.hitBox.y1) <= (b.y + b.hitBox.y2)) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
+
     }
 
     function spawnLine(e, game, x1, y1, x2, y2, color) {
@@ -296,27 +384,58 @@
         self.y = y;
         self.sprite = textureId;
     }
+
     function spawnExplosion(e1, e2, game) {
         self = getNewEntity(game);
 
         if (!self)
             return;
 
-        self.x = centerPoint(e1, e2).x - 20;
-        self.y = centerPoint(e1, e2).y - 20;
-        self.state = FvB.st_Explosion1;
-        self.type = FvB.en_Explosion;
-        self.ticcount = FvB.objstate[self.type][self.state].timeout;
-        //self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        //self.speed = 16;
-
+        var pos = centerPoint(e1, e2);
+        
         switch (e1.objClass) {
             case FvB.ob_HugeProjectile:
                 FvB.Sound.playSound(FvB.SFX_HUGE_EXPLOSION);
+                self.type = FvB.en_HugeExplosion;
+                self.x = pos.x;
+                self.y = pos.y + 20;
+                break;
+            case FvB.ob_BasicProjectile:
+                //FvB.Sound.playSound(FvB.SFX_SPLAT);
+                self.type = FvB.en_Explosion;
+                self.x = pos.x;
+                self.y = pos.y + 10;
                 break;
             default:
-                ;//FvB.Sound.playSound(SFX_SPLAT);
+                ;
         }
+
+        stateChange(self, FvB.st_Explosion1);
+
+        return self;
+    }
+
+    function A_SpawnHadouken(player, game, tics) {
+        var self = getNewEntity(game);
+
+        if (!self)
+            return;
+
+        self.dir = player.dir;
+        
+            self.y = player.y + 7;
+            self.x = player.x + 36 - (self.dir == FvB.DIR_LEFT ? 24 : 0);
+        
+
+        self.objClass = FvB.ob_HugeProjectile;
+        self.parent = player;
+        self.type = FvB.en_Hadouken;
+        self.hitBox.x1 = 0;
+        self.hitBox.x2 = 24;
+        self.hitBox.y1 = 8;
+        self.hitBox.y2 = 16;
+
+        stateChange(self, FvB.st_Path);
 
         return self;
     }
@@ -329,21 +448,16 @@
 
         self.dir = player.dir;
         if (player.type == FvB.en_Boogerboy) {
-            self.y = player.y + 7;
-            self.x = player.x + 36 - (self.dir == FvB.DIR_LEFT ? 24 : 0);
+            self.y = player.y -40;
+            self.x = player.x + (self.dir == FvB.DIR_LEFT ? -16 : 16);
         } else {
-            self.y = player.y + 33;
-            self.x = player.x + 32 - (self.dir == FvB.DIR_LEFT ? 34 : 0);
+            self.y = player.y - 14;
+            self.x = player.x + (self.dir == FvB.DIR_LEFT ? -20 : 20);
         }
         
-        self.state = FvB.st_Path;
+        
         self.objClass = FvB.ob_HugeProjectile;
         self.parent = player;
-
-        self.hitBox.x1 = 0;
-        self.hitBox.x2 = 24;
-        self.hitBox.y1 = 8;
-        self.hitBox.y2 = 16;
 
         switch (player.type) {
             case FvB.en_Fartsac:
@@ -357,25 +471,13 @@
 
         }
 
+        stateChange(self, FvB.st_Path);
+
         return self;
 
     }
     
-    function haveCollided(a, b) {
-
-        if ((a.x + a.hitBox.x2) >= (b.x + b.hitBox.x1)) {
-            if ((a.x + a.hitBox.x1) <= (b.x + b.hitBox.x2)) {
-                if ((a.y + a.hitBox.y2) >= (b.y + b.hitBox.y1)) {
-                    if ((a.y + a.hitBox.y1) <= (b.y + b.hitBox.y2)) {
-                        return true;
-                    }
-                }
-            }
-
-        }
-        return false;
-        
-    }
+    
 
     function spawnBasicProjectile(player, game) {
         var self = getNewEntity(game);
@@ -384,16 +486,10 @@
             return;
 
         self.dir = player.dir;
-        self.y = player.y + 32;
-        self.x = player.x + 32 - (player.dir == FvB.DIR_LEFT ? 8 : 0);
-        self.state = FvB.st_Path;
+        self.y = player.y - 26;
+        self.x = player.x + (player.dir == FvB.DIR_LEFT ? -8 : 8);
         self.objClass = FvB.ob_BasicProjectile;
         self.parent = player;
-
-        self.hitBox.x1 = 0;
-        self.hitBox.x2 = 6;
-        self.hitBox.y1 = 0;
-        self.hitBox.y2 = 6;
 
         switch (player.type) {
             case FvB.en_Fartsac:
@@ -406,6 +502,8 @@
                 break;
 
         }
+
+        stateChange(self, FvB.st_Path);
 
         return self;
 
@@ -421,7 +519,9 @@
         spawnSingleFrameSprite: spawnSingleFrameSprite,
         spawnLine: spawnLine,
         stateChange: stateChange,
-        haveCollided: haveCollided
+        nextState: nextState,
+        haveCollided: haveCollided,
+        A_SpawnHadouken: A_SpawnHadouken
     };
 
 })();

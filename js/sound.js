@@ -21,8 +21,8 @@
         MAX_PLAYSOUNDS: 128,
         MAX_CHANNELS: 64,
 
-        MUSIC_VOLUME: 0.8,
-        MASTER_VOLUME: 0.6,
+        MUSIC_VOLUME: 0.3,
+        MASTER_VOLUME: 0.8,
 
         SFX_PATH: 'sfx'
     });
@@ -101,6 +101,9 @@
             music.volume = FvB.MUSIC_VOLUME * FvB.MASTER_VOLUME * (musicEnabled ? 1 : 0);
             music.play();
         }
+        else {
+            music.play();
+        }
     }
 
     function stopAllSounds() {
@@ -114,6 +117,7 @@
 
     function init(soundResources) {
         // Load in all sounds and play them at 0 volume
+        
         if (Modernizr.audio) {
             for (i = 0; i < soundResources.length; i++) {
                 var file = soundResources[i];
@@ -128,6 +132,7 @@
 
                 audio.volume = 0;
                 audio.play();
+                audio.pause();
             }
         }       
     }
@@ -136,7 +141,7 @@
         var finishedLoading = true;
 
         for (var s in sounds) {
-            if (!sounds[s][0].ended) {
+            if (!sounds[s][0].ended && !sounds[s][0].paused) {
                 finishedLoading = false;
                 break;
             }
