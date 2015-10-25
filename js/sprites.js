@@ -8,164 +8,195 @@ FvB.Sprites = (function () {
     //
     // sprite constants
     //
-    var spriteNames = [
-        "SPR_BACKGROUND",
-        //
-        // Fartsac
-        //
-        "SPR_FARTSAC_STAND_1", "SPR_FARTSAC_STAND_2",
-        "SPR_FARTSAC_CROUCH_1", "SPR_FARTSAC_CROUCH_2",
-        "SPR_FARTSAC_JUMP_1", "SPR_FARTSAC_JUMP_2",
-        "SPR_FART_BLOW_1", "SPR_FART_BLOW_2", "SPR_FART_BLOW_3", "SPR_FART_BLOW_4", "SPR_FART_BLOW_5",
-        "SPR_FART_BLOW_6", "SPR_FART_BLOW_7", "SPR_FART_BLOW_8", "SPR_FART_BLOW_9", "SPR_FART_BLOW_10",
-        "SPR_FARTSAC_DAMAGED",
-        "SPR_BUTT_EATS_BOOG_1", "SPR_BUTT_EATS_BOOG_2", "SPR_BUTT_EATS_BOOG_3", "SPR_BUTT_EATS_BOOG_4", "SPR_BUTT_EATS_BOOG_5", "SPR_BUTT_EATS_BOOG_6",
-        //
-        // Boogerboy
-        //
-        "SPR_BOOGERBOY_STAND_1", "SPR_BOOGERBOY_STAND_2",
-        "SPR_BOOGERBOY_CROUCH_1", "SPR_BOOGERBOY_CROUCH_2",
-        "SPR_BOOGERBOY_JUMP_1", "SPR_BOOGERBOY_JUMP_2",
-        "SPR_BOOG_BLOW_1", "SPR_BOOG_BLOW_2", "SPR_BOOG_BLOW_3", "SPR_BOOG_BLOW_4", "SPR_BOOG_BLOW_5",
-        "SPR_BOOG_BLOW_6", "SPR_BOOG_BLOW_7", "SPR_BOOG_BLOW_8", "SPR_BOOG_BLOW_9", "SPR_BOOG_BLOW_10",
-        "SPR_BOOGERBOY_DAMAGED",
-        "SPR_BOOG_HEAD","SPR_BOOG_HEADLESS",
-        //
-        // Static Sprites
-        //
-        "SPR_FARTBALL",
-        "SPR_BOOGER",
-        "SPR_HUGE_FARTBALL", "SPR_HUGE_FARTBALL_1",
-        "SPR_HUGE_BOOGER","SPR_HUGE_BOOGER_1",
-        "SPR_EXPLOSION_0", "SPR_EXPLOSION_1", "SPR_EXPLOSION_2", "SPR_EXPLOSION_3", "SPR_EXPLOSION_4", "SPR_EXPLOSION_5", "SPR_EXPLOSION_6",
-        "SPR_EXPLOSION_7", "SPR_EXPLOSION_8", "SPR_EXPLOSION_9", "SPR_EXPLOSION_10", "SPR_EXPLOSION_11", "SPR_EXPLOSION_12",
-        "SPR_HUGE_EXPLOSION_0", "SPR_HUGE_EXPLOSION_1", "SPR_HUGE_EXPLOSION_2", "SPR_HUGE_EXPLOSION_3", "SPR_HUGE_EXPLOSION_4", "SPR_HUGE_EXPLOSION_5", "SPR_HUGE_EXPLOSION_6",
-        "SPR_HUGE_EXPLOSION_7", "SPR_HUGE_EXPLOSION_8", "SPR_HUGE_EXPLOSION_9", "SPR_HUGE_EXPLOSION_10", "SPR_HUGE_EXPLOSION_11", "SPR_HUGE_EXPLOSION_12",
-        //
-        // Ryu
-        //
-        "SPR_RYU_IDLE_1", "SPR_RYU_IDLE_2", "SPR_RYU_IDLE_3", "SPR_RYU_IDLE_4",
-        "SPR_RYU_WALK_1", "SPR_RYU_WALK_2", "SPR_RYU_WALK_3", "SPR_RYU_WALK_4", "SPR_RYU_WALK_5",
-        "SPR_RYU_CROUCH_1",
-        "SPR_RYU_JUMP_1", "SPR_RYU_JUMP_2",
-        "SPR_RYU_HADOUKEN_1", "SPR_RYU_HADOUKEN_2", "SPR_RYU_HADOUKEN_3", "SPR_RYU_HADOUKEN_4", "SPR_RYU_HADOUKEN_5",
-        "SPR_HADOUKEN_1","SPR_HADOUKEN_2","SPR_HADOUKEN_3"
+    //var spriteNames = [
+    //    "SPR_BACKGROUND",
+    //    //
+    //    // Fartsac
+    //    //
+    //    "SPR_FARTSAC_STAND_1", "SPR_FARTSAC_STAND_2",
+    //    "SPR_FARTSAC_CROUCH_1", "SPR_FARTSAC_CROUCH_2",
+    //    "SPR_FARTSAC_JUMP_1", "SPR_FARTSAC_JUMP_2",
+    //    "SPR_FART_TURD_1", "SPR_FART_TURD_2", "SPR_FART_TURD_3", "SPR_FART_TURD_4", "SPR_FART_TURD_5",
+    //    "SPR_FART_TURD_6", "SPR_FART_TURD_7", "SPR_FART_TURD_8", "SPR_FART_TURD_9", "SPR_FART_TURD_10",
+    //    "SPR_FARTSAC_DAMAGED",
+    //    "SPR_BUTT_EATS_BOOG_1", "SPR_BUTT_EATS_BOOG_2", "SPR_BUTT_EATS_BOOG_3", "SPR_BUTT_EATS_BOOG_4", "SPR_BUTT_EATS_BOOG_5", "SPR_BUTT_EATS_BOOG_6",
+    //    //
+    //    // Boogerboy
+    //    //
+    //    "SPR_BOOGERBOY_STAND_1", "SPR_BOOGERBOY_STAND_2",
+    //    "SPR_BOOGERBOY_CROUCH_1", "SPR_BOOGERBOY_CROUCH_2",
+    //    "SPR_BOOGERBOY_JUMP_1", "SPR_BOOGERBOY_JUMP_2",
+    //    "SPR_BOOG_BLOW_1", "SPR_BOOG_BLOW_2", "SPR_BOOG_BLOW_3", "SPR_BOOG_BLOW_4", "SPR_BOOG_BLOW_5",
+    //    "SPR_BOOG_BLOW_6", "SPR_BOOG_BLOW_7", "SPR_BOOG_BLOW_8", "SPR_BOOG_BLOW_9", "SPR_BOOG_BLOW_10",
+    //    "SPR_BOOGERBOY_DAMAGED",
+    //    "SPR_BOOG_HEAD","SPR_BOOG_HEADLESS",
+    //    //
+    //    // Static Sprites
+    //    //
+    //    "SPR_FARTBALL",
+    //    "SPR_BOOGER",
+    //    "SPR_HUGE_FARTBALL", "SPR_HUGE_FARTBALL_1",
+    //    "SPR_HUGE_BOOGER","SPR_HUGE_BOOGER_1",
+    //    "SPR_EXPLOSION_0", "SPR_EXPLOSION_1", "SPR_EXPLOSION_2", "SPR_EXPLOSION_3", "SPR_EXPLOSION_4", "SPR_EXPLOSION_5", "SPR_EXPLOSION_6",
+    //    "SPR_EXPLOSION_7", "SPR_EXPLOSION_8", "SPR_EXPLOSION_9", "SPR_EXPLOSION_10", "SPR_EXPLOSION_11", "SPR_EXPLOSION_12",
+    //    "SPR_HUGE_EXPLOSION_0", "SPR_HUGE_EXPLOSION_1", "SPR_HUGE_EXPLOSION_2", "SPR_HUGE_EXPLOSION_3", "SPR_HUGE_EXPLOSION_4", "SPR_HUGE_EXPLOSION_5", "SPR_HUGE_EXPLOSION_6",
+    //    "SPR_HUGE_EXPLOSION_7", "SPR_HUGE_EXPLOSION_8", "SPR_HUGE_EXPLOSION_9", "SPR_HUGE_EXPLOSION_10", "SPR_HUGE_EXPLOSION_11", "SPR_HUGE_EXPLOSION_12",
+    //    //
+    //    // Ryu
+    //    //
+    //    "SPR_RYU_IDLE_1", "SPR_RYU_IDLE_2", "SPR_RYU_IDLE_3", "SPR_RYU_IDLE_4",
+    //    "SPR_RYU_WALK_1", "SPR_RYU_WALK_2", "SPR_RYU_WALK_3", "SPR_RYU_WALK_4", "SPR_RYU_WALK_5",
+    //    "SPR_RYU_CROUCH_1",
+    //    "SPR_RYU_JUMP_1", "SPR_RYU_JUMP_2",
+    //    "SPR_RYU_HADOUKEN_1", "SPR_RYU_HADOUKEN_2", "SPR_RYU_HADOUKEN_3", "SPR_RYU_HADOUKEN_4", "SPR_RYU_HADOUKEN_5",
+    //    "SPR_HADOUKEN_1","SPR_HADOUKEN_2","SPR_HADOUKEN_3"
 
+    //];
+
+    
+
+   
+
+   
+    
+    var sprites = [
+        { sprite: "SPR_BACKGROUND", sheet: "background.PNG", xOffset: 0, yOffset: 0, width: 640, height: 400, hitBox: null },
+{ sprite: "SPR_RYU_BACKGROUND", sheet: "RYU-STAGE.PNG", xOffset: 0, yOffset: 0, width: 640, height: 400, hitBox: null },
+{ sprite: "SPR_PLAYER_HEALTH_BAR", sheet: "HEALTH.PNG", xOffset: 0, yOffset: 0, width: 640, height: 30, hitBox: null },
+
+// Choose a character
+
+{ sprite: "SPR_CHARACTER_SELECT_TEXT", sheet: "CHARSELECT.PNG", xOffset: 0, yOffset: 0, width: 640, height: 22, hitBox: null },
+{ sprite: "SPR_1P", sheet: "CHARSELECT.PNG", xOffset: 68, yOffset: 148, width: 34, height: 22, hitBox: null },
+{ sprite: "SPR_2P", sheet: "CHARSELECT.PNG", xOffset: 510, yOffset: 152, width: 34, height: 22, hitBox: null },
+{ sprite: "SPR_1P_SELECT", sheet: "CHARSELECT.PNG", xOffset: 8, yOffset: 42, width: 52, height: 82, hitBox: null },
+{ sprite: "SPR_2P_SELECT", sheet: "CHARSELECT.PNG", xOffset: 62, yOffset: 42, width: 52, height: 82, hitBox: null },
+{ sprite: "SPR_BOTH_SELECT", sheet: "CHARSELECT.PNG", xOffset: 116, yOffset: 42, width: 52, height: 82, hitBox: null },
+{ sprite: "SPR_VERSUS", sheet: "CHARSELECT.PNG", xOffset: 459, yOffset: 40, width: 126, height: 94, hitBox: null },
+{ sprite: "SPR_CHARACTER_SELECT_MATRIX", sheet: "CHARSELECT.PNG", xOffset: 244, yOffset: 80, width: 152, height: 82, hitBox: null },
+// Character sprites must be in enum order for easier rendering
+{ sprite: "SPR_FARTSAC_TEXT", sheet: "CHARSELECT.PNG", xOffset: 5, yOffset: 181, width: 96, height: 14, hitBox: null },
+{ sprite: "SPR_BOOGERBOY_TEXT", sheet: "CHARSELECT.PNG", xOffset: 441, yOffset: 178, width: 124, height: 14, hitBox: null },
+{ sprite: "SPR_YOHAN_TEXT", sheet: "CHARSELECT.PNG", xOffset: 270, yOffset: 179, width: 72, height: 14, hitBox: null },
+{ sprite: "SPR_RYU_TEXT", sheet: "CHARSELECT.PNG", xOffset: 655, yOffset: 173, width: 40, height: 14, hitBox: null },
+{ sprite: "SPR_FARTSAC_MUG", sheet: "CHARSELECT.PNG", xOffset: 3, yOffset: 198, width: 202, height: 205, hitBox: null },
+{ sprite: "SPR_BOOGERBOY_MUG", sheet: "CHARSELECT.PNG", xOffset: 429, yOffset: 199, width: 202, height: 205, hitBox: null },
+{ sprite: "SPR_YOHAN_MUG", sheet: "CHARSELECT.PNG", xOffset: 215, yOffset: 199, width: 202, height: 205, hitBox: null },
+{ sprite: "SPR_RYU_MUG", sheet: "CHARSELECT.PNG", xOffset: 646, yOffset: 200, width: 202, height: 205, hitBox: null },
+
+
+        // Fartsac
+        { sprite: "SPR_FARTSAC_STAND_1", sheet: "FARTSAC.PNG", xOffset: 0, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FARTSAC_CROUCH_1", sheet: "FARTSAC.PNG", xOffset: 64, yOffset: 0, width: 64, height: 64, hitBox: {x1: -12, x2: 14, y1: -36, y2: 0} },
+        { sprite: "SPR_FARTSAC_JUMP_1", sheet: "FARTSAC.PNG", xOffset: 128, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_1",      sheet: "FARTSAC.PNG", xOffset: 192, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_2",      sheet: "FARTSAC.PNG", xOffset: 256, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_3",      sheet: "FARTSAC.PNG", xOffset: 320, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_4",      sheet: "FARTSAC.PNG", xOffset: 384, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_5",      sheet: "FARTSAC.PNG", xOffset: 448, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_6",      sheet: "FARTSAC.PNG", xOffset: 512, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_7",      sheet: "FARTSAC.PNG", xOffset: 576, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_8",      sheet: "FARTSAC.PNG", xOffset: 640, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_9",      sheet: "FARTSAC.PNG", xOffset: 704, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FART_TURD_10",     sheet: "FARTSAC.PNG", xOffset: 768, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_FARTSAC_DAMAGED_1", sheet: "FARTSAC.PNG", xOffset: 0, yOffset: 128, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_FARTSAC_DAMAGED_2", sheet: "FARTSAC.PNG", xOffset: 64, yOffset: 128, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BUTT_EATS_BOOG_1", sheet: "BUTTHEAD.PNG", xOffset: 0,   yOffset: 0, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BUTT_EATS_BOOG_2", sheet: "BUTTHEAD.PNG", xOffset: 64,  yOffset: 0, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BUTT_EATS_BOOG_3", sheet: "BUTTHEAD.PNG", xOffset: 128, yOffset: 0, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BUTT_EATS_BOOG_4", sheet: "BUTTHEAD.PNG", xOffset: 192, yOffset: 0, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BUTT_EATS_BOOG_5", sheet: "BUTTHEAD.PNG", xOffset: 256, yOffset: 0, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BUTT_EATS_BOOG_6", sheet: "BUTTHEAD.PNG", xOffset: 320, yOffset: 0, width: 64, height: 64, hitBox: null },
+        // Boogerboy
+ { sprite: "SPR_BOOGERBOY_STAND_1", sheet: "BOOGERBOY.PNG", xOffset: 0, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BOOGERBOY_CROUCH_1", sheet: "BOOGERBOY.PNG", xOffset: 64, yOffset: 0, width: 64, height: 64, hitBox: { x1: -12, x2: 14, y1: -36, y2: 0 } },
+        { sprite: "SPR_BOOGERBOY_JUMP_1", sheet: "BOOGERBOY.PNG", xOffset: 128, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+         { sprite: "SPR_BLOW_BOOG_1", sheet: "BOOGERBOY.PNG", xOffset: 192, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_2", sheet: "BOOGERBOY.PNG", xOffset: 256, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_3", sheet: "BOOGERBOY.PNG", xOffset: 320, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_4", sheet: "BOOGERBOY.PNG", xOffset: 384, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_5", sheet: "BOOGERBOY.PNG", xOffset: 448, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_6", sheet: "BOOGERBOY.PNG", xOffset: 512, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_7", sheet: "BOOGERBOY.PNG", xOffset: 576, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_8", sheet: "BOOGERBOY.PNG", xOffset: 640, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_9", sheet: "BOOGERBOY.PNG", xOffset: 704, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BLOW_BOOG_10", sheet: "BOOGERBOY.PNG", xOffset: 768, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_BOOGERBOY_DAMAGED_1", sheet: "BOOGERBOY.PNG", xOffset: 0, yOffset: 128, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BOOGERBOY_DAMAGED_2", sheet: "BOOGERBOY.PNG", xOffset: 64, yOffset: 128, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BOOG_HEAD", sheet: "BOOGHEAD.PNG", xOffset: 0, yOffset: 0, width: 12, height: 12, hitBox: null },
+        { sprite: "SPR_BOOG_HEADLESS", sheet: "HEADLESS.PNG", xOffset: 0, yOffset: 0, width: 64, height: 64, hitBox: null },
+
+{ sprite: "SPR_FARTBALL", sheet: "FARTSAC.PNG", xOffset: 861, yOffset: 0, width: 6, height: 6, hitBox: null },
+        { sprite: "SPR_BOOGER", sheet: "BOOGERBOY.PNG", xOffset: 861, yOffset: 0, width: 6, height: 6, hitBox: null },
+        
+        { sprite: "SPR_HUGE_FARTBALL", sheet: "FARTSAC.PNG", xOffset: 832, yOffset: 0, width: 22, height: 10, hitBox: null },
+        //{ sprite: "SPR_HUGE_FARTBALL_1", sheet: "FARTSAC.PNG", xOffset: 0, yOffset: 140, width: 22, height: 10, hitBox: null },
+        { sprite: "SPR_HUGE_BOOGER", sheet: "BOOGERBOY.PNG", xOffset: 832, yOffset: 0, width: 22, height: 10, hitBox: null },
+        //{ sprite: "SPR_HUGE_BOOGER_1", sheet: "HUGE.PNG", xOffset: 72, yOffset: 0, width: 24, height: 24, hitBox: null },
+        // Explosion
+        { sprite: "SPR_EXPLOSION_0",  sheet: "SMALLEXPLOSION.PNG", xOffset: 0,   yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_1",  sheet: "SMALLEXPLOSION.PNG", xOffset: 20,  yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_2",  sheet: "SMALLEXPLOSION.PNG", xOffset: 40,  yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_3",  sheet: "SMALLEXPLOSION.PNG", xOffset: 60,  yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_4",  sheet: "SMALLEXPLOSION.PNG", xOffset: 80,  yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_5",  sheet: "SMALLEXPLOSION.PNG", xOffset: 100, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_6",  sheet: "SMALLEXPLOSION.PNG", xOffset: 120, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_7",  sheet: "SMALLEXPLOSION.PNG", xOffset: 140, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_8",  sheet: "SMALLEXPLOSION.PNG", xOffset: 160, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_9",  sheet: "SMALLEXPLOSION.PNG", xOffset: 180, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_10", sheet: "SMALLEXPLOSION.PNG", xOffset: 200, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_11", sheet: "SMALLEXPLOSION.PNG", xOffset: 220, yOffset: 0, width: 20, height: 20, hitBox: null },
+        { sprite: "SPR_EXPLOSION_12", sheet: "SMALLEXPLOSION.PNG", xOffset: 240, yOffset: 0, width: 20, height: 20, hitBox: null },
+        // Huge Explosion
+        { sprite: "SPR_HUGE_EXPLOSION_0",  sheet: "EXPLODEY.PNG", xOffset: 0,   yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_1",  sheet: "EXPLODEY.PNG", xOffset: 40,  yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_2",  sheet: "EXPLODEY.PNG", xOffset: 80,  yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_3",  sheet: "EXPLODEY.PNG", xOffset: 120, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_4",  sheet: "EXPLODEY.PNG", xOffset: 160, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_5",  sheet: "EXPLODEY.PNG", xOffset: 200, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_6",  sheet: "EXPLODEY.PNG", xOffset: 240, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_7",  sheet: "EXPLODEY.PNG", xOffset: 280, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_8",  sheet: "EXPLODEY.PNG", xOffset: 320, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_9",  sheet: "EXPLODEY.PNG", xOffset: 360, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_10", sheet: "EXPLODEY.PNG", xOffset: 400, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_11", sheet: "EXPLODEY.PNG", xOffset: 440, yOffset: 0, width: 40, height: 40, hitBox: null },
+        { sprite: "SPR_HUGE_EXPLOSION_12", sheet: "EXPLODEY.PNG", xOffset: 480, yOffset: 0, width: 40, height: 40, hitBox: null },
+        // Ryu Idle
+    { sprite: "SPR_RYU_IDLE_1", sheet: "RYU.PNG", xOffset: 5, yOffset: 17, width: 45, height: 82, hitBox: null },
+         { sprite: "SPR_RYU_IDLE_2",sheet: "RYU.PNG", xOffset: 54, yOffset: 17, width: 45, height: 82, hitBox: null },
+         { sprite: "SPR_RYU_IDLE_3",sheet: "RYU.PNG", xOffset: 104, yOffset: 17, width: 45, height: 82, hitBox: null },
+         { sprite: "SPR_RYU_IDLE_4",sheet: "RYU.PNG", xOffset: 153, yOffset: 17, width: 45, height: 82, hitBox: null },
+         // Ryu Walk
+          { sprite: "SPR_RYU_WALK_1", sheet: "RYU.PNG", xOffset: 204, yOffset: 17, width: 45, height: 82, hitBox: null },
+         { sprite: "SPR_RYU_WALK_2", sheet: "RYU.PNG", xOffset: 251, yOffset: 17, width: 45, height: 82, hitBox: null },
+         { sprite: "SPR_RYU_WALK_3", sheet: "RYU.PNG", xOffset: 300, yOffset: 17, width: 45, height: 82, hitBox: null },
+         { sprite: "SPR_RYU_WALK_4", sheet: "RYU.PNG", xOffset: 350, yOffset: 17, width: 45, height: 82, hitBox: null },
+          { sprite: "SPR_RYU_WALK_5", sheet: "RYU.PNG", xOffset: 400, yOffset: 17, width: 45, height: 82, hitBox: null },
+          // Ryu Crouch
+    { sprite: "SPR_RYU_CROUCH_1", sheet: "RYU.PNG", xOffset: 1159, yOffset: 17, width: 45, height: 82, hitBox: null },
+    // Ryu Jump
+    { sprite: "SPR_RYU_JUMP_1",sheet: "RYU.PNG", xOffset: 537, yOffset: 17, width: 43, height: 82, hitBox: null },
+    { sprite: "SPR_RYU_JUMP_2",sheet: "RYU.PNG", xOffset: 575, yOffset: 17, width: 43, height: 82, hitBox: null },
+    // Ryu Hadouken
+      { sprite: "SPR_RYU_HADOUKEN_1", sheet: "RYU.PNG", xOffset: 4, yOffset: 636, width: 52, height: 85, hitBox: null },
+         { sprite: "SPR_RYU_HADOUKEN_2",sheet: "RYU.PNG", xOffset: 60, yOffset: 636, width: 66, height: 85, hitBox: null },
+         { sprite: "SPR_RYU_HADOUKEN_3",sheet: "RYU.PNG", xOffset: 131, yOffset: 636, width: 68, height: 85, hitBox: null },
+         { sprite: "SPR_RYU_HADOUKEN_4",sheet: "RYU.PNG", xOffset: 202, yOffset: 636, width: 96, height: 85, hitBox: null },
+          { sprite: "SPR_RYU_HADOUKEN_5",sheet: "RYU.PNG", xOffset: 299, yOffset: 636, width: 72, height: 85, hitBox: null },
+
+          // Hadouken Projectile
+          { sprite: "SPR_HADOUKEN_1",sheet: "RYU.PNG", xOffset: 131, yOffset: 636, width: 68, height: 85, hitBox: null },
+         { sprite: "SPR_HADOUKEN_2",sheet: "RYU.PNG", xOffset: 202, yOffset: 636, width: 96, height: 85, hitBox: null },
+          { sprite: "SPR_HADOUKEN_3",sheet: "RYU.PNG", xOffset: 299, yOffset: 636, width: 72, height: 85, hitBox: null }
     ];
 
     var spriteConsts = {};
-    for (var i = 0, n = spriteNames.length; i < n; i++) {
-        spriteConsts[spriteNames[i]] = i;
+    //for (var i = 0, n = spriteNames.length; i < n; i++) {
+    //    spriteConsts[spriteNames[i]] = i;
+    //}
+    for (var i = 0, n = sprites.length; i < n; i++) {
+        spriteConsts[sprites[i].sprite] = i;
     }
-
-    // 
-    // Each sprite constant is an index into this array
-    //
-    var sheets = [
-        { sheet: "background.PNG", size: 640, idx: 0, num: 1},
-        { sheet: "FARTSAC0.PNG", size: 64, idx: 0, num: 6 },
-        { sheet: "FARTSAC0.PNG", size: 64, idx: 1, num: 6 },
-        { sheet: "FARTSAC0.PNG", size: 64, idx: 2, num: 6 },
-        { sheet: "FARTSAC0.PNG", size: 64, idx: 3, num: 6 },
-        { sheet: "FARTSAC0.PNG", size: 64, idx: 4, num: 6 },
-        { sheet: "FARTSAC0.PNG", size: 64, idx: 5, num: 6 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 0, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 2, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 4, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 6, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 8, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 10, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 12, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 14, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 16, num: 20 },
-        { sheet: "FARTBLOW.PNG", size: 64, idx: 18, num: 20 },
-        { sheet: "DAMAGED.PNG", size: 64, idx: 0, num: 4 },
-        { sheet: "BUTTHEAD.PNG", size: 64, idx: 0, num: 6 },
-        { sheet: "BUTTHEAD.PNG", size: 64, idx: 1, num: 6 },
-        { sheet: "BUTTHEAD.PNG", size: 64, idx: 2, num: 6 },
-        { sheet: "BUTTHEAD.PNG", size: 64, idx: 3, num: 6 },
-        { sheet: "BUTTHEAD.PNG", size: 64, idx: 4, num: 6 },
-        { sheet: "BUTTHEAD.PNG", size: 64, idx: 5, num: 6 },
-        { sheet: "BOOGBOY0.PNG", size: 64, idx: 0, num: 6 },
-        { sheet: "BOOGBOY0.PNG", size: 64, idx: 1, num: 6 },
-        { sheet: "BOOGBOY0.PNG", size: 64, idx: 2, num: 6 },
-        { sheet: "BOOGBOY0.PNG", size: 64, idx: 3, num: 6 },
-        { sheet: "BOOGBOY0.PNG", size: 64, idx: 4, num: 6 },
-        { sheet: "BOOGBOY0.PNG", size: 64, idx: 5, num: 6 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 0, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 2, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 4, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 6, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 8, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 10, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 12, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 14, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 16, num: 20 },
-        { sheet: "BOOGBLOW.PNG", size: 64, idx: 18, num: 20 },
-        { sheet: "DAMAGED.PNG", size: 64, idx: 2, num: 4 },
-        { sheet: "BOOGHEAD.PNG", size: 12, idx: 0, num: 1 },
-        { sheet: "HEADLESS.PNG", size: 64, idx: 0, num: 2 },
-        { sheet: "FARTBOOG.PNG", size: 6, idx: 0, num: 2 },
-        { sheet: "FARTBOOG.PNG", size: 6, idx: 1, num: 2 },
-        { sheet: "HUGE.PNG", size: 24, idx: 0, num: 6 },
-        { sheet: "HUGE.PNG", size: 24, idx: 1, num: 6 },
-        { sheet: "HUGE.PNG", size: 24, idx: 2, num: 6 },
-        { sheet: "HUGE.PNG", size: 24, idx: 3, num: 6 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 0, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 1, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 2, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 3, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 4, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 5, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 6, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 7, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 8, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 9, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 10, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 11, num: 13 },
-        { sheet: "SMALLEXPLOSION.PNG", size: 20, idx: 12, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 0, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 1, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 2, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 3, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 4, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 5, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 6, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 7, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 8, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 9, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 10, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 11, num: 13 },
-        { sheet: "EXPLODEY.PNG", size: 40, idx: 12, num: 13 },
-        // Ryu Idle
-         { sheet: "RYU.PNG", x: 5, y: 17, width: 45, height: 82 },
-         { sheet: "RYU.PNG", x: 54, y: 17, width: 45, height: 82 },
-         { sheet: "RYU.PNG", x: 104, y: 17, width: 45, height: 82 },
-         { sheet: "RYU.PNG", x: 153, y: 17, width: 45, height: 82 },
-         // Ryu Walk
-          { sheet: "RYU.PNG", x: 204, y: 17, width: 45, height: 82 },
-         { sheet: "RYU.PNG", x: 251, y: 17, width: 45, height: 82 },
-         { sheet: "RYU.PNG", x: 300, y: 17, width: 45, height: 82 },
-         { sheet: "RYU.PNG", x: 350, y: 17, width: 45, height: 82 },
-          { sheet: "RYU.PNG", x: 400, y: 17, width: 45, height: 82 },
-          // Ryu Crouch
-    { sheet: "RYU.PNG", x: 1159, y: 17, width: 45, height: 82 },
-    // Ryu Jump
-    { sheet: "RYU.PNG", x: 537, y: 17, width: 43, height: 82 },
-    { sheet: "RYU.PNG", x: 575, y: 17, width: 43, height: 82 },
-    // Ryu Hadouken
-      { sheet: "RYU.PNG", x: 4, y: 636, width: 52, height: 85 },
-         { sheet: "RYU.PNG", x: 60, y: 636, width: 66, height: 85 },
-         { sheet: "RYU.PNG", x: 131, y: 636, width: 68, height: 85 },
-         { sheet: "RYU.PNG", x: 202, y: 636, width: 96, height: 85 },
-          { sheet: "RYU.PNG", x: 299, y: 636, width: 72, height: 85 },
-
-          // Hadouken Projectile
-          { sheet: "RYU.PNG", x: 131, y: 636, width: 68, height: 85 },
-         { sheet: "RYU.PNG", x: 202, y: 636, width: 96, height: 85 },
-          { sheet: "RYU.PNG", x: 299, y: 636, width: 72, height: 85 }
-    ];
-
     FvB.setConsts(spriteConsts);
 
     var gfxResources = {};
@@ -184,13 +215,13 @@ FvB.Sprites = (function () {
 
         var fileName;
 
-        for (i = 0; i < sheets.length; i++) {
+        for (i = 0; i < sprites.length; i++) {
 
-            if (fileName == sheets[i].sheet) {
+            if (fileName == sprites[i].sheet) {
                 // already did this one
                 continue;
             } else {
-                fileName = sheets[i].sheet;
+                fileName = sprites[i].sheet;
             }
 
             loadImage(fileName);
@@ -210,19 +241,19 @@ FvB.Sprites = (function () {
         return ready;
     }
 
-    function getSheet(id) {
-        return sheets[id];
+    function getSprite(id) {
+        return sprites[id];
     }
 
     function getTexture(id) {
-        return gfxResources[sheets[id].sheet];
+        return gfxResources[sprites[id].sheet];
     }
 
     return {
         init: init,
         isReady: isReady,
         getTexture: getTexture,
-        getSheet: getSheet
+        getSprite: getSprite
     };
 
 })();
