@@ -304,8 +304,8 @@
     /**
      * @description Returns the center point of two entities
      * @memberOf FvB.Entities
-     * @param {object} e1 Entity1.
-     * @param {object} e2 Entity2.
+     * @param {object} Entity1.
+     * @param {object} Entity2.
      */
     function centerPoint(e1, e2) {
 
@@ -336,6 +336,12 @@
         return { x: x, y: y };
     }
 
+    /**
+    * @description Determine if two entities have collided
+    * @memberOf FvB.Entities
+    * @param {object} Entity1.
+    * @param {object} Entity2.
+    */
     function haveCollided(a, b) {
 
         if ((a.x + a.hitBox.x2) >= (b.x + b.hitBox.x1)) {
