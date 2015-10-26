@@ -22,7 +22,7 @@
         MAX_CHANNELS: 64,
 
         MUSIC_VOLUME: 0.1,
-        MASTER_VOLUME: 0.8,
+        MASTER_VOLUME: 1.0,
 
         SFX_PATH: 'sfx'
     });
