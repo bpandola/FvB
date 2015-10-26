@@ -308,58 +308,6 @@ FvB.Player = (function () {
         
     }
 
-    //function T_Blow(self, game, tics) {
-
-    //    // First time
-    //    if (self._index === 0 && self.speed === 0) {
-    //        self.frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    //        self.frame = 0;
-    //        self.speed = 20;
-
-    //        //switch (self.type) {
-    //        //    case FvB.en_Fartsac:
-    //        //        FvB.Sound.playSound("sfx/fartball.wav");
-    //        //        break;
-    //        //    case FvB.en_Boogerboy:
-    //        //        FvB.Sound.playSound("sfx/booger.wav");
-    //        //        break;
-    //        //}
-
-    //        return true;
-    //    }
-
-    //    self._index += self.speed * tics;
-    //    if (self.speed > 0) {
-    //        var max = self.frames.length;
-    //        var idx = Math.floor(self._index);
-    //        self.frame = self.frames[idx % max];
-
-    //        if (self.type == FvB.en_Fartsac) {
-    //            self.y -= FvB.PLAYER_JUMP_SPEED * tics;
-    //            if (self.y <= FvB.PLAYER_START_Y - 26) {
-    //                self.y = FvB.PLAYER_START_Y - 26;
-    //            }
-    //        } 
-    //        if (idx >= max) {
-    //            if (self.type == FvB.en_Fartsac) {
-    //                FvB.Entities.stateChange(self, FvB.st_JumpDown);
-    //            } else {
-    //                FvB.Entities.stateChange(self, FvB.st_Stand);
-    //            }
-    //            self.frames = [0];
-    //            self.frame = 0;
-    //            self.speed = 0;
-    //            self._index = 0;
-    //            FvB.Entities.spawnHugeProjectile(self, game);
-    //            return true;
-    //        }
-    //    }
-    //    else {
-
-    //        self.frame = self.frames[0];
-    //    }
-    //}
-
     function spawnPlayer(game, playerNum, playerCharacter) {
 
         var player = FvB.Entities.getNewEntity(game);
