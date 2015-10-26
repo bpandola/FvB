@@ -63,7 +63,7 @@ FvB.Sprites = (function () {
         { sprite: "SPR_BOOG_HEADLESS", sheet: "BOOGERBOY.PNG", xOffset: 0, yOffset: 256, width: 64, height: 64, hitBox: null },
         // These need to be in charEntity order as well
         { sprite: "SPR_FARTBALL", sheet: "FARTSAC.PNG", xOffset: 861, yOffset: 0, width: 6, height: 6, hitBox: null },
-        { sprite: "SPR_BOOGER", sheet: "BOOGERBOY.PNG", xOffset: 861, yOffset: 0, width: 6, height: 6, hitBox: null },
+        { sprite: "SPR_BOOGBALL", sheet: "BOOGERBOY.PNG", xOffset: 861, yOffset: 0, width: 6, height: 6, hitBox: null },
         { sprite: "SPR_HUGE_FARTBALL", sheet: "FARTSAC.PNG", xOffset: 832, yOffset: 0, width: 22, height: 10, hitBox: null },
         { sprite: "SPR_HUGE_BOOGER", sheet: "BOOGERBOY.PNG", xOffset: 832, yOffset: 0, width: 22, height: 10, hitBox: null },
         // Explosion

@@ -127,9 +127,9 @@
        [
            [FvB.st_Path, 0, FvB.SPR_FARTBALL, 0, FvB.AI.T_Projectile, null, FvB.st_Path]
        ],
-       // en_Booger
+       // en_Boogball
        [
-           [FvB.st_Path, 0, FvB.SPR_BOOGER, 0, FvB.AI.T_Projectile, null, FvB.st_Path]
+           [FvB.st_Path, 0, FvB.SPR_BOOGBALL, 0, FvB.AI.T_Projectile, null, FvB.st_Path]
        ],
        // en_HugeFartball
        [
