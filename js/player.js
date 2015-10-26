@@ -7,7 +7,7 @@ FvB.Player = (function () {
     FvB.setConsts({
         MIN_DISTANCE: 64,
         
-        PLAYER_SPEED: 100,
+        PLAYER_SPEED: 130,
         PLAYER_JUMP_SPEED: 100,
         PLAYER_START_Y: 330,
 
