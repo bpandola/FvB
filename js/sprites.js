@@ -42,6 +42,7 @@ FvB.Sprites = (function () {
         { sprite: "SPR_FART_TURD_9", sheet: "FARTSAC.PNG", xOffset: 704, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
         { sprite: "SPR_FART_TURD_10", sheet: "FARTSAC.PNG", xOffset: 768, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
         { sprite: "SPR_FARTSAC_DAMAGED_1", sheet: "FARTSAC.PNG", xOffset: 0, yOffset: 128, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_FARTSAC_DAMAGED_2", sheet: "FARTSAC.PNG", xOffset: 64, yOffset: 128, width: 64, height: 64, hitBox: null },
         // Boogerboy
         { sprite: "SPR_BOOGERBOY_STAND_1", sheet: "BOOGERBOY.PNG", xOffset: 0, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
         { sprite: "SPR_BOOGERBOY_CROUCH_1", sheet: "BOOGERBOY.PNG", xOffset: 64, yOffset: 0, width: 64, height: 64, hitBox: { x1: -12, x2: 14, y1: -36, y2: 0 } },
@@ -57,6 +58,7 @@ FvB.Sprites = (function () {
         { sprite: "SPR_BLOW_BOOG_9", sheet: "BOOGERBOY.PNG", xOffset: 704, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
         { sprite: "SPR_BLOW_BOOG_10", sheet: "BOOGERBOY.PNG", xOffset: 768, yOffset: 0, width: 64, height: 64, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
         { sprite: "SPR_BOOGERBOY_DAMAGED_1", sheet: "BOOGERBOY.PNG", xOffset: 0, yOffset: 128, width: 64, height: 64, hitBox: null },
+        { sprite: "SPR_BOOGERBOY_DAMAGED_2", sheet: "BOOGERBOY.PNG", xOffset: 64, yOffset: 128, width: 64, height: 64, hitBox: null },
         { sprite: "SPR_BOOG_HEAD", sheet: "BOOGERBOY.PNG", xOffset: 64, yOffset: 306, width: 12, height: 14, hitBox: null },
         { sprite: "SPR_BOOG_HEADLESS", sheet: "BOOGERBOY.PNG", xOffset: 0, yOffset: 256, width: 64, height: 64, hitBox: null },
         // These need to be in charEntity order as well
