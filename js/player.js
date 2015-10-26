@@ -287,25 +287,15 @@ FvB.Player = (function () {
         }
 
     }
+    function A_FireHugeProjectile(self, game, tics) {
+        FvB.Entities.spawnHugeProjectile(self, game);
+    }
 
     function T_FartTurd(self, game, tics) {
         self.y -= FvB.PLAYER_JUMP_SPEED * tics;
         if (self.y <= FvB.PLAYER_START_Y - 26) {
             self.y = FvB.PLAYER_START_Y - 26;
-
-            if (self.state == FvB.st_FartTurd10) {
-                FvB.Entities.spawnHugeProjectile(self, game);
-                FvB.Entities.nextState(self);
-            }
         }
-    }
-
-    function T_BlowBoog(self, game, tics) {
-            if (self.state == FvB.st_BlowBoog10) {
-                FvB.Entities.spawnHugeProjectile(self, game);
-                FvB.Entities.nextState(self);
-            }
-        
     }
 
     function spawnPlayer(game, playerNum, playerCharacter) {
@@ -341,9 +331,10 @@ FvB.Player = (function () {
                 damage = 10;
                 break;
             case FvB.ob_HugeProjectile:
-                if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged) {
-                    FvB.Entities.stateChange(player, FvB.st_Damaged);
+                if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged1) {
+                    FvB.Entities.stateChange(player, FvB.st_Damaged1);
                     // HACKY! - Advance damage frame by other character value to get offset into sprite sheet
+                    if (player.type != FvB.en_Ryu)
                     player.sprite += attacker.parent.type;
                     FvB.Sound.playSound(FvB.SFX_DAMAGE_SCREAM);
                 }
@@ -369,12 +360,12 @@ FvB.Player = (function () {
         T_Stand: T_Stand,
         T_Crouch: T_Crouch,
         T_Jump: T_Jump,
-        T_BlowBoog: T_BlowBoog,
         T_FartTurd: T_FartTurd,
         T_StartFatality: T_StartFatality,
         T_FinishFatality: T_FinishFatality,
         T_Idle: T_Idle,
         T_Walk: T_Walk,
+        A_FireHugeProjectile: A_FireHugeProjectile,
         damage: damage
     };
 

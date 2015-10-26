@@ -20,7 +20,7 @@
            [FvB.st_JumpUp, 1,FvB.SPR_FARTSAC_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_JumpDown],
            [FvB.st_JumpDown,1, FvB.SPR_FARTSAC_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_Idle1],
            //[FvB.st_Blow,1, FvB.SPR_FART_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.st_Stand],
-           [FvB.st_Damaged, 1, FvB.SPR_FARTSAC_DAMAGED_1, 50, null, null, FvB.st_Idle1],
+           [FvB.st_Damaged1, 1, FvB.SPR_FARTSAC_DAMAGED_1, 50, null, null, FvB.st_Idle1],
            [FvB.st_NearlyDead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_Dead, 1, FvB.SPR_FARTSAC_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_StartFatality, 1, FvB.SPR_FARTSAC_STAND_1, 0, FvB.Player.T_StartFatality, null,FvB.st_Stand],
@@ -43,7 +43,7 @@
            [FvB.st_FartTurd7, 1, FvB.SPR_FART_TURD_7, 3, FvB.Player.T_FartTurd, null, FvB.st_FartTurd8],
            [FvB.st_FartTurd8, 1, FvB.SPR_FART_TURD_8, 3, FvB.Player.T_FartTurd, null, FvB.st_FartTurd9],
            [FvB.st_FartTurd9, 1, FvB.SPR_FART_TURD_9, 3, FvB.Player.T_FartTurd, null, FvB.st_FartTurd10],
-           [FvB.st_FartTurd10, 1, FvB.SPR_FART_TURD_10, 0, FvB.Player.T_FartTurd, null, FvB.st_JumpDown]
+           [FvB.st_FartTurd10, 1, FvB.SPR_FART_TURD_10, 3, FvB.Player.T_FartTurd, FvB.Player.A_FireHugeProjectile, FvB.st_JumpDown]
        ],
        // en_Boogerboy
        [
@@ -53,23 +53,23 @@
            [FvB.st_JumpUp, 1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_JumpDown],
            [FvB.st_JumpDown, 1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_Idle1],
            [FvB.st_Blow, 1, FvB.SPR_BOOG_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.st_Idle1],
-           [FvB.st_Damaged, 1, FvB.SPR_BOOGERBOY_DAMAGED_1, 50, null, null, FvB.st_Idle1],
+           [FvB.st_Damaged1, 1, FvB.SPR_BOOGERBOY_DAMAGED_1, 50, null, null, FvB.st_Idle1],
            [FvB.st_NearlyDead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_Dead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_Decapitated, 1, FvB.SPR_BOOG_HEADLESS, 0, null, null, FvB.st_Dead],
            [FvB.st_FatalityDead, 1, FvB.SPR_BOOG_HEADLESS, 0, null, null, FvB.st_Dead],
            [FvB.st_Victorious, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Victorious],
 
-            [FvB.st_Blow, 1, FvB.SPR_BLOW_BOOG_1, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog2],
-           [FvB.st_BlowBoog2, 1, FvB.SPR_BLOW_BOOG_2, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog3],
-           [FvB.st_BlowBoog3, 1, FvB.SPR_BLOW_BOOG_3, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog4],
-           [FvB.st_BlowBoog4, 1, FvB.SPR_BLOW_BOOG_4, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog5],
-           [FvB.st_BlowBoog5, 1, FvB.SPR_BLOW_BOOG_5, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog6],
-           [FvB.st_BlowBoog6, 1, FvB.SPR_BLOW_BOOG_6, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog7],
-           [FvB.st_BlowBoog7, 1, FvB.SPR_BLOW_BOOG_7, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog8],
-           [FvB.st_BlowBoog8, 1, FvB.SPR_BLOW_BOOG_8, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog9],
-           [FvB.st_BlowBoog9, 1, FvB.SPR_BLOW_BOOG_9, 3, FvB.Player.T_BlowBoog, null, FvB.st_BlowBoog10],
-           [FvB.st_BlowBoog10, 1, FvB.SPR_BLOW_BOOG_10, 0, FvB.Player.T_BlowBoog, null, FvB.st_Idle1]
+           [FvB.st_Blow, 1, FvB.SPR_BLOW_BOOG_1, 4, null, null, FvB.st_BlowBoog2],
+           [FvB.st_BlowBoog2, 1, FvB.SPR_BLOW_BOOG_2, 4, null, null, FvB.st_BlowBoog3],
+           [FvB.st_BlowBoog3, 1, FvB.SPR_BLOW_BOOG_3, 4, null, null, FvB.st_BlowBoog4],
+           [FvB.st_BlowBoog4, 1, FvB.SPR_BLOW_BOOG_4, 5, null, null, FvB.st_BlowBoog5],
+           [FvB.st_BlowBoog5, 1, FvB.SPR_BLOW_BOOG_5, 4, null, null, FvB.st_BlowBoog6],
+           [FvB.st_BlowBoog6, 1, FvB.SPR_BLOW_BOOG_6, 4, null, null, FvB.st_BlowBoog7],
+           [FvB.st_BlowBoog7, 1, FvB.SPR_BLOW_BOOG_7, 4, null, null, FvB.st_BlowBoog8],
+           [FvB.st_BlowBoog8, 1, FvB.SPR_BLOW_BOOG_8, 5, null, null, FvB.st_BlowBoog9],
+           [FvB.st_BlowBoog9, 1, FvB.SPR_BLOW_BOOG_9, 4, null, null, FvB.st_BlowBoog10],
+           [FvB.st_BlowBoog10, 1, FvB.SPR_BLOW_BOOG_10, 5, null, FvB.Player.A_FireHugeProjectile, FvB.st_Idle1]
        ],
         // en_Yohan
        [
@@ -79,7 +79,7 @@
            [FvB.st_JumpUp, 1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_JumpDown],
            [FvB.st_JumpDown, 1, FvB.SPR_BOOGERBOY_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_Idle1],
            [FvB.st_Blow, 1, FvB.SPR_BOOG_BLOW_1, 0, FvB.Player.T_Blow, null, FvB.st_Idle1],
-           [FvB.st_Damaged, 1, FvB.SPR_BOOGERBOY_DAMAGED_1, 50, null, null, FvB.st_Idle1],
+           [FvB.st_Damaged1, 1, FvB.SPR_BOOGERBOY_DAMAGED_1, 50, null, null, FvB.st_Idle1],
            [FvB.st_NearlyDead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_Dead, 1, FvB.SPR_BOOGERBOY_STAND_1, 0, null, null, FvB.st_Dead],
            [FvB.st_Decapitated, 1, FvB.SPR_BOOG_HEADLESS, 0, null, null, FvB.st_Dead],
@@ -120,8 +120,21 @@
             [FvB.st_Hadouken1, 1, FvB.SPR_RYU_HADOUKEN_1, 7, null, null, FvB.st_Hadouken2],
         [FvB.st_Hadouken2, 1, FvB.SPR_RYU_HADOUKEN_2, 7, null, null, FvB.st_Hadouken3],
          [FvB.st_Hadouken3, 1, FvB.SPR_RYU_HADOUKEN_3, 7, null, null, FvB.st_Hadouken4],
-         [FvB.st_Hadouken4, 1, FvB.SPR_RYU_HADOUKEN_4, 7, null, FvB.Entities.A_SpawnHadouken, FvB.st_Hadouken5],
+         [FvB.st_Hadouken4, 1, FvB.SPR_RYU_HADOUKEN_4, 7, null, /*FvB.Entities.A_SpawnHadouken*/, FvB.st_Hadouken5],
           [FvB.st_Hadouken5, 1, FvB.SPR_RYU_HADOUKEN_5, 7, null, null, FvB.st_Idle1],
+
+           [FvB.st_Damaged1, 1, FvB.SPR_RYU_DAMAGED_1, 7, null, null, FvB.st_Damaged2],
+           [FvB.st_Damaged2, 1, FvB.SPR_RYU_DAMAGED_2, 7, null, null, FvB.st_Damaged3],
+           [FvB.st_Damaged3, 1, FvB.SPR_RYU_DAMAGED_3, 7, null, null, FvB.st_Damaged4],
+           [FvB.st_Damaged4, 1, FvB.SPR_RYU_DAMAGED_2, 7, null, null, FvB.st_Damaged5],
+           [FvB.st_Damaged5, 1, FvB.SPR_RYU_DAMAGED_4, 7, null, null, FvB.st_Idle1],
+
+
+           [FvB.st_NearlyDead, 1, FvB.SPR_RYU_IDLE_1, 0, null, null, FvB.st_Dead],
+           [FvB.st_Dead, 1, FvB.SPR_RYU_IDLE_1, 0, null, null, FvB.st_Dead],
+           [FvB.st_Decapitated, 1, FvB.SPR_RYU_IDLE_1, 0, null, null, FvB.st_Dead],
+           [FvB.st_FatalityDead, 1, FvB.SPR_RYU_IDLE_1, 0, null, null, FvB.st_Dead],
+           [FvB.st_Victorious, 1, FvB.SPR_RYU_IDLE_1, 0, null, null, FvB.st_Victorious]
        ],
        // en_Fartball
        [

@@ -52,10 +52,10 @@
                               -sprite.width / 2, -sprite.height,
                               sprite.width, sprite.height);
 
-        ctx.beginPath();
-        ctx.strokeStyle = "red";
-        ctx.rect(entity.hitBox.x1, entity.hitBox.y1, entity.hitBox.x2 - entity.hitBox.x1, entity.hitBox.y2 - entity.hitBox.y1);
-        ctx.stroke();
+        //ctx.beginPath();
+        //ctx.strokeStyle = "red";
+        //ctx.rect(entity.hitBox.x1, entity.hitBox.y1, entity.hitBox.x2 - entity.hitBox.x1, entity.hitBox.y2 - entity.hitBox.y1);
+        //ctx.stroke();
 
         ctx.restore();
     }

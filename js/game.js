@@ -2,10 +2,11 @@
 FvB.Game = (function () {
 
     var game = {
+        isGameOver: false,
         isSinglePlayer: true,
         doneSelecting: false,
         round: 1,
-
+        roundOver: false,
         playerCharacters: [FvB.en_Fartsac, FvB.en_Boogerboy],
         charactersSelected: [false, false],
 
@@ -21,17 +22,10 @@ FvB.Game = (function () {
         buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
     };
 
-    var canvasBackground;
-    var isGameOver = false;
-// Create the canvas
-    //var canvas; //= document.getElementById('myCanvas');// document.createElement("canvas");
-    //var ctx; //= canvas.getContext("2d");
-//canvas.width = 640;
-//canvas.height = 400;
-//document.body.appendChild(canvas);
     function nextRound() {
         game.round++;
-        if (game.round > 1) {
+        game.roundOver = false;
+        if (game.round > 3) {
             gameOver();
             return;
         }
@@ -72,7 +66,7 @@ function main() {
     if (dt > 1.0) { dt = 0.5; }
 
 
-    if (isGameOver && game.entities.length == 2) {
+    if (game.roundOver && game.entities.length == 2) {
         //if (game.entities[0].state == FvB.ST_DEAD)
         //gameOver();
         nextRound();
@@ -94,40 +88,7 @@ function main() {
     animFrame = requestAnimFrame(main);
 };
 
-function init() {
-    //canvas= document.getElementById('myCanvas');// document.createElement("canvas");
-    //ctx= canvas.getContext("2d");
-    //canvasBackground = ctx.createPattern(FvB.Sprites.getTexture(FvB.SPR_RYU_BACKGROUND), 'no-repeat');
-
-    document.getElementById('play-again').addEventListener('click', function() {
-        reset();
-    });
-    
-    
-    //FvB.Renderer.init(ctx);
-
-   
-    reset();
-   
-}
-
 function startGame() {
-
-    //game = {
-    //    isSinglePlayer: true,
-    //    doneSelecting: false,
-
-    //    player1: {},
-    //    player2: {},
-
-    //    entities: [],
-
-    //    health: [FvB.MAX_PLAYER_HEALTH, FvB.MAX_PLAYER_HEALTH],
-
-    //    // Players button states
-    //    buttonState: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]],
-    //    buttonHeld: [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]]
-    //};
 
     game.isSinglePlayer = true;
     game.doneSelecting = false;
@@ -143,7 +104,11 @@ function startGame() {
     game.buttonState=[[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
     game.buttonHeld=[[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
     
-    init();
+    document.getElementById('play-again').addEventListener('click', function () {
+        reset();
+    });
+    
+    reset();
 }
 
 function drawHealth()
@@ -171,7 +136,7 @@ function drawHealth()
 // Update game objects
 function update(dt) {
 
-    if (!isGameOver)
+    if (!game.isGameOver)
         PollControls();
 
     updateEntities(dt);
@@ -194,12 +159,11 @@ function update(dt) {
 
     if (game.player1.state == FvB.st_NearlyDead || game.player2.state == FvB.st_NearlyDead) {
         document.getElementById('finish-him').style.display = 'block';
-        //document.getElementById('finish-him-overlay').style.display = 'block';
     }
     //if (game.player1.state == FvB.st_Dead || game.player2.state == FvB.st_Dead
     //    || game.player1.state == FvB.st_FatalityDead || game.player2.state == FvB.st_FatalityDead) {
     if (game.player1.state == FvB.st_Victorious || game.player2.state == FvB.st_Victorious) {
-        isGameOver = true;
+        game.roundOver = true;
     }
 
 }
@@ -235,10 +199,6 @@ function updateEntities(dt) {
 function render() {
 
     // Background
-    //ctx.fillStyle = "#000000"; //canvasBackground;
-    //ctx.fillStyle = canvasBackground;
-    //ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     if (game.player1.type != FvB.en_Ryu && game.player2.type != FvB.en_Ryu) {
         FvB.Renderer.clearScreen();
     } else {
@@ -342,8 +302,6 @@ function renderCharacterSelect() {
     var p1 = game.playerCharacters[0],
         p2 = game.playerCharacters[1];
 
-    //ctx.fillStyle="#000000";
-    //ctx.fillRect(0, 0, canvas.width, canvas.height);
     FvB.Renderer.clearScreen();
 
     // Static elements
@@ -391,9 +349,7 @@ function renderVersusScreen() {
     var p1 = game.playerCharacters[0],
         p2 = game.playerCharacters[1];
 
-    //ctx.fillStyle = "#000000";
-    //ctx.fillRect(0, 0, canvas.width, canvas.height);
-    FvB.Renderer.clearScreen(/*"#000000"*/);
+    FvB.Renderer.clearScreen();
     
     FvB.Renderer.renderSprite(FvB.SPR_VERSUS, 320, 300, FvB.R_ALIGN_CENTER);
     
@@ -416,9 +372,12 @@ function newStartGame() {
     //if (!game.isSinglePlayer)
      game.player2 = FvB.Player.spawnPlayer(game, 2, game.playerCharacters[1]);
 
-    isGameOver = false;
-
+    game.isGameOver = false;
+    game.round=1;
+    game.roundOver = false;
+    game.health[0] = game.health[1] = FvB.MAX_PLAYER_HEALTH;
     // Render initial screen
+    
     render();
 
     //$("#fader-overlay").fadeOut(3000, function () {
@@ -474,28 +433,8 @@ function reset() {
     game.entities = [];
     FvB.Sound.stopAllSounds();
     game.isSinglePlayer = false;
+    game.playerCharacters = [FvB.en_Fartsac, FvB.en_Boogerboy];
     characterSelect(game);
-    return;
-
-    game.player1 = FvB.Player.spawnPlayer(game, 1, FvB.en_Ryu);
-    game.player2 = FvB.Player.spawnPlayer(game, 2, FvB.en_Fartsac);
-      
-    isGameOver = false;
-
-    // Render initial screen
-    render();
-
-    //$("#fader-overlay").fadeOut(3000, function () {
-    //    lastTime = Date.now()
-    //    main();
-    //});
-
-    $("#fader-overlay").fadeOut(3000);
-
-    //FvB.Sound.startMusic(FvB.SFX_RYU_THEME);
-        lastTime = Date.now()
-        main();
-    
     
 }
 

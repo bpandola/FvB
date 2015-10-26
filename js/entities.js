@@ -121,9 +121,13 @@
         st_BlowBoog7: 77,
         st_BlowBoog8: 78,
         st_BlowBoog9: 79,
-        st_BlowBoog10: 80
+        st_BlowBoog10: 80,
 
-
+        st_Damaged1: 81,
+        st_Damaged2: 82,
+        st_Damaged3: 83,
+        st_Damaged4: 84,
+        st_Damaged5: 85
     });
 
 
@@ -277,7 +281,8 @@
             ent.ticcount = 0;
         } else {
             
-            ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
+            //ent.ticcount += FvB.objstate[ent.type][ent.state].timeout;
+            ent.ticcount = FvB.objstate[ent.type][ent.state].timeout;
         }
 
         if (newState == FvB.st_Remove) {

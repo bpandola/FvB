@@ -21,7 +21,7 @@
         MAX_PLAYSOUNDS: 128,
         MAX_CHANNELS: 64,
 
-        MUSIC_VOLUME: 0.3,
+        MUSIC_VOLUME: 0.1,
         MASTER_VOLUME: 0.8,
 
         SFX_PATH: 'sfx'
@@ -98,7 +98,7 @@
         var filename = getFileName(file);
         if (currentMusic != filename) {
             music.src = currentMusic = filename;
-            music.volume = FvB.MUSIC_VOLUME * FvB.MASTER_VOLUME * (musicEnabled ? 1 : 0);
+            music.volume = FvB.MUSIC_VOLUME * (musicEnabled ? 1 : 0);
             music.play();
         }
         else {

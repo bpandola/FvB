@@ -5,6 +5,7 @@ FvB.Sprites = (function () {
         GFX_PATH: 'gfx'
     });
 
+// hitBoxes are relative to the entity x,y position, which is center x, bottom y
     var sprites = [
         { sprite: "SPR_RYU_BACKGROUND", sheet: "RYU-STAGE.PNG", xOffset: 0, yOffset: 0, width: 640, height: 400, hitBox: null },
         { sprite: "SPR_PLAYER_HEALTH_BAR", sheet: "HEALTH.PNG", xOffset: 0, yOffset: 0, width: 640, height: 30, hitBox: null },
@@ -95,10 +96,10 @@ FvB.Sprites = (function () {
         { sprite: "SPR_HUGE_EXPLOSION_11", sheet: "EXPLODEY.PNG", xOffset: 440, yOffset: 0, width: 40, height: 40, hitBox: null },
         { sprite: "SPR_HUGE_EXPLOSION_12", sheet: "EXPLODEY.PNG", xOffset: 480, yOffset: 0, width: 40, height: 40, hitBox: null },
         // Ryu Idle
-        { sprite: "SPR_RYU_IDLE_1", sheet: "RYU.PNG", xOffset: 5, yOffset: 17, width: 45, height: 82, hitBox: null },
-        { sprite: "SPR_RYU_IDLE_2", sheet: "RYU.PNG", xOffset: 54, yOffset: 17, width: 45, height: 82, hitBox: null },
-        { sprite: "SPR_RYU_IDLE_3", sheet: "RYU.PNG", xOffset: 104, yOffset: 17, width: 45, height: 82, hitBox: null },
-        { sprite: "SPR_RYU_IDLE_4", sheet: "RYU.PNG", xOffset: 153, yOffset: 17, width: 45, height: 82, hitBox: null },
+        { sprite: "SPR_RYU_IDLE_1", sheet: "RYU.PNG", xOffset: 5, yOffset: 17, width: 45, height: 82, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_RYU_IDLE_2", sheet: "RYU.PNG", xOffset: 54, yOffset: 17, width: 45, height: 82, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_RYU_IDLE_3", sheet: "RYU.PNG", xOffset: 104, yOffset: 17, width: 45, height: 82, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
+        { sprite: "SPR_RYU_IDLE_4", sheet: "RYU.PNG", xOffset: 153, yOffset: 17, width: 45, height: 82, hitBox: { x1: -5, x2: 5, y1: -64, y2: 0 } },
         // Ryu Walk
         { sprite: "SPR_RYU_WALK_1", sheet: "RYU.PNG", xOffset: 204, yOffset: 17, width: 45, height: 82, hitBox: null },
         { sprite: "SPR_RYU_WALK_2", sheet: "RYU.PNG", xOffset: 251, yOffset: 17, width: 45, height: 82, hitBox: null },
@@ -116,7 +117,11 @@ FvB.Sprites = (function () {
         { sprite: "SPR_RYU_HADOUKEN_3", sheet: "RYU.PNG", xOffset: 131, yOffset: 636, width: 68, height: 85, hitBox: null },
         { sprite: "SPR_RYU_HADOUKEN_4", sheet: "RYU.PNG", xOffset: 202, yOffset: 636, width: 96, height: 85, hitBox: null },
         { sprite: "SPR_RYU_HADOUKEN_5", sheet: "RYU.PNG", xOffset: 299, yOffset: 636, width: 72, height: 85, hitBox: null },
-
+        // Ryu Damaged
+        { sprite: "SPR_RYU_DAMAGED_1", sheet: "RYU.PNG", xOffset: 4, yOffset: 754, width: 45, height: 82, hitBox: null },
+        { sprite: "SPR_RYU_DAMAGED_2", sheet: "RYU.PNG", xOffset: 56, yOffset: 754, width: 45, height: 82, hitBox: null },
+        { sprite: "SPR_RYU_DAMAGED_3", sheet: "RYU.PNG", xOffset: 111, yOffset: 754, width: 45, height: 82, hitBox: null },
+        { sprite: "SPR_RYU_DAMAGED_4", sheet: "RYU.PNG", xOffset: 162, yOffset: 754, width: 45, height: 82, hitBox: null },
         // Hadouken Projectile
         { sprite: "SPR_HADOUKEN_1", sheet: "RYU.PNG", xOffset: 131, yOffset: 636, width: 68, height: 85, hitBox: null },
         { sprite: "SPR_HADOUKEN_2", sheet: "RYU.PNG", xOffset: 202, yOffset: 636, width: 96, height: 85, hitBox: null },
