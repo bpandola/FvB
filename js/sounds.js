@@ -14,6 +14,14 @@
         { constant: "SFX_RYU_THEME", sfx: "ryu-theme" },
         { constant: "SFX_SELECT_CHARACTER", sfx: "select_character" },
         { constant: "SFX_CHOOSE_CHARACTER", sfx: "choose_character" },
+        { constant: "SFX_ROUND1", sfx: "round1" },
+        { constant: "SFX_ROUND2", sfx: "round2" },
+        { constant: "SFX_ROUND3", sfx: "round3" },
+        { constant: "SFX_FIGHT", sfx: "fight" },
+        { constant: "SFX_CHARACTER_SELECT_MUSIC", sfx: "Street Fighter II Arcade Music - Character Select - CPS1" },
+         { constant: "SFX_FARTSAC_THEME", sfx: "Street Fighter II Arcade Music - Ken Stage - CPS1" },
+    { constant: "SFX_BOOGERBOY_THEME", sfx: "Street Fighter II Arcade Music - Guile Stage - CPS1" },
+    { constant: "SFX_TITLE_THEME", sfx: "Street Fighter II Arcade Music - Opening Theme - CPS1" }
     ];
 
     var soundConsts = {};
