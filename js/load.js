@@ -6,8 +6,8 @@
 
         var progress = $("<div>");
 
-        progress.addClass("load-progress").appendTo("#title-screen");
-        $("#title-screen").show();
+        progress.addClass("load-progress").appendTo("#intro-screen");
+        $("#intro-screen").show();
        
         // Entering callback hell...
         loadGraphics();
@@ -43,12 +43,16 @@
         }
         
         function finishedLoading() {
+
+            document.getElementById('play-again').addEventListener('click', function () {
+                FvB.Game.startGame();;
+            });
             progress.text("Ready.  Click anywhere to run.");
-            document.getElementById('title-screen').addEventListener('click', function () {
+            document.getElementById('intro-screen').addEventListener('click', function () {
 
-                document.getElementById('title-screen').style.cursor = "none";
+                document.getElementById('intro-screen').style.cursor = "none";
 
-                $("#title-screen").fadeOut(1500, function () {
+                $("#intro-screen").fadeOut(1500, function () {
                     //Wolf.Input.init();
                     //Wolf.Game.init();
                     //Wolf.Menu.show();

@@ -34,7 +34,7 @@
         // note: our canvas is still 320x480 but
         // we're essentially scaling it with CSS
         var faderOverlay = document.getElementById('fader-overlay'),
-            titleScreen = document.getElementById('title-screen');
+            titleScreen = document.getElementById('intro-screen');
         canvas.style.width = titleScreen.style.width = faderOverlay.style.width = currentWidth + 'px';
         canvas.style.height = titleScreen.style.height =faderOverlay.style.height = currentHeight + 'px';
 
