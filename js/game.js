@@ -25,7 +25,7 @@ FvB.Game = (function () {
     function nextRound() {
         game.round++;
         game.roundOver = false;
-        if (game.round > 3) {
+        if (game.round > 2) {
             gameOver();
             return;
         }
@@ -37,9 +37,9 @@ FvB.Game = (function () {
             game.player1 = FvB.Player.spawnPlayer(game, 1, game.playerCharacters[0]);
             if (!game.isSinglePlayer)
                 game.player2 = FvB.Player.spawnPlayer(game, 2, game.playerCharacters[1]);
-
+            //FvB.Entities.spawnFight(game, 320, 150);
             isGameOver = false;
-
+            $("#fader-overlay").fadeOut(1500, function () { FvB.Entities.spawnFight(game, 320, 170); });
             main();
             // Render initial screen
             //render();
@@ -49,7 +49,8 @@ FvB.Game = (function () {
             //    main();
             //});
 
-            $("#fader-overlay").fadeOut(1500);
+            
+           
 
 
         });
@@ -213,7 +214,8 @@ function render() {
     // Render Players first
     for (i = 0; i < 2; i++) {
         var renderFunction = game.entities[i].renderFunction;
-        if (renderFunction)
+        var sprite = game.entities[i].sprite;
+        if (sprite != -1 && renderFunction)
             renderFunction(game.entities[i]);
     }
     //FvB.Renderer.renderEntity(game.entities[0]);
@@ -373,7 +375,7 @@ function newStartGame() {
      game.player2 = FvB.Player.spawnPlayer(game, 2, game.playerCharacters[1]);
 
     game.isGameOver = false;
-    game.round=1;
+    game.round=0;
     game.roundOver = false;
     game.health[0] = game.health[1] = FvB.MAX_PLAYER_HEALTH;
     // Render initial screen
@@ -385,18 +387,24 @@ function newStartGame() {
     //    main();
     //});
 
-    $("#fader-overlay").fadeOut(3000);
+    $("#fader-overlay").fadeOut(3000, function () { FvB.Entities.spawnFight(game, 320, 170); });
 
     if (game.player1.type == FvB.en_Ryu || game.player2.type == FvB.en_Ryu) {
         FvB.Sound.startMusic(FvB.SFX_RYU_THEME);
     }
+    else if (game.player2.type == FvB.en_Fartsac)
+        FvB.Sound.startMusic(FvB.SFX_FARTSAC_THEME);
+    else if (game.player2.type == FvB.en_Boogerboy)
+        FvB.Sound.startMusic(FvB.SFX_BOOGERBOY_THEME);
+    else
+        FvB.Sound.stopAllSounds();
     
     lastTime = Date.now()
     main();
 }
 function characterSelect(game) {
 
-    
+    FvB.Sound.startMusic(FvB.SFX_CHARACTER_SELECT_MUSIC);
 
     function characterSelectAnim() {
         updateCharacterSelect();
@@ -404,7 +412,7 @@ function characterSelect(game) {
         
         if (game.charactersSelected[0]  && (game.isSinglePlayer || game.charactersSelected[1])) {
             // put up black screen
-            $("#fader-overlay").fadeIn(3000, function () {
+            $("#fader-overlay").fadeIn(1500, function () {
                 newStartGame();
             }
                 );
@@ -417,6 +425,60 @@ function characterSelect(game) {
     // Render intial view and then fade in and start anim loop
     renderCharacterSelect();
     $("#fader-overlay").fadeOut(1500, characterSelectAnim);
+
+}
+
+function titleScreen(game) {
+
+    var intervalHandler;
+
+    FvB.Sound.startMusic(FvB.SFX_TITLE_THEME);
+
+    function renderTitleScreen(game) {
+       
+        var menuY = 210;
+
+        FvB.Renderer.clearScreen();
+
+        FvB.Renderer.renderSprite(FvB.SPR_TITLE_FARTSAC, 320, 40, FvB.R_ALIGN_CENTER);
+        FvB.Renderer.renderSprite(FvB.SPR_TITLE_VS, 320, 70, FvB.R_ALIGN_CENTER);
+        FvB.Renderer.renderSprite(FvB.SPR_TITLE_BOOGERBOY, 320, 100, FvB.R_ALIGN_CENTER);
+
+        FvB.Renderer.renderSprite(FvB.SPR_NUM_PLAYERS, 320, menuY, FvB.R_X_ALIGN_CENTER);
+
+        // Put a Turd and Booger on either side of the selection
+        var y = game.isSinglePlayer ? menuY + 2 : menuY + 30;
+
+        FvB.Renderer.renderSprite(FvB.SPR_TITLE_TURD, 220, y);
+        FvB.Renderer.renderSprite(FvB.SPR_TITLE_BOOG, 398, y);
+
+    }
+
+    function titleScreenUpdate() {
+
+        if (input.checkKey(FvB.Keys.ENTER) || input.checkKey(FvB.Keys.SPACE)) {
+            clearInterval(intervalHandler);
+            FvB.Sound.playSound(FvB.SFX_HUGE_EXPLOSION);
+            $("#fader-overlay").fadeIn(1500, function () {
+                FvB.Sound.stopAllSounds();
+                characterSelect(game);
+            })
+            return;
+        }
+
+        if (game.isSinglePlayer && input.checkKey(FvB.Keys.DOWN)) {
+            game.isSinglePlayer = false;
+            FvB.Sound.playSound(FvB.SFX_HUGE_FARTBALL);
+        } else if (!game.isSinglePlayer && input.checkKey(FvB.Keys.UP)) {
+            game.isSinglePlayer = true;
+            FvB.Sound.playSound(FvB.SFX_HUGE_BOOGER);
+        }
+        renderTitleScreen(game);
+    }
+
+    // Render intial view and then fade in and set interval to check input
+    renderTitleScreen(game);
+    $("#fader-overlay").fadeOut(1500, function () { intervalHandler = setInterval(titleScreenUpdate, 1000/30); });
 
 }
 // Reset game to original state
@@ -432,9 +494,10 @@ function reset() {
     
     game.entities = [];
     FvB.Sound.stopAllSounds();
-    game.isSinglePlayer = false;
+    game.isSinglePlayer = true;
     game.playerCharacters = [FvB.en_Fartsac, FvB.en_Boogerboy];
-    characterSelect(game);
+    //characterSelect(game);
+    titleScreen(game);
     
 }
 
