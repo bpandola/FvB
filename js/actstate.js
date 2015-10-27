@@ -185,7 +185,18 @@
            [FvB.st_Explosion13, 0, FvB.SPR_HUGE_EXPLOSION_12, 4, null, null, FvB.st_Remove]
        ],
        // en_Static
-       []
+       [],
+       // en_FightText
+       [
+           [FvB.st_Explosion1, 0, FvB.SPR_ROUND1_SMALL, 4, null, FvB.AI.A_PlaySound, FvB.st_Explosion2],
+           [FvB.st_Explosion2, 0, FvB.SPR_ROUND1_MEDIUM, 4, null, null/*FvB.AI.A_PlaySound*/, FvB.st_Explosion3],
+           [FvB.st_Explosion3, 0, FvB.SPR_ROUND1_LARGE, 90, null, null, FvB.st_Explosion4],
+           [FvB.st_Explosion4, 0, FvB.SPR_ROUND1_MEDIUM, 4, null, null, FvB.st_Explosion5],
+           [FvB.st_Explosion5, 0, FvB.SPR_ROUND1_SMALL, 4, null, null, FvB.st_Explosion6],
+           [FvB.st_Explosion6, 0, FvB.SPR_FIGHT_SMALL, 4, null, null, FvB.st_Explosion7],
+           [FvB.st_Explosion7, 0, FvB.SPR_FIGHT_MEDIUM, 4, null, FvB.AI.A_PlaySound, FvB.st_Explosion8],
+           [FvB.st_Explosion8, 0, FvB.SPR_FIGHT_LARGE, 60, null, null, FvB.st_Remove]
+       ]
     ];
     
     //
