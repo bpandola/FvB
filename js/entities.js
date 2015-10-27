@@ -36,7 +36,7 @@
         en_Explosion: 8,
         en_HugeExplosion: 9,
         en_Static: 10,
-        en_Hadouken: 11
+        en_FightText: 11
     });
 
     FvB.setConsts({
@@ -61,7 +61,7 @@
         st_EatBoog5: 17,
         st_EatBoog6: 18,
 
-        st_Explosion1: 19,
+        st_Explosion1: 20,
         st_Explosion2: 21,
         st_Explosion3: 22,
         st_Explosion4: 23,
@@ -396,6 +396,24 @@
         self.sprite = textureId;
     }
 
+    function spawnFight(game, x, y) {
+        self = getNewEntity(game);
+
+        if (!self)
+            return;
+
+        self.type = FvB.en_FightText;
+        self.x = x;
+        self.y = y;
+        // SUPER HACKY! - Modify state structure for Round Number
+        var roundMetaData=[FvB.SPR_ROUND1_SMALL,FvB.SPR_ROUND1_MEDIUM, FvB.SPR_ROUND1_LARGE, FvB.SPR_ROUND1_MEDIUM, FvB.SPR_ROUND1_SMALL];
+
+        for (i = 0; i< 5; i++) {
+            FvB.objstate[FvB.en_FightText][FvB.st_Explosion1 + i].texture = roundMetaData[i] + game.round;
+        }
+        stateChange(self, FvB.st_Explosion1);
+    }
+
     function spawnExplosion(e1, e2, game) {
         self = getNewEntity(game);
 
@@ -532,7 +550,8 @@
         stateChange: stateChange,
         nextState: nextState,
         haveCollided: haveCollided,
-        A_SpawnHadouken: A_SpawnHadouken
+        A_SpawnHadouken: A_SpawnHadouken,
+        spawnFight: spawnFight
     };
 
 })();
