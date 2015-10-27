@@ -121,8 +121,8 @@ canvas {
     bottom: 0;
     z-index: 2;
     background-image : url(../gfx/TITLE.PNG);
-    /*background-repeat: no-repeat;
-    background-size: 100% 100%;*/
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     display : none;
 }
 
