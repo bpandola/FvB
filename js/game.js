@@ -63,7 +63,7 @@ function main() {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
 
-    // bound ticcount to a maximum of 1 second (should maybe be even less...)
+    // bound ticcount to a maximum to avoid having objects move across the entire screen in one frame
     if (dt > 1.0) { dt = 0.5; }
 
 
@@ -91,6 +91,18 @@ function main() {
 
 function startGame() {
 
+// made this a single class selector...
+    document.getElementById('game-over').style.display = 'none';
+    document.getElementById('game-over-overlay').style.display = 'none';
+    document.getElementById('finish-him').style.display = 'none';
+    document.getElementById('finish-him-overlay').style.display = 'none';
+    document.getElementById('intro-screen').style.display = 'none';
+
+    // put up black screen
+    document.getElementById('fader-overlay').style.display = 'block';
+
+    FvB.Sound.stopAllSounds();
+// write function to return new game object
     game.isSinglePlayer = true;
     game.doneSelecting = false;
 
@@ -103,13 +115,11 @@ function startGame() {
 
         // Players button states
     game.buttonState=[[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
-    game.buttonHeld=[[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
+    game.buttonHeld = [[FvB.NUM_PLAYER_BUTTONS], [FvB.NUM_PLAYER_BUTTONS]];
+
+    game.playerCharacters = [FvB.en_Fartsac, FvB.en_Boogerboy];
     
-    document.getElementById('play-again').addEventListener('click', function () {
-        reset();
-    });
-    
-    reset();
+    titleScreen(game);
 }
 
 function drawHealth()
@@ -402,6 +412,7 @@ function newStartGame() {
     lastTime = Date.now()
     main();
 }
+
 function characterSelect(game) {
 
     FvB.Sound.startMusic(FvB.SFX_CHARACTER_SELECT_MUSIC);
@@ -428,6 +439,11 @@ function characterSelect(game) {
 
 }
 
+/**
+* @description Display Title Screen
+* @memberOf FvB.Game
+* @param {object} game The game object.
+*/
 function titleScreen(game) {
 
     var intervalHandler;
@@ -478,27 +494,8 @@ function titleScreen(game) {
 
     // Render intial view and then fade in and set interval to check input
     renderTitleScreen(game);
-    $("#fader-overlay").fadeOut(1500, function () { intervalHandler = setInterval(titleScreenUpdate, 1000/30); });
+    $("#fader-overlay").fadeOut(1500, function () { intervalHandler = setInterval(titleScreenUpdate, 1000 / 30); });
 
-}
-// Reset game to original state
-function reset() {
-    document.getElementById('game-over').style.display = 'none';
-    document.getElementById('game-over-overlay').style.display = 'none';
-    document.getElementById('finish-him').style.display = 'none';
-    document.getElementById('finish-him-overlay').style.display = 'none';
-    document.getElementById('title-screen').style.display = 'none';
-
-    // put up black screen
-    document.getElementById('fader-overlay').style.display = 'block';
-    
-    game.entities = [];
-    FvB.Sound.stopAllSounds();
-    game.isSinglePlayer = true;
-    game.playerCharacters = [FvB.en_Fartsac, FvB.en_Boogerboy];
-    //characterSelect(game);
-    titleScreen(game);
-    
 }
 
 return {
