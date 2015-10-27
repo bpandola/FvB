@@ -2,6 +2,8 @@
 
     $(document).ready(function () {
 
+        FvB.Renderer.init();
+
         var progress = $("<div>");
 
         progress.addClass("load-progress").appendTo("#title-screen");
@@ -50,7 +52,7 @@
                     //Wolf.Input.init();
                     //Wolf.Game.init();
                     //Wolf.Menu.show();
-                    FvB.Renderer.init();
+                    //FvB.Renderer.init();
                     
                     FvB.Game.startGame();
                 });
