@@ -17,13 +17,49 @@
     var width = 640,
         height = 400,
         canvas = null,
-        ctx = null;
+        ctx = null,
+            RATIO = null,
+            scale = 1,
+    currentWidth=  null,
+    currentHeight= null;
+
+    function resize() {
+
+        currentHeight = window.innerHeight;
+        // resize the width in proportion
+        // to the new height
+        currentWidth = currentHeight * RATIO;
+
+        // set the new canvas style width & height plus the fader overlay
+        // note: our canvas is still 320x480 but
+        // we're essentially scaling it with CSS
+        var faderOverlay = document.getElementById('fader-overlay'),
+            titleScreen = document.getElementById('title-screen');
+        canvas.style.width = titleScreen.style.width = faderOverlay.style.width = currentWidth + 'px';
+        canvas.style.height = titleScreen.style.height =faderOverlay.style.height = currentHeight + 'px';
+
+        
+
+        // the amount by which the css resized canvas
+        // is different to the actual (480x320) size.
+        scale = currentWidth / width;
+        // position of canvas in relation to
+        // the screen
+    }
 
     function init() {
         canvas = document.getElementsByTagName('canvas')[0];
         canvas.width = width;
         canvas.height = height;
         ctx = canvas.getContext('2d');
+        RATIO = width / height;
+        
+        // these will change when the screen is resize
+        currentWidth = width;
+        currentHeight = height;
+
+        resize();
+        window.addEventListener('resize', FvB.Renderer.resize, false);
     }
 
     function getContext() {
@@ -112,6 +148,7 @@
 
     return {
         init: init,
+        resize: resize,
         getContext: getContext,
         clearScreen: clearScreen,
         renderEntity: renderEntity,
