@@ -9,6 +9,13 @@ FvB.Sprites = (function () {
     var sprites = [
         { sprite: "SPR_RYU_BACKGROUND", sheet: "RYU-STAGE.PNG", xOffset: 0, yOffset: 0, width: 640, height: 400, hitBox: null },
         { sprite: "SPR_PLAYER_HEALTH_BAR", sheet: "HEALTH.PNG", xOffset: 0, yOffset: 0, width: 640, height: 30, hitBox: null },
+        // Title Screen
+        { sprite: "SPR_TITLE_FARTSAC", sheet: "GAME.PNG", xOffset: 1, yOffset: 1, width: 220, height: 16, hitBox: null },
+        { sprite: "SPR_TITLE_VS", sheet: "GAME.PNG", xOffset: 1, yOffset: 19, width: 62, height: 16, hitBox: null },
+        { sprite: "SPR_TITLE_BOOGERBOY", sheet: "GAME.PNG", xOffset: 1, yOffset: 37, width: 286, height: 16, hitBox: null },
+        { sprite: "SPR_NUM_PLAYERS", sheet: "GAME.PNG", xOffset: 1, yOffset: 55, width: 142, height: 44, hitBox: null },
+         { sprite: "SPR_TITLE_TURD", sheet: "FARTSAC.PNG", xOffset: 832, yOffset: 0, width: 22, height: 10, hitBox: null },
+        { sprite: "SPR_TITLE_BOOG", sheet: "BOOGERBOY.PNG", xOffset: 832, yOffset: 10, width: 22, height: 10, hitBox: null },
         // Choose a character
         { sprite: "SPR_CHARACTER_SELECT_TEXT", sheet: "CHARSELECT.PNG", xOffset: 0, yOffset: 0, width: 640, height: 22, hitBox: null },
         { sprite: "SPR_1P", sheet: "CHARSELECT.PNG", xOffset: 68, yOffset: 148, width: 34, height: 22, hitBox: null },
@@ -18,6 +25,19 @@ FvB.Sprites = (function () {
         { sprite: "SPR_BOTH_SELECT", sheet: "CHARSELECT.PNG", xOffset: 116, yOffset: 42, width: 52, height: 82, hitBox: null },
         { sprite: "SPR_VERSUS", sheet: "CHARSELECT.PNG", xOffset: 459, yOffset: 40, width: 126, height: 94, hitBox: null },
         { sprite: "SPR_CHARACTER_SELECT_MATRIX", sheet: "CHARSELECT.PNG", xOffset: 244, yOffset: 80, width: 152, height: 82, hitBox: null },
+        // Round/Fight!
+        { sprite: "SPR_ROUND1_SMALL", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 1, width: 50, height: 8, hitBox: null },
+        { sprite: "SPR_ROUND2_SMALL", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 55, width: 50, height: 8, hitBox: null },
+        { sprite: "SPR_ROUND3_SMALL", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 109, width: 50, height: 8, hitBox: null },
+        { sprite: "SPR_ROUND1_MEDIUM", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 11, width: 100, height: 16, hitBox: null },
+         { sprite: "SPR_ROUND2_MEDIUM", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 65, width: 106, height: 16, hitBox: null },
+          { sprite: "SPR_ROUND3_MEDIUM", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 119, width: 106, height: 16, hitBox: null },
+        { sprite: "SPR_ROUND1_LARGE", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 29, width: 150, height: 24, hitBox: null },
+         { sprite: "SPR_ROUND2_LARGE", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 83, width: 158, height: 24, hitBox: null },
+          { sprite: "SPR_ROUND3_LARGE", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 137, width: 158, height: 24, hitBox: null },
+        { sprite: "SPR_FIGHT_SMALL", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 163, width: 44, height: 8, hitBox: null },
+        { sprite: "SPR_FIGHT_MEDIUM", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 173, width: 88, height: 16, hitBox: null },
+        { sprite: "SPR_FIGHT_LARGE", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 191, width: 132, height: 24, hitBox: null },
         // Character sprites must be in enum order for easier rendering
         // For example: to render SPR_BOOGER_TEXT we can just to renderSprite(SPR_FARTSAC_TEXT + characterEntityNum)
         { sprite: "SPR_FARTSAC_TEXT", sheet: "CHARSELECT.PNG", xOffset: 5, yOffset: 181, width: 96, height: 14, hitBox: null },
