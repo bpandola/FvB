@@ -50,9 +50,23 @@
         }
     }
 
+    function A_PlaySound(self, game, tics) {
+
+        switch (self.state) {
+            case FvB.st_Explosion1:
+                FvB.Sound.playSound(FvB.SFX_ROUND1.substring(0,FvB.SFX_ROUND1.length-1) +(game.round+1));
+                break;
+            case FvB.st_Explosion7:
+                FvB.Sound.playSound(FvB.SFX_FIGHT);
+                break;
+                
+        }
+    }
+
     return {
        
-        T_Projectile: T_Projectile
+        T_Projectile: T_Projectile,
+        A_PlaySound: A_PlaySound
     };
 
 })();
