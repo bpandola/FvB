@@ -189,13 +189,35 @@
        // en_FightText
        [
            [FvB.st_Explosion1, 0, FvB.SPR_ROUND1_SMALL, 4, null, FvB.AI.A_PlaySound, FvB.st_Explosion2],
-           [FvB.st_Explosion2, 0, FvB.SPR_ROUND1_MEDIUM, 4, null, null/*FvB.AI.A_PlaySound*/, FvB.st_Explosion3],
+           [FvB.st_Explosion2, 0, FvB.SPR_ROUND1_MEDIUM, 4, null, null, FvB.st_Explosion3],
            [FvB.st_Explosion3, 0, FvB.SPR_ROUND1_LARGE, 90, null, null, FvB.st_Explosion4],
            [FvB.st_Explosion4, 0, FvB.SPR_ROUND1_MEDIUM, 4, null, null, FvB.st_Explosion5],
            [FvB.st_Explosion5, 0, FvB.SPR_ROUND1_SMALL, 4, null, null, FvB.st_Explosion6],
            [FvB.st_Explosion6, 0, FvB.SPR_FIGHT_SMALL, 4, null, null, FvB.st_Explosion7],
            [FvB.st_Explosion7, 0, FvB.SPR_FIGHT_MEDIUM, 4, null, FvB.AI.A_PlaySound, FvB.st_Explosion8],
            [FvB.st_Explosion8, 0, FvB.SPR_FIGHT_LARGE, 60, null, null, FvB.st_Remove]
+       ],
+       // en_YouWin
+       [
+           [FvB.st_Explosion1, 0, FvB.SPR_YOUWIN_REGULAR, 1, null, FvB.AI.A_PlaySound, FvB.st_Explosion2],
+           [FvB.st_Explosion2, 0, FvB.SPR_YOUWIN_REGULAR, 40, null, null, FvB.st_Explosion3],
+           [FvB.st_Explosion3, 0, FvB.SPR_YOUWIN_INVERSE, 4, null, null, FvB.st_Explosion4],
+           [FvB.st_Explosion4, 0, FvB.SPR_YOUWIN_REGULAR, 4, null, null, FvB.st_Explosion5],
+           [FvB.st_Explosion5, 0, FvB.SPR_YOUWIN_INVERSE, 4, null, null, FvB.st_Explosion6],
+           [FvB.st_Explosion6, 0, FvB.SPR_YOUWIN_REGULAR, 4, null, null, FvB.st_Explosion7],
+           [FvB.st_Explosion7, 0, FvB.SPR_YOUWIN_INVERSE, 4, null, null, FvB.st_Explosion8],
+ [FvB.st_Explosion8, 0, FvB.SPR_YOUWIN_REGULAR, 4, null, null, FvB.st_Explosion9],
+           [FvB.st_Explosion9, 0, FvB.SPR_YOUWIN_INVERSE, 4, null, null, FvB.st_Explosion10],
+           [FvB.st_Explosion10, 0, FvB.SPR_YOUWIN_REGULAR, 4, null, null, FvB.st_Explosion11],
+           [FvB.st_Explosion11, 0, FvB.SPR_YOUWIN_INVERSE, 4, null, null, FvB.st_Explosion12],
+
+
+[FvB.st_Explosion12, 0, FvB.SPR_YOUWIN_REGULAR, 150, null, FvB.AI.A_PlaySound, FvB.st_Remove]
+       ],
+       // en_YouLose
+       [
+           [FvB.st_Explosion1, 0, FvB.SPR_YOULOSE_REGULAR, 1, null, FvB.AI.A_PlaySound, FvB.st_Explosion2],
+           [FvB.st_Explosion2, 0, FvB.SPR_YOULOSE_REGULAR, 150, null, FvB.AI.A_PlaySound, FvB.st_Remove]
        ]
     ];
     
