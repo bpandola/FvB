@@ -351,7 +351,9 @@ FvB.Game = (function () {
                 }
                 return;
             } else {
-                gameOver();
+                $("#fader-overlay").fadeIn(1500, function () {
+                    gameOver();
+                });
             }
             return;
         }
