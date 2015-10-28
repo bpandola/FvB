@@ -36,7 +36,9 @@
         en_Explosion: 8,
         en_HugeExplosion: 9,
         en_Static: 10,
-        en_FightText: 11
+        en_FightText: 11,
+        en_YouWin: 12,
+        en_YouLose: 13
     });
 
     FvB.setConsts({
@@ -414,6 +416,19 @@
         stateChange(self, FvB.st_Explosion1);
     }
 
+    function spawnYouWinLose(game, x, y, eType) {
+        self = getNewEntity(game);
+
+        if (!self)
+            return;
+
+        self.type = eType;
+        self.x = x;
+        self.y = y;
+        
+        stateChange(self, FvB.st_Explosion1);
+    }
+
     function spawnExplosion(e1, e2, game) {
         self = getNewEntity(game);
 
@@ -551,7 +566,8 @@
         nextState: nextState,
         haveCollided: haveCollided,
         A_SpawnHadouken: A_SpawnHadouken,
-        spawnFight: spawnFight
+        spawnFight: spawnFight,
+spawnYouWinLose: spawnYouWinLose
     };
 
 })();
