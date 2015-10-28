@@ -64,8 +64,8 @@
         return audio;
     }
 
-    function playSound(file) {
-        startSound(null, null, 1, FvB.CHAN_VOICE, file, 1, FvB.ATTN_NORM, 0);
+    function playSound(id) {
+        startSound(null, null, 1, FvB.CHAN_VOICE, FvB.soundResources[id], 1, FvB.ATTN_NORM, 0);
     }
 
     function startSound(posPlayer, posSound, entNum, entChannel, file, volume, attenuation, timeOfs) {
@@ -90,12 +90,12 @@
         audio.play();
     }
 
-    function startMusic(file) {
+    function startMusic(id) {
         if (!music) {
             music = createAudioElement();
             music.loop = true;
         }
-        var filename = getFileName(file);
+        var filename = getFileName(FvB.soundResources[id]);
         if (currentMusic != filename) {
             music.src = currentMusic = filename;
             music.volume = FvB.MUSIC_VOLUME * (musicEnabled ? 1 : 0);
