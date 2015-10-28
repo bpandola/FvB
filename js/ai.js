@@ -52,12 +52,33 @@
 
     function A_PlaySound(self, game, tics) {
 
+        if (self.type == FvB.en_YouWin) {
+            if (self.state == FvB.st_Explosion1) {
+                FvB.Sound.playSound(FvB.SFX_YOU_WIN);
+                
+            } else {
+                game.roundOver = true;
+            }
+            return;
+        }
+
+        if (self.type == FvB.en_YouLose) {
+            if (self.state == FvB.st_Explosion1) {
+                FvB.Sound.playSound(FvB.SFX_YOU_LOSE);
+
+            } else {
+                game.roundOver = true;
+            }
+            return;
+        }
+
         switch (self.state) {
             case FvB.st_Explosion1:
-                FvB.Sound.playSound(FvB.SFX_ROUND1.substring(0,FvB.SFX_ROUND1.length-1) +(game.round+1));
+                FvB.Sound.playSound(FvB.SFX_ROUND1 + game.round);
                 break;
             case FvB.st_Explosion7:
                 FvB.Sound.playSound(FvB.SFX_FIGHT);
+                game.acceptingInput = true;
                 break;
                 
         }
