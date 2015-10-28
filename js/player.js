@@ -30,16 +30,16 @@ FvB.Player = (function () {
             player.x = FvB.SCREENWIDTH - FvB.MIN_DISTANCE/2;
         }
 
-        if (player === game.player1) {
+        if (player === game.player2) {
 
-            if (player.x + FvB.MIN_DISTANCE > game.player2.x) {
-                player.x = game.player2.x - FvB.MIN_DISTANCE;
+            if (player.x + FvB.MIN_DISTANCE > game.player1.x) {
+                player.x = game.player1.x - FvB.MIN_DISTANCE;
             }
         }
         else {
 
-            if (player.x < game.player1.x + FvB.MIN_DISTANCE) {
-                player.x = game.player1.x + FvB.MIN_DISTANCE;
+            if (player.x < game.player2.x + FvB.MIN_DISTANCE) {
+                player.x = game.player2.x + FvB.MIN_DISTANCE;
             }
         }
     }
@@ -305,11 +305,11 @@ FvB.Player = (function () {
         if (!player)
             return;
         
-        player.x = playerNum == 1 ? FvB.SCREENWIDTH / 2 - FvB.MIN_DISTANCE*3 : FvB.SCREENWIDTH / 2 + FvB.MIN_DISTANCE*3;
+        player.x = playerNum == 1 ? FvB.SCREENWIDTH / 2 + FvB.MIN_DISTANCE*3 : FvB.SCREENWIDTH / 2 - FvB.MIN_DISTANCE*3;
         player.y = FvB.PLAYER_START_Y;
         player.health = FvB.MAX_PLAYER_HEALTH;
         player.type = playerCharacter;
-        player.dir = playerNum == 1 ? FvB.DIR_RIGHT : FvB.DIR_LEFT;
+        player.dir = playerNum == 1 ? FvB.DIR_LEFT : FvB.DIR_RIGHT;
         player.objClass = FvB.ob_Player;
 
         FvB.Entities.stateChange(player, FvB.st_Idle1);        
