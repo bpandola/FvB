@@ -38,6 +38,10 @@ FvB.Sprites = (function () {
         { sprite: "SPR_FIGHT_SMALL", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 163, width: 44, height: 8, hitBox: null },
         { sprite: "SPR_FIGHT_MEDIUM", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 173, width: 88, height: 16, hitBox: null },
         { sprite: "SPR_FIGHT_LARGE", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 191, width: 132, height: 24, hitBox: null },
+        // You Win/Lose
+        { sprite: "SPR_YOUWIN_REGULAR", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 217, width: 170, height: 24, hitBox: null },
+        { sprite: "SPR_YOUWIN_INVERSE", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 243, width: 170, height: 24, hitBox: null },
+ { sprite: "SPR_YOULOSE_REGULAR", sheet: "ROUNDS.PNG", xOffset: 1, yOffset: 269, width: 198, height: 24, hitBox: null },
         // Character sprites must be in enum order for easier rendering
         // For example: to render SPR_BOOGER_TEXT we can just to renderSprite(SPR_FARTSAC_TEXT + characterEntityNum)
         { sprite: "SPR_FARTSAC_TEXT", sheet: "CHARSELECT.PNG", xOffset: 5, yOffset: 181, width: 96, height: 14, hitBox: null },
