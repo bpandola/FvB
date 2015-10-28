@@ -25,34 +25,35 @@ FvB.Player = (function () {
         
         if (player.x - FvB.MIN_DISTANCE/2 < 0) {
             player.x = FvB.MIN_DISTANCE/2;
-        }
-        else if (player.x > FvB.SCREENWIDTH - FvB.MIN_DISTANCE/2) {
+        } else if (player.x > FvB.SCREENWIDTH - FvB.MIN_DISTANCE / 2) {
             player.x = FvB.SCREENWIDTH - FvB.MIN_DISTANCE/2;
         }
 
-        if (player === game.player2) {
+        var otherPlayer = player === game.player1.entity ? game.player2.entity : game.player1.entity;
 
-            if (player.x + FvB.MIN_DISTANCE > game.player1.x) {
-                player.x = game.player1.x - FvB.MIN_DISTANCE;
+        if (player.dir == FvB.DIR_RIGHT) {
+
+            if (player.x + FvB.MIN_DISTANCE > otherPlayer.x) {
+                player.x = otherPlayer.x - FvB.MIN_DISTANCE;
             }
         }
         else {
 
-            if (player.x < game.player2.x + FvB.MIN_DISTANCE) {
-                player.x = game.player2.x + FvB.MIN_DISTANCE;
+            if (player.x < otherPlayer.x + FvB.MIN_DISTANCE) {
+                player.x = otherPlayer.x + FvB.MIN_DISTANCE;
             }
         }
     }
 
     function T_Walk(player, game, tics) {
-        var p = player === game.player1 ? 0 : 1;
+        var p = player.parent;
 
-        if (game.buttonState[p][FvB.BT_LEFT] || game.buttonState[p][FvB.BT_RIGHT]) {
+        if (p.buttonState[FvB.BT_LEFT] || p.buttonState[FvB.BT_RIGHT]) {
 
-            if (game.buttonState[p][FvB.BT_LEFT]) {
+            if (p.buttonState[FvB.BT_LEFT]) {
                 player.x -= FvB.PLAYER_SPEED * tics;
             }
-            if (game.buttonState[p][FvB.BT_RIGHT]) {
+            if (p.buttonState[FvB.BT_RIGHT]) {
                 player.x += FvB.PLAYER_SPEED * tics;
             }
         }
@@ -64,76 +65,76 @@ FvB.Player = (function () {
         clipMove(player, game);
     }
     function T_Idle(player, game, tics) {
-        var p = player === game.player1 ? 0 : 1;
+        var p = player.parent;
 
-        if (game.buttonState[p][FvB.BT_LEFT] || game.buttonState[p][FvB.BT_RIGHT]) {
+        if (p.buttonState[FvB.BT_LEFT] || p.buttonState[FvB.BT_RIGHT]) {
             FvB.Entities.stateChange(player, FvB.st_Walk1);
             return;
         }
 
-        if (game.buttonState[p][FvB.BT_DOWN] && !game.buttonHeld[p][FvB.BT_DOWN]) {
+        if (p.buttonState[FvB.BT_DOWN] && !p.buttonHeld[FvB.BT_DOWN]) {
             FvB.Entities.stateChange(player, FvB.st_Crouch);
         }
 
-        if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
+        if (p.buttonState[FvB.BT_UP] && !p.buttonHeld[FvB.BT_UP]) {
             FvB.Entities.stateChange(player, FvB.st_JumpStart);
         }
 
        
 
         // If both fire buttons hit, default to Primary Attack
-        if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
+        if (p.buttonHeld[FvB.BT_PRIMARY_ATTACK] && !p.buttonState[FvB.BT_PRIMARY_ATTACK]) {
             //FvB.Entities.spawnBasicProjectile(player, game);
 
-        } else if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
+        } else if (p.buttonHeld[FvB.BT_SECONDARY_ATTACK] && !p.buttonState[FvB.BT_SECONDARY_ATTACK]) {
             FvB.Entities.stateChange(player, FvB.st_Hadouken1);
         }
 
         
     }
     function T_Stand(player, game, tics) {
-        var p = player === game.player1 ? 0 : 1;
+        var p = player.parent;
 
-        if (game.buttonState[p][FvB.BT_DOWN] && !game.buttonHeld[p][FvB.BT_DOWN]) {
+        if (p.buttonState[FvB.BT_DOWN] && !p.buttonHeld[FvB.BT_DOWN]) {
             FvB.Entities.stateChange(player, FvB.st_Crouch);
         }
 
-        if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
+        if (p.buttonState[FvB.BT_UP] && !p.buttonHeld[FvB.BT_UP]) {
             FvB.Entities.stateChange(player, FvB.st_JumpUp);
         }
 
-        if (game.buttonState[p][FvB.BT_LEFT]) {
+        if (p.buttonState[FvB.BT_LEFT]) {
             player.x -= FvB.PLAYER_SPEED * tics;
         }
 
-        if (game.buttonState[p][FvB.BT_RIGHT]) {
+        if (p.buttonState[FvB.BT_RIGHT]) {
             player.x += FvB.PLAYER_SPEED * tics;
         }
 
         clipMove(player, game);
 
         // If both fire buttons hit, default to Primary Attack
-        if (game.buttonHeld[p][FvB.BT_PRIMARY_ATTACK] && !game.buttonState[p][FvB.BT_PRIMARY_ATTACK]) {
+        if (p.buttonHeld[FvB.BT_PRIMARY_ATTACK] && !p.buttonState[FvB.BT_PRIMARY_ATTACK]) {
             FvB.Entities.spawnBasicProjectile(player, game);
-        } else if (game.buttonHeld[p][FvB.BT_SECONDARY_ATTACK] && !game.buttonState[p][FvB.BT_SECONDARY_ATTACK]) {
+        } else if (p.buttonHeld[FvB.BT_SECONDARY_ATTACK] && !p.buttonState[FvB.BT_SECONDARY_ATTACK]) {
             FvB.Entities.stateChange(player, FvB.st_Blow);
         } 
 
-        if (game.buttonHeld[p][FvB.BT_FATALITY] && !game.buttonState[p][FvB.BT_FATALITY]) {
+        if (p.buttonHeld[FvB.BT_FATALITY] && !p.buttonState[FvB.BT_FATALITY]) {
             FvB.Entities.stateChange(player, FvB.st_StartFatality);
         }
     }
 
     function T_Crouch(player, game, tics) {
-        var p = player === game.player1 ? 0 : 1;
+        var p = player.parent;
 
-        if (game.buttonState[p][FvB.BT_UP] && !game.buttonHeld[p][FvB.BT_UP]) {
-            FvB.Entities.stateChange(player, FvB.objstate[player.type][player.state].next_state/*FvB.st_Stand*/);
+        if (p.buttonState[FvB.BT_UP] && !p.buttonHeld[FvB.BT_UP]) {
+            FvB.Entities.nextState(player);
         }
     }
 
     function T_Jump(player, game, tics) {
-        var p = player === game.player1 ? 0 : 1;
+        var p = player.parent;
 
         switch (player.state) {
 
@@ -142,7 +143,7 @@ FvB.Player = (function () {
                 player.y += FvB.PLAYER_JUMP_SPEED * tics;
                 if (player.y >= FvB.PLAYER_START_Y) {
                     player.y = FvB.PLAYER_START_Y;
-                    FvB.Entities.stateChange(player, FvB.objstate[player.type][player.state].next_state/*FvB.st_Stand*/);
+                    FvB.Entities.nextState(player);
                 }
                 break;
 
@@ -150,7 +151,6 @@ FvB.Player = (function () {
                 case FvB.st_JumpStart:
                 player.y -= FvB.PLAYER_JUMP_SPEED * tics;
                 if (player.y <= FvB.PLAYER_START_Y - 50) {
-                    //FvB.Entities.stateChange(player, FvB.st_JumpDown);
                     FvB.Entities.nextState(player);
                 }
                 break;
@@ -159,11 +159,11 @@ FvB.Player = (function () {
                 FvB.Entities.stateChange(player, FvB.st_Stand);
 
         }
-        if (game.buttonState[p][FvB.BT_LEFT]) {
+        if (p.buttonState[FvB.BT_LEFT]) {
             player.x -= FvB.PLAYER_SPEED * tics;
         }
 
-        if (game.buttonState[p][FvB.BT_RIGHT]) {
+        if (p.buttonState[FvB.BT_RIGHT]) {
             player.x += FvB.PLAYER_SPEED * tics;
         }
 
@@ -298,19 +298,20 @@ FvB.Player = (function () {
         }
     }
 
-    function spawnPlayer(game, playerNum, playerCharacter) {
+    function spawnPlayer(game, playerObj) {
 
         var player = FvB.Entities.getNewEntity(game);
 
         if (!player)
             return;
         
-        player.x = playerNum == 1 ? FvB.SCREENWIDTH / 2 + FvB.MIN_DISTANCE*3 : FvB.SCREENWIDTH / 2 - FvB.MIN_DISTANCE*3;
+        player.x = playerObj == game.player2 ? FvB.SCREENWIDTH / 2 + FvB.MIN_DISTANCE*3 : FvB.SCREENWIDTH / 2 - FvB.MIN_DISTANCE*3;
         player.y = FvB.PLAYER_START_Y;
         player.health = FvB.MAX_PLAYER_HEALTH;
-        player.type = playerCharacter;
-        player.dir = playerNum == 1 ? FvB.DIR_LEFT : FvB.DIR_RIGHT;
+        player.type = playerObj.character;
+        player.dir = playerObj == game.player2 == 1 ? FvB.DIR_LEFT : FvB.DIR_RIGHT;
         player.objClass = FvB.ob_Player;
+        player.parent = playerObj;
 
         FvB.Entities.stateChange(player, FvB.st_Idle1);        
 
@@ -334,8 +335,9 @@ FvB.Player = (function () {
                 if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged1) {
                     FvB.Entities.stateChange(player, FvB.st_Damaged1);
                     // HACKY! - Advance damage frame by other character value to get offset into sprite sheet
-                    if (player.type != FvB.en_Ryu)
-                    player.sprite += attacker.parent.type;
+                    if (player.type != FvB.en_Ryu) {
+                        player.sprite += attacker.parent.type;
+                    }
                     FvB.Sound.playSound(FvB.SFX_DAMAGE_SCREAM);
                 }
                 damage = 25;
