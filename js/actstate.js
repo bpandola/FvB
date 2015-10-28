@@ -212,12 +212,12 @@
            [FvB.st_Explosion11, 0, FvB.SPR_YOUWIN_INVERSE, 4, null, null, FvB.st_Explosion12],
 
 
-[FvB.st_Explosion12, 0, FvB.SPR_YOUWIN_REGULAR, 150, null, FvB.AI.A_PlaySound, FvB.st_Remove]
+[FvB.st_Explosion12, 0, FvB.SPR_YOUWIN_REGULAR, 130, null, FvB.AI.A_PlaySound, FvB.st_Remove]
        ],
        // en_YouLose
        [
            [FvB.st_Explosion1, 0, FvB.SPR_YOULOSE_REGULAR, 1, null, FvB.AI.A_PlaySound, FvB.st_Explosion2],
-           [FvB.st_Explosion2, 0, FvB.SPR_YOULOSE_REGULAR, 150, null, FvB.AI.A_PlaySound, FvB.st_Remove]
+           [FvB.st_Explosion2, 0, FvB.SPR_YOULOSE_REGULAR, 130, null, FvB.AI.A_PlaySound, FvB.st_Remove]
        ]
     ];
     
