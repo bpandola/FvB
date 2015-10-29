@@ -107,8 +107,8 @@
            [FvB.st_Walk1, 1, FvB.SPR_RYU_WALK_1, 7, FvB.Player.T_Walk, null, FvB.st_Walk2],
         [FvB.st_Walk2, 1, FvB.SPR_RYU_WALK_2, 7, FvB.Player.T_Walk, null, FvB.st_Walk3],
          [FvB.st_Walk3, 1, FvB.SPR_RYU_WALK_3, 7, FvB.Player.T_Walk, null, FvB.st_Walk4],
-         [FvB.st_Walk4, 1, FvB.SPR_RYU_WALK_4, 7, FvB.Player.T_Walk, null, FvB.st_Walk5],
-          [FvB.st_Walk5, 1, FvB.SPR_RYU_WALK_5, 7, FvB.Player.T_Walk, null, FvB.st_Walk1],
+         [FvB.st_Walk4, 1, FvB.SPR_RYU_WALK_4, 7, FvB.Player.T_Walk, null, FvB.st_Walk1],
+         
 
           [FvB.st_Crouch, 1, FvB.SPR_RYU_CROUCH_1, 0, FvB.Player.T_Crouch, null, FvB.st_Idle1],
 
@@ -117,11 +117,11 @@
           [FvB.st_JumpDown, 1, FvB.SPR_RYU_JUMP_2, 5, FvB.Player.T_Jump, null, FvB.st_JumpEnd],
           [FvB.st_JumpEnd, 1, FvB.SPR_RYU_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_Idle1],
 
-            [FvB.st_Hadouken1, 1, FvB.SPR_RYU_HADOUKEN_1, 7, null, null, FvB.st_Hadouken2],
-        [FvB.st_Hadouken2, 1, FvB.SPR_RYU_HADOUKEN_2, 7, null, null, FvB.st_Hadouken3],
-         [FvB.st_Hadouken3, 1, FvB.SPR_RYU_HADOUKEN_3, 7, null, null, FvB.st_Hadouken4],
-         [FvB.st_Hadouken4, 1, FvB.SPR_RYU_HADOUKEN_4, 7, null, /*FvB.Entities.A_SpawnHadouken*/, FvB.st_Hadouken5],
-          [FvB.st_Hadouken5, 1, FvB.SPR_RYU_HADOUKEN_5, 7, null, null, FvB.st_Idle1],
+            [FvB.st_Hadouken1, 1, FvB.SPR_RYU_HADOUKEN_1, 77, null, null, FvB.st_Hadouken2],
+        [FvB.st_Hadouken2, 1, FvB.SPR_RYU_HADOUKEN_2, 77, null, null, FvB.st_Hadouken3],
+         [FvB.st_Hadouken3, 1, FvB.SPR_RYU_HADOUKEN_3, 77, null, null, FvB.st_Hadouken4],
+         [FvB.st_Hadouken4, 1, FvB.SPR_RYU_HADOUKEN_4, 77, null, /*FvB.Entities.A_SpawnHadouken*/, FvB.st_Hadouken5],
+          [FvB.st_Hadouken5, 1, FvB.SPR_RYU_HADOUKEN_5, 77, null, null, FvB.st_Idle1],
 
            [FvB.st_Damaged1, 1, FvB.SPR_RYU_DAMAGED_1, 7, null, null, FvB.st_Damaged2],
            [FvB.st_Damaged2, 1, FvB.SPR_RYU_DAMAGED_2, 7, null, null, FvB.st_Damaged3],
