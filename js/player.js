@@ -131,6 +131,10 @@ FvB.Player = (function () {
         if (p.buttonState[FvB.BT_UP] && !p.buttonHeld[FvB.BT_UP]) {
             FvB.Entities.nextState(player);
         }
+
+        if (p.buttonState[FvB.BT_PRIMARY_ATTACK] && !p.buttonHeld[FvB.BT_PRIMARY_ATTACK]) {
+            FvB.Entities.spawnBasicProjectile2(player, game);
+        }
     }
 
     function T_Jump(player, game, tics) {
@@ -356,7 +360,12 @@ FvB.Player = (function () {
         
         
     }
-    
+    function otherPlayer(self, game) {
+        if (self == game.player1.entity)
+            return game.player2.entity;
+        else
+            return game.player1.entity;
+    }
     return {
         spawnPlayer: spawnPlayer,
         T_Stand: T_Stand,
@@ -368,7 +377,8 @@ FvB.Player = (function () {
         T_Idle: T_Idle,
         T_Walk: T_Walk,
         A_FireHugeProjectile: A_FireHugeProjectile,
-        damage: damage
+        damage: damage,
+        otherPlayer: otherPlayer
     };
 
 })();

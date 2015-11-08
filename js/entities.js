@@ -81,7 +81,7 @@
         st_Victorious: 41,
         st_NearlyDead: 42, // Player is dead, but fatality move hasn't been performed
         st_Dead: 43,
-        st_Remove: 44,
+        
 
         st_Idle1: 45,
         st_Idle2: 46,
@@ -129,7 +129,11 @@
         st_Damaged2: 82,
         st_Damaged3: 83,
         st_Damaged4: 84,
-        st_Damaged5: 85
+        st_Damaged5: 85,
+
+        st_Path2: 100,
+
+        st_Remove: 104
     });
 
 
@@ -552,12 +556,53 @@
         return self;
 
     }
-   
+    function spawnBasicProjectile2(player, game) {
+        var self = getNewEntity(game);
+
+        if (!self)
+            return;
+
+        self.dir = player.dir;
+        self.y = player.y - 26;
+        self.x = player.x + (player.dir == FvB.DIR_LEFT ? -8 : 8);
+        self.objClass = FvB.ob_BasicProjectile;
+        self.parent = player;
+
+        // new
+        var otherPlayer = FvB.Player.otherPlayer(player,game);
+        self.angle = .5 * Math.asin( (FvB.GRAVITY*Math.abs(player.x - otherPlayer.x) / Math.pow(FvB.ANGLED_PROJECTILE_SPEED,2) ));
+        self.time = 0;
+        self.startX = self.x;
+        self.startY = self.y;
+        self.xVelocity = FvB.ANGLED_PROJECTILE_SPEED * Math.cos(self.angle /* * Math.PI / 180 */);
+        self.yVelocity = FvB.ANGLED_PROJECTILE_SPEED * Math.sin(self.angle /* * Math.PI / 180 */);
+
+        if (self.dir == FvB.DIR_LEFT)
+            self.xVelocity = -self.xVelocity;
+
+        switch (player.type) {
+            case FvB.en_Fartsac:
+                self.type = FvB.en_Fartball;
+                //FvB.Sound.playSound("sfx/fartball.wav");
+                break;
+            case FvB.en_Boogerboy:
+                self.type = FvB.en_Booger;
+                //FvB.Sound.playSound("sfx/booger.wav");
+                break;
+
+        }
+
+        stateChange(self, FvB.st_Path2);
+
+        return self;
+
+    }
     
     return {
         process: process,
         getNewEntity: getNewEntity,
         spawnBasicProjectile: spawnBasicProjectile,
+        spawnBasicProjectile2: spawnBasicProjectile2,
         spawnHugeProjectile: spawnHugeProjectile,
         spawnExplosion: spawnExplosion,
         spawnSingleFrameSprite: spawnSingleFrameSprite,

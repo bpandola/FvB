@@ -72,7 +72,8 @@ FvB.Game = (function () {
 
         game = init();
 
-        titleScreen(game);
+        //titleScreen(game);
+        beginRound();
     }
 
     /**

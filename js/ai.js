@@ -12,6 +12,12 @@
         if (self.x + self.hitBox.x2 < 0 || self.x + self.hitBox.x1 >= FvB.SCREENWIDTH)
             return false;
 
+        if (self.y > FvB.PLAYER_START_Y) {
+            FvB.Entities.spawnExplosion(self, self, game);
+            return false;
+        }
+            
+
         for (i = 0; i < game.entities.length; i++) {
             var e = game.entities[i];
 
@@ -36,6 +42,17 @@
             }
         }
         return true;
+    }
+
+    function T_Projectile2(self, game, tics) {
+
+        self.time += tics;
+        self.x = self.startX + self.xVelocity * self.time;
+        self.y = self.startY - ( self.yVelocity * self.time - (1/2 * FvB.GRAVITY * Math.pow(self.time,2)));
+
+        if (!projectileTryMove(self, game)) {
+            self.state = FvB.st_Remove;
+        }
     }
 
     function T_Projectile(self, game, tics) {
@@ -87,6 +104,7 @@
     return {
        
         T_Projectile: T_Projectile,
+        T_Projectile2: T_Projectile2,
         A_PlaySound: A_PlaySound
     };
 
