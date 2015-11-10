@@ -578,22 +578,31 @@
         // new
         var otherPlayer = FvB.Player.otherPlayer(player, game);
         var range = Math.abs(player.x - otherPlayer.x) - 16;
-        var velocity = FvB.ANGLED_PROJECTILE_SPEED; // (FvB.ANGLED_PROJECTILE_SPEED) * (Math.random() + .1);
+        var velocity = /*range * FvB.BASIC_PROJECTILE_SPEED_OVER_RANGE_RATIO; // */FvB.BASIC_PROJECTILE_SPEED; // (FvB.ANGLED_PROJECTILE_SPEED) * (Math.random() + .1);
 
         if (arguments.length > 2)
             self.angle = arguments[2];
-else
-        self.angle = NaN;
-        while (isNaN(self.angle)) {
-            velocity = /*FvB.ANGLED_PROJECTILE_SPEED; //*/(FvB.ANGLED_PROJECTILE_SPEED) * (Math.random() + .1);
+        else {
+            self.angle = NaN;
+            //while (isNaN(self.angle)) {
+            //velocity = /*FvB.ANGLED_PROJECTILE_SPEED; //*/(FvB.BASIC_PROJECTILE_SPEED) * (Math.random() + .1);
+            velocity = velocity + (Math.random() * 50); // FvB.BASIC_PROJECTILE_SPEED /** (range / FvB.SCREENWIDTH)*/ + (Math.random() * 50);
 
-            self.angle = .5 * Math.asin((FvB.GRAVITY * range) / Math.pow(velocity, 2));
+            var angCalc = ((FvB.GRAVITY * range) / Math.pow(velocity, 2));
+            if (angCalc < -1) angCalc = -1; if (angCalc > 1) angCalc = 1;
+            self.angle = .5 * Math.asin(angCalc);
+            if (isNaN(self.angle)) {
+                FvB.Entities.stateChange(self, FvB.st_Remove);
+                return;
+            }
         }
+        //}
         //self.angle += Math.random();
         //if (self.angle < .45)
         //    self.angle += (.55*(640/range));
-//if (Date.now() % 2 == 0 && self.angle < .785)
-        //self.angle = .785 + (.785-self.angle);
+        if (player.state != FvB.st_Stand && (player.state < FvB.st_Idle1 && player.state > FvB.st_Idle4) && arguments.length < 3 && Date.now() % 2 == 0 && self.angle < .785) {
+            self.angle = .785 + (.785 - self.angle);
+        }
             self.time = 0;
         self.startX = self.x;
         self.startY = self.y;

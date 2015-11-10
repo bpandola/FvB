@@ -3,6 +3,9 @@
     // Sprite Render Constants
     // 
     FvB.setConsts({
+        SCREENWIDTH: 640,
+        SCREENHEIGHT: 400,
+
         R_X_ALIGN_CENTER: 1,
         R_Y_ALIGN_CENTER: 2,
         R_X_ALIGN_LEFT : 4,
@@ -14,8 +17,8 @@
         R_ALIGN_TOP_LEFT: 4|8
     });
 
-    var width = 640,
-        height = 400,
+    var width = FvB.SCREENWIDTH,
+        height = FvB.SCREENHEIGHT,
         canvas = null,
         ctx = null,
             RATIO = null,

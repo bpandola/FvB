@@ -115,7 +115,7 @@ FvB.Player = (function () {
 
         // If both fire buttons hit, default to Primary Attack
         if (p.buttonHeld[FvB.BT_PRIMARY_ATTACK] && !p.buttonState[FvB.BT_PRIMARY_ATTACK]) {
-            FvB.Entities.spawnBasicProjectile(player, game);
+            FvB.Entities.spawnBasicProjectile2(player, game);
         } else if (p.buttonHeld[FvB.BT_SECONDARY_ATTACK] && !p.buttonState[FvB.BT_SECONDARY_ATTACK]) {
             FvB.Entities.stateChange(player, FvB.st_Blow);
         } 
@@ -416,10 +416,10 @@ FvB.Player = (function () {
 
         switch (attacker.objClass) {
             case FvB.ob_BasicProjectile:
-                damage = .5;
+                damage = 1;
                 break;
             case FvB.ob_HugeProjectile:
-                if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged1) {
+                if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged1 || player.state == FvB.st_Stand) {
                     FvB.Entities.stateChange(player, FvB.st_Damaged1);
                     // HACKY! - Advance damage frame by other character value to get offset into sprite sheet
                     if (player.type != FvB.en_Ryu) {

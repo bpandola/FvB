@@ -125,11 +125,11 @@
           [FvB.st_JumpDown, 1, FvB.SPR_RYU_JUMP_2, 5, FvB.Player.T_Jump, null, FvB.st_JumpEnd],
           [FvB.st_JumpEnd, 1, FvB.SPR_RYU_JUMP_1, 0, FvB.Player.T_Jump, null, FvB.st_Idle1],
 
-            [FvB.st_Hadouken1, 1, FvB.SPR_RYU_HADOUKEN_1, 77, null, null, FvB.st_Hadouken2],
-        [FvB.st_Hadouken2, 1, FvB.SPR_RYU_HADOUKEN_2, 77, null, null, FvB.st_Hadouken3],
-         [FvB.st_Hadouken3, 1, FvB.SPR_RYU_HADOUKEN_3, 77, null, null, FvB.st_Hadouken4],
-         [FvB.st_Hadouken4, 1, FvB.SPR_RYU_HADOUKEN_4, 77, null, /*FvB.Entities.A_SpawnHadouken*/, FvB.st_Hadouken5],
-          [FvB.st_Hadouken5, 1, FvB.SPR_RYU_HADOUKEN_5, 77, null, null, FvB.st_Idle1],
+            [FvB.st_Hadouken1, 1, FvB.SPR_RYU_HADOUKEN_1, 7, null, null, FvB.st_Hadouken2],
+        [FvB.st_Hadouken2, 1, FvB.SPR_RYU_HADOUKEN_2, 7, null, null, FvB.st_Hadouken3],
+         [FvB.st_Hadouken3, 1, FvB.SPR_RYU_HADOUKEN_3, 7, null, null, FvB.st_Hadouken4],
+         [FvB.st_Hadouken4, 1, FvB.SPR_RYU_HADOUKEN_4, 7, null, /*FvB.Entities.A_SpawnHadouken*/, FvB.st_Hadouken5],
+          [FvB.st_Hadouken5, 1, FvB.SPR_RYU_HADOUKEN_5, 7, null, null, FvB.st_Idle1],
 
            [FvB.st_Damaged1, 1, FvB.SPR_RYU_DAMAGED_1, 7, null, null, FvB.st_Damaged2],
            [FvB.st_Damaged2, 1, FvB.SPR_RYU_DAMAGED_2, 7, null, null, FvB.st_Damaged3],
@@ -146,12 +146,12 @@
        ],
        // en_Fartball
        [
-           [FvB.st_Path, 0, FvB.SPR_FARTBALL, 0, FvB.AI.T_Projectile, null, FvB.st_Path],
+           [FvB.st_Path, 0, FvB.SPR_FARTBALL, 0, FvB.AI.T_Projectile2, null, FvB.st_Path],
             [FvB.st_Path2, 0, FvB.SPR_FARTBALL, 0, FvB.AI.T_Projectile2, null, FvB.st_Path2]
        ],
        // en_Boogball
        [
-           [FvB.st_Path, 0, FvB.SPR_BOOGBALL, 0, FvB.AI.T_Projectile, null, FvB.st_Path],
+           [FvB.st_Path, 0, FvB.SPR_BOOGBALL, 0, FvB.AI.T_Projectile2, null, FvB.st_Path],
            [FvB.st_Path2, 0, FvB.SPR_BOOGBALL, 0, FvB.AI.T_Projectile2, null, FvB.st_Path2]
        ],
        // en_HugeFartball

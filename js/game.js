@@ -72,8 +72,8 @@ FvB.Game = (function () {
 
         game = init();
 
-        //titleScreen(game);
-        beginRound();
+        titleScreen(game);
+        //beginRound(); For debugging -- get into the action quickly
     }
 
     /**
@@ -497,11 +497,19 @@ function update(dt) {
 }
 
 function PollControls() {
-    // Init these in game state
+    // Init these in game state and don't do this stupid hack to swith the buttons!
     var playerButtons = [
         [FvB.Keys.LEFT, FvB.Keys.RIGHT, FvB.Keys.UP, FvB.Keys.DOWN, FvB.Keys.L, FvB.Keys.K, FvB.Keys.O],
         [FvB.Keys.F, FvB.Keys.H, FvB.Keys.T, FvB.Keys.G, FvB.Keys.W, FvB.Keys.Q, FvB.Keys.A]
     ];
+
+    if (!game.isSinglePlayer) {
+        playerButtons = [
+        
+        [FvB.Keys.F, FvB.Keys.H, FvB.Keys.T, FvB.Keys.G, FvB.Keys.W, FvB.Keys.Q, FvB.Keys.A],
+        [FvB.Keys.LEFT, FvB.Keys.RIGHT, FvB.Keys.UP, FvB.Keys.DOWN, FvB.Keys.L, FvB.Keys.K, FvB.Keys.O]
+        ];
+    }
 
     var player;
     // copy previous state to held array
