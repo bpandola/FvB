@@ -402,7 +402,7 @@ function main() {
         //    return;
         //}
     }
-
+    //console.log(game.entities.length);
     update(dt);
     render();
 
@@ -579,7 +579,7 @@ function gameOver() {
     document.getElementById('finish-him-overlay').style.display = 'none';
 
     
-    var gameOverText = !game.isSinglePlayer ? game.player1.numWins > game.player2.numWins ? 'Player 1 Wins!' : 'Player 2 Wins!' : game.player1.numWins > game.player2.numWins ? 'You Won!' : 'Da Computer Beat You!';
+    var gameOverText = !game.isSinglePlayer ? game.player1.numWins > game.player2.numWins ? 'Player 1 Wins!' : 'Player 2 Wins!' : game.player1.numWins > game.player2.numWins ? 'You Won!' : 'Da Compuder Beat You!';
 
  $('#game-over h1').text(gameOverText);
     document.getElementById('game-over').style.display = 'block';

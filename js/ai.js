@@ -13,6 +13,7 @@
             return false;
 
         if (self.y > FvB.PLAYER_START_Y) {
+            self.y = FvB.PLAYER_START_Y;
             FvB.Entities.spawnExplosion(self, self, game);
             return false;
         }

@@ -43,7 +43,11 @@
            [FvB.st_FartTurd7, 1, FvB.SPR_FART_TURD_7, 3, FvB.Player.T_FartTurd, null, FvB.st_FartTurd8],
            [FvB.st_FartTurd8, 1, FvB.SPR_FART_TURD_8, 3, FvB.Player.T_FartTurd, null, FvB.st_FartTurd9],
            [FvB.st_FartTurd9, 1, FvB.SPR_FART_TURD_9, 3, FvB.Player.T_FartTurd, null, FvB.st_FartTurd10],
-           [FvB.st_FartTurd10, 1, FvB.SPR_FART_TURD_10, 3, FvB.Player.T_FartTurd, FvB.Player.A_FireHugeProjectile, FvB.st_JumpDown]
+           [FvB.st_FartTurd10, 1, FvB.SPR_FART_TURD_10, 3, FvB.Player.T_FartTurd, FvB.Player.A_FireHugeProjectile, FvB.st_JumpDown],
+
+           [FvB.st_Sneeze1, 1, FvB.SPR_FARTSAC_FARTING, 1, null, FvB.Player.A_Sneeze1, FvB.st_Sneeze1],
+           [FvB.st_Sneeze2, 1, FvB.SPR_FARTSAC_FARTING, 1, null, FvB.Player.A_Sneeze2, FvB.st_Sneeze2],
+           [FvB.st_Sneeze3, 1, FvB.SPR_FARTSAC_FARTING, 1, null, FvB.Player.A_Sneeze3, FvB.st_Sneeze3]
        ],
        // en_Boogerboy
        [
@@ -69,7 +73,11 @@
            [FvB.st_BlowBoog7, 1, FvB.SPR_BLOW_BOOG_7, 4, null, null, FvB.st_BlowBoog8],
            [FvB.st_BlowBoog8, 1, FvB.SPR_BLOW_BOOG_8, 5, null, null, FvB.st_BlowBoog9],
            [FvB.st_BlowBoog9, 1, FvB.SPR_BLOW_BOOG_9, 4, null, null, FvB.st_BlowBoog10],
-           [FvB.st_BlowBoog10, 1, FvB.SPR_BLOW_BOOG_10, 5, null, FvB.Player.A_FireHugeProjectile, FvB.st_Idle1]
+           [FvB.st_BlowBoog10, 1, FvB.SPR_BLOW_BOOG_10, 5, null, FvB.Player.A_FireHugeProjectile, FvB.st_Idle1],
+
+           [FvB.st_Sneeze1, 1, FvB.SPR_BLOW_BOOG_1, 1, null, FvB.Player.A_Sneeze1, FvB.st_Sneeze1],
+           [FvB.st_Sneeze2, 1, FvB.SPR_BLOW_BOOG_1, 1, null, FvB.Player.A_Sneeze2, FvB.st_Sneeze2],
+           [FvB.st_Sneeze3, 1, FvB.SPR_BLOW_BOOG_1, 1, null, FvB.Player.A_Sneeze3, FvB.st_Sneeze3]
        ],
         // en_Yohan
        [

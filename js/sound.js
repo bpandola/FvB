@@ -65,7 +65,8 @@
     }
 
     function playSound(id) {
-        startSound(null, null, 1, FvB.CHAN_VOICE, FvB.soundResources[id], 1, FvB.ATTN_NORM, 0);
+        var volume = id == FvB.SFX_FATALITY_FART ? 1 : 0.5;
+        startSound(null, null, 1, FvB.CHAN_VOICE, FvB.soundResources[id], volume, FvB.ATTN_NORM, 0);
     }
 
     function startSound(posPlayer, posSound, entNum, entChannel, file, volume, attenuation, timeOfs) {
@@ -80,11 +81,18 @@
                 break;
             }
         }
+
+        if (!audio && sounds[file].length > 15) {
+            // too many of the same sound playing
+            return;
+        }
+
         if (!audio) {
             audio = createAudioElement();
             audio.src = getFileName(file);
             sounds[file].push(audio);
-        }
+        } 
+           
 
         audio.volume = volume * FvB.MASTER_VOLUME * (soundEnabled ? 1 : 0);
         audio.play();

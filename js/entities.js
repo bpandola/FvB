@@ -133,6 +133,10 @@
 
         st_Path2: 100,
 
+        st_Sneeze1: 101,
+        st_Sneeze2: 102,
+        st_Sneeze3: 103,
+
         st_Remove: 104
     });
 
@@ -355,6 +359,9 @@
     */
     function haveCollided(a, b) {
 
+        if (a.parent == b.parent)
+            return false;
+
         if ((a.x + a.hitBox.x2) >= (b.x + b.hitBox.x1)) {
             if ((a.x + a.hitBox.x1) <= (b.x + b.hitBox.x2)) {
                 if ((a.y + a.hitBox.y2) >= (b.y + b.hitBox.y1)) {
@@ -449,7 +456,7 @@
                 self.y = pos.y + 20;
                 break;
             case FvB.ob_BasicProjectile:
-                //FvB.Sound.playSound(FvB.SFX_SPLAT);
+                FvB.Sound.playSound(FvB.SFX_SPLAT);
                 self.type = FvB.en_Explosion;
                 self.x = pos.x;
                 self.y = pos.y + 10;
@@ -556,26 +563,42 @@
         return self;
 
     }
-    function spawnBasicProjectile2(player, game) {
+    function spawnBasicProjectile2(player, game /* angle, x, y */) {
         var self = getNewEntity(game);
 
         if (!self)
             return;
 
         self.dir = player.dir;
-        self.y = player.y - 26;
-        self.x = player.x + (player.dir == FvB.DIR_LEFT ? -8 : 8);
+        self.y = arguments.length >= 5 ? arguments[4] : player.y - 26;
+        self.x = arguments.length >= 4 ? arguments[3] : player.x + (player.dir == FvB.DIR_LEFT ? -8 : 8);
         self.objClass = FvB.ob_BasicProjectile;
         self.parent = player;
 
         // new
-        var otherPlayer = FvB.Player.otherPlayer(player,game);
-        self.angle = .5 * Math.asin( (FvB.GRAVITY*Math.abs(player.x - otherPlayer.x) / Math.pow(FvB.ANGLED_PROJECTILE_SPEED,2) ));
-        self.time = 0;
+        var otherPlayer = FvB.Player.otherPlayer(player, game);
+        var range = Math.abs(player.x - otherPlayer.x) - 16;
+        var velocity = FvB.ANGLED_PROJECTILE_SPEED; // (FvB.ANGLED_PROJECTILE_SPEED) * (Math.random() + .1);
+
+        if (arguments.length > 2)
+            self.angle = arguments[2];
+else
+        self.angle = NaN;
+        while (isNaN(self.angle)) {
+            velocity = /*FvB.ANGLED_PROJECTILE_SPEED; //*/(FvB.ANGLED_PROJECTILE_SPEED) * (Math.random() + .1);
+
+            self.angle = .5 * Math.asin((FvB.GRAVITY * range) / Math.pow(velocity, 2));
+        }
+        //self.angle += Math.random();
+        //if (self.angle < .45)
+        //    self.angle += (.55*(640/range));
+//if (Date.now() % 2 == 0 && self.angle < .785)
+        //self.angle = .785 + (.785-self.angle);
+            self.time = 0;
         self.startX = self.x;
         self.startY = self.y;
-        self.xVelocity = FvB.ANGLED_PROJECTILE_SPEED * Math.cos(self.angle /* * Math.PI / 180 */);
-        self.yVelocity = FvB.ANGLED_PROJECTILE_SPEED * Math.sin(self.angle /* * Math.PI / 180 */);
+        self.xVelocity = velocity * Math.cos(self.angle /* * Math.PI / 180 */);
+        self.yVelocity = velocity * Math.sin(self.angle /* * Math.PI / 180 */);
 
         if (self.dir == FvB.DIR_LEFT)
             self.xVelocity = -self.xVelocity;
@@ -598,6 +621,7 @@
 
     }
     
+
     return {
         process: process,
         getNewEntity: getNewEntity,

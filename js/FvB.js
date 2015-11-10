@@ -8,7 +8,7 @@ var FvB = {
     FART_ROPE_SPEED: 120,
     BASIC_PROJECTILE_SPEED: 200,
     SUPER_PROJECTILE_SPEED: 300,
-    ANGLED_PROJECTILE_SPEED: 250,  // Has to be large enough to cover the entire screen distance at 45 degree angle.
+    ANGLED_PROJECTILE_SPEED: 200,  // Has to be large enough to cover the entire screen distance at 45 degree angle.
 
     BASIC_PROJECTILE_Y: 100,
     HUGE_PROJECTILE_Y: 40,

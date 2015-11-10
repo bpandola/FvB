@@ -121,7 +121,15 @@ FvB.Player = (function () {
         } 
 
         if (p.buttonHeld[FvB.BT_FATALITY] && !p.buttonState[FvB.BT_FATALITY]) {
-            FvB.Entities.stateChange(player, FvB.st_StartFatality);
+            //FvB.Entities.stateChange(player, FvB.st_StartFatality);
+            var state;
+            switch (Math.floor((Math.random()*3)+1))
+            {
+                case 1: state = FvB.st_Sneeze1; break;
+                case 2: state = FvB.st_Sneeze2; break;
+                case 3: state = FvB.st_Sneeze3; break;
+            }
+            FvB.Entities.stateChange(player, state);
         }
     }
 
@@ -302,6 +310,81 @@ FvB.Player = (function () {
         }
     }
 
+    function playSneezeFart(player) {
+        if (player.type == FvB.en_Fartsac) {
+            FvB.Sound.playSound(FvB.SFX_FATALITY_FART);
+        } else {
+            FvB.Sound.playSound(FvB.SFX_NOSE_BLOW);
+        }
+    }
+    function A_Sneeze1(self, game, tics) {
+
+        if (!self.temp2.hasOwnProperty("angle")) {
+            playSneezeFart(self);
+            //self.temp2 = { angle: -0.785 };
+            self.temp2 = { angle: 0 };
+        }
+
+        //for (i = 0; i < 3; i++) {
+        //if (self.temp2.angle >= 1.565) {
+            if (self.temp2.angle >= 25) {
+                self.temp2 = {};
+                FvB.Entities.stateChange(self, FvB.st_Stand);
+                return;
+            }
+
+        // count without sin is awesome Math.sin( self.temp2.angle)
+            FvB.Entities.spawnBasicProjectile2(self, game, Math.sin(self.temp2.angle), self.x + (self.dir == FvB.DIR_LEFT ? -6 : 6), self.type == FvB.en_Fartsac ? self.y - 20 : self.y - 42);
+
+            self.temp2.angle += 0.1; //.025;
+        //}
+    }
+
+    function A_Sneeze2(self, game, tics) {
+
+        if (!self.temp2.hasOwnProperty("angle")) {
+            playSneezeFart(self);
+            self.temp2 = { angle: -0.785 };
+            //self.temp2 = { angle: 0 };
+        }
+
+        //for (i = 0; i < 3; i++) {
+        if (self.temp2.angle >= 1.565) {
+        //if (self.temp2.angle >= 25) {
+            self.temp2 = {};
+            FvB.Entities.stateChange(self, FvB.st_Stand);
+            return;
+        }
+
+        // count without sin is awesome Math.sin( self.temp2.angle)
+        FvB.Entities.spawnBasicProjectile2(self, game, self.temp2.angle, self.x + (self.dir == FvB.DIR_LEFT ? -6 : 6), self.type == FvB.en_Fartsac ? self.y - 20 : self.y - 42);
+
+        self.temp2.angle += 0.025;
+        //}
+    }
+
+    function A_Sneeze3(self, game, tics) {
+
+        if (!self.temp2.hasOwnProperty("angle")) {
+            playSneezeFart(self);
+            //self.temp2 = { angle: -0.785 };
+            self.temp2 = { angle: 1.565 };
+        }
+
+        //for (i = 0; i < 3; i++) {
+        if (self.temp2.angle <= -0.785) {
+            //if (self.temp2.angle >= 25) {
+            self.temp2 = {};
+            FvB.Entities.stateChange(self, FvB.st_Stand);
+            return;
+        }
+
+        // count without sin is awesome Math.sin( self.temp2.angle)
+        FvB.Entities.spawnBasicProjectile2(self, game, self.temp2.angle, self.x + (self.dir == FvB.DIR_LEFT ? -6 : 6), self.type == FvB.en_Fartsac ? self.y - 20 : self.y - 42);
+
+        self.temp2.angle -= 0.025;
+        //}
+    }
     function spawnPlayer(game, playerObj) {
 
         var player = FvB.Entities.getNewEntity(game);
@@ -333,7 +416,7 @@ FvB.Player = (function () {
 
         switch (attacker.objClass) {
             case FvB.ob_BasicProjectile:
-                damage = 10;
+                damage = .5;
                 break;
             case FvB.ob_HugeProjectile:
                 if ((player.state >= FvB.st_Idle1 && player.state <= FvB.st_Idle4) || player.state == FvB.st_Damaged1) {
@@ -377,6 +460,9 @@ FvB.Player = (function () {
         T_Idle: T_Idle,
         T_Walk: T_Walk,
         A_FireHugeProjectile: A_FireHugeProjectile,
+        A_Sneeze1: A_Sneeze1,
+        A_Sneeze2: A_Sneeze2,
+        A_Sneeze3: A_Sneeze3,
         damage: damage,
         otherPlayer: otherPlayer
     };

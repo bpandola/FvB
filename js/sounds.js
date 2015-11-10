@@ -10,7 +10,7 @@
         { constant: "SFX_FATALITY_FART", sfx: "hugefart" },
         { constant: "SFX_SLURP", sfx: "slurp" },
         { constant: "SFX_BULLET", sfx: "smallexplodey" },
-        { constant: "SFX_SPLAT", sfx: "splat" },
+        { constant: "SFX_SPLAT", sfx: "splat(audio-cutter)" },
         { constant: "SFX_SELECT_CHARACTER", sfx: "select_character" },
         { constant: "SFX_CHOOSE_CHARACTER", sfx: "choose_character" },
         { constant: "SFX_ROUND1", sfx: "round1" },
