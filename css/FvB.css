@@ -15,6 +15,9 @@ canvas {
     right: 0;
 
     cursor: none;
+
+    /* Prevent canvas from blurring image */
+    image-rendering: pixelated;
 }
 
 .wrapper {
